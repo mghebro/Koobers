@@ -1,1 +1,66 @@
-/* You can add global styles to this file, and also import other style files */
+@use './styles/variables';
+@use './styles/mixins';
+
+@font-face {
+    font-family: General Sans;
+    src: url('./fonts/GeneralSans/GeneralSans-Semibold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: General Sans;
+    src: url('./fonts/GeneralSans/GeneralSans-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Open Sans;
+    src: url('./fonts/OpenSans/OpenSans-VariableFont_wdth\,wght.ttf') format('truetype');
+    font-style: normal;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    font-family: "Open Sans";
+}
+
+body {
+    margin: 0;
+    background-color: variables.$bg-background;
+}
+
+a {
+  text-decoration: none;
+}
+
+.page-wrapper {
+  display: flex;
+  min-height: 1000px;
+  flex-direction: column;
+  gap: 96px;
+  padding: 48px 48px 0 48px;
+}
+
+.page-section {
+  margin: 0 auto;
+  width: 1344px;
+  max-width: 100%;
+}
+
+@media (max-width: 650px) {
+  .page-wrapper {
+    padding: 24px 24px 0 24px;
+  }
+}
+
+
+.Primary-Default {
+  @include mixins.button-primary;
+}
+
+.Secondary-Default {
+  @include mixins.button-secondary;
+}

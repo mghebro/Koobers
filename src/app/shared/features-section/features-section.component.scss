@@ -1,0 +1,201 @@
+@use "../../../styles/mixins";
+@use "../../../styles/variables";
+
+.page-section {
+  padding: 96px;
+  background-color: variables.$bg-section;
+  border-radius: 96px;
+
+  .content-box {
+    @include mixins.flex-center;
+    flex-direction: column;
+    gap: 48px;
+    .heading {
+      width: 100%;
+      span {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 2%;
+        color: variables.$button-primary-bg-light;
+      }
+
+      .main-text {
+        margin-top: 12px;
+        font-family: General Sans;
+        font-weight: 500;
+        font-size: 36px;
+        line-height: 44px;
+        letter-spacing: 4%;
+        color: variables.$typography-100;
+      }
+
+      .sub-text {
+        margin-top: 8px;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 6%;
+        color: variables.$typography-200;
+      }
+    }
+
+    .features {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 24px;
+
+      .feature {
+        padding: 24px;
+        border-radius: 24px;
+        background-color: variables.$bg-section-secondary;
+        .heading {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          .logo {
+            padding: 8px;
+            width: 48px;
+            height: 48px;
+            @include mixins.flex-center;
+            border-radius: 16px;
+            background-color: variables.$bg-section;
+
+            img {
+              width: 32px;
+              height: 32px;
+            }
+          }
+
+          .title {
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 24px;
+            letter-spacing: 2%;
+            color: variables.$typography-100;
+          }
+        }
+
+        .description {
+          margin-top: 8px;
+          width: 320px;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
+          letter-spacing: 6%;
+          color: variables.$typography-300;
+        }
+      }
+    }
+
+    .contact {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+
+      .text-content {
+        .main-text {
+          font-family: Open Sans;
+          font-weight: 600;
+          font-size: 22px;
+          line-height: 28px;
+          letter-spacing: 2%;
+          background: radial-gradient(
+            40% 50% at 45% 50%,
+            variables.$bg-green-light 0%,
+            variables.$bg-green-dark 100%
+          );
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+
+        .sub-text {
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
+          letter-spacing: 0.7px;
+          color: variables.$typography-300;
+        }
+      }
+
+      a {
+        width: 128px;
+        height: 48px;
+        
+        @include mixins.button-primary
+      }
+    }
+  }
+}
+
+@media (max-width: 1450px) {
+  .page-section {
+    padding: 48px;
+    border-radius: 48px;
+
+    .content-box {
+      .features {
+        .feature {
+          width: calc(33.3% - 16px);
+          .description {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1150px) {
+  .page-section {
+    .content-box {
+      .features {
+        .feature {
+          width: calc(50% - 16px);
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .page-section {
+    padding: 24px;
+    border-radius: 24px;
+
+    .content-box {
+      .features {
+        .feature {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 650px) {
+  .page-section {
+    .content-box {
+      .heading {
+        .main-text {
+          font-size: 30px;
+          line-height: 36px;
+        }
+      }
+      .contact {
+        flex-direction: column;
+        gap: 24px;
+
+        .text-content {
+          width: 100%;
+        }
+
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

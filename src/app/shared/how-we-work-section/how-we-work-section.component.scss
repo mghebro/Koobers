@@ -1,0 +1,143 @@
+@use "../../../styles/mixins";
+@use "../../../styles/variables";
+
+.page-section {
+  margin: 0 auto;
+  width: 1344px;
+  max-width: 100%;
+  padding: 48px 96px;
+
+  .content-box {
+    @include mixins.flex-center;
+    flex-direction: column;
+    gap: 48px;
+    .heading {
+        width: 100%;
+      span {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 2%;
+        color: variables.$button-primary-bg-light;
+      }
+
+      .main-text {
+        margin-top: 12px;
+        font-family: General Sans;
+        font-weight: 500;
+        font-size: 36px;
+        line-height: 44px;
+        letter-spacing: 4%;
+        color: variables.$typography-100;
+      }
+
+      .sub-text {
+        margin-top: 8px;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 6%;
+        color: variables.$typography-200;
+      }
+    }
+
+    .process {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 48px;
+      width: 100%;
+
+      .card {
+        width: 352px;
+        max-width: 100%;
+
+        .heading {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+
+          .logo {
+            width: 48px;
+            height: 48px;
+          }
+
+          .heading-text {
+            .title {
+              font-weight: 700;
+              font-size: 16px;
+              line-height: 24px;
+              letter-spacing: 2%;
+              color: variables.$typography-100;
+            }
+
+            .timeline {
+              margin-top: 4px;
+              font-weight: 600;
+              font-size: 14px;
+              line-height: 16px;
+              letter-spacing: 4%;
+              color: variables.$typography-200;
+            }
+          }
+        }
+
+        .description {
+          margin-top: 8px;
+          width: 100%;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
+          letter-spacing: 6%;
+          color: variables.$typography-300;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1440px) {
+  .page-section {
+    padding: 48px;
+  }
+}
+
+
+@media (max-width: 1150px) {
+  .page-section {
+    .content-box {
+      .process {
+        .card {
+          width: calc(50% - 24px);
+        }
+      }
+    }
+  }
+}
+
+
+@media (max-width: 850px) {
+  .page-section {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 650px) {
+  .page-section {
+    padding: 0;
+    .content-box {
+
+      .heading {
+        .main-text {
+          font-size: 30px;
+          line-height: 36px;
+        }
+      }
+      .process {
+        .card {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

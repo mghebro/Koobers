@@ -1,0 +1,112 @@
+@use "../../../styles/mixins";
+@use "../../../styles/variables";
+
+.page-section {
+  padding: 96px;
+  background-color: variables.$bg-section;
+  border-radius: 96px;
+
+  .content-box {
+    @include mixins.flex-center;
+    flex-direction: column;
+    gap: 48px;
+    .heading {
+      width: 100%;
+      span {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 2%;
+        color: variables.$button-primary-bg-light;
+      }
+
+      .main-text {
+        margin-top: 12px;
+        font-family: General Sans;
+        font-weight: 500;
+        font-size: 36px;
+        line-height: 44px;
+        letter-spacing: 4%;
+        color: variables.$typography-100;
+      }
+    }
+
+    .benefits {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+
+      .benefit {
+        width: 21%;
+        overflow: hidden;
+        cursor: pointer;
+        transition: cubic-bezier(0.49, 0.16, 0.02, 1.23) 500ms;
+
+        &:not(:first-child) {
+            .text-content {
+                padding-left: 24px;
+            }
+        }
+
+        .progress-bar {
+          width: 100%;
+          height: 4px;
+          background: variables.$bg-disabled;
+          border-radius: 4px;
+        }
+
+        .text-content {
+          margin-top: 24px;
+          transition: 500ms;
+
+          .id {
+            margin-left: 4px;
+          }
+          
+          .id,
+          .title {
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 24px;
+            letter-spacing: 2%;
+            color: variables.$typography-disabled;
+            transition: 500ms;
+          }
+
+          .description {
+            width: 390px;
+            max-height: 48px;
+            opacity: 0;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            letter-spacing: 6%;
+            overflow: hidden;
+            color: variables.$typography-300;
+            transition: 500ms;
+          }
+        }
+
+        &.active {
+          width: 37%;
+
+          .progress-bar {
+            background: linear-gradient(90deg, #34b84a 0%, #42eb85 100%);
+          }
+
+          .text-content {
+            padding-left: 0;
+            .id,
+            .title {
+              color: variables.$typography-200;
+            }
+
+            .description {
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+  }
+}

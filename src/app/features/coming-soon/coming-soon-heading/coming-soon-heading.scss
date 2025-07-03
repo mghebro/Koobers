@@ -1,0 +1,131 @@
+@use '../../../../styles/mixins';
+@use '../../../../styles/variables';
+
+.heading {
+    text-align: left;
+    max-width: 100%;
+    
+    .title {
+        font-family: General Sans;
+        font-weight: 600;
+        font-size: 72px;
+        line-height: 92px;
+        letter-spacing: -2%;
+        text-align: left;
+        color: variables.$typography-100;
+        width: 55%;
+        max-width: 900px;
+
+        span {
+          font-family: General Sans;
+          font-weight: 600;
+          background: radial-gradient(
+            40% 50% at 45% 50%,
+            variables.$bg-green-light 0%,
+            variables.$bg-green-dark 100%
+          );
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+
+    }
+
+    .sub-text {
+        color: variables.$typography-200;
+        font-family: "Open Sans";
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 6%;
+        margin-top: 12px;
+    }
+}
+
+@media (max-width: 1700px) {
+  .heading {
+    .title {
+      width: 820px;
+      max-width: 100%;
+    }
+  }
+}
+
+@media (max-width: 1150px) {
+  .heading {
+    width: 830px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .heading {
+    width: 100%;
+    max-width: 620px;
+
+    .title {
+      width: 600px;
+      font-size: 52px;
+      line-height: 64px;
+    }
+
+  }
+}
+
+
+@media (max-width: 800px) {
+  .heading {
+    width: 100%;
+
+    .title {
+      font-size: 38px;
+      max-width: 512px;
+      width: 100%;
+      line-height: 45px;
+    }
+
+    .sub-text {
+      max-width: 500px;
+      width: 100%;
+    }
+
+  }
+}
+
+@media (max-width: 650px) {
+  
+  .heading {
+    .title {
+      font-size: 27px;
+      max-width: 430px;
+      line-height: 40px;
+    }
+
+    .sub-text {
+      font-size: 14px;
+      max-width: 350px;
+    }
+  }
+}
+
+
+@media (max-width: 450px) {
+  
+  .heading {
+    text-align: left;
+    width: 294px;
+    max-width: 100%;
+
+    .title {
+      font-size: 36px;
+      max-width: 430px;
+      line-height: 44px;
+      letter-spacing: 4%;
+      font-weight: 500;
+      text-align: left;
+    }
+
+    .sub-text {
+      font-size: 14px;
+      max-width: 350px;
+    }
+  }
+}

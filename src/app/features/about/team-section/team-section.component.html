@@ -1,0 +1,152 @@
+<section class="team-section" #teamSection>
+  <div class="container">
+
+    <div class="header-container">
+      <h3 class="section-subtitle">Our Team</h3>
+      <h2 class="section-title">Meet the Minds Behind the Code</h2>
+      <p class="section-description">
+        We're a small, focused team of designers and developers who love what we do — and who you'll actually work with.
+      </p>
+    </div>
+
+    <div class="team-rows-container">
+      <!-- Top row that moves right to left -->
+      <div class="carousel-wrapper">
+        <div class="carousel-container">
+          <div class="team-row row-top" #topRow>
+            <!-- Original set of members -->
+            <div class="team-member" *ngFor="let member of topRowMembers"
+                 (mouseenter)="flipCard(member, true, $event)"
+                 (mouseleave)="flipCard(member, false, $event)">
+              <div class="flip-card" [class.flipped]="member.isFlipped">
+                <div class="flip-card-inner">
+                  <div class="flip-card-front">
+                    <div class="member-header">
+                      <div class="member-icon" [ngClass]="{'designer-icon': member.role.includes('UI/UX')}">
+                        <ng-container *ngIf="member.role.includes('Developer')">
+                          <img src="assets/svgs/team-section/developer.svg" alt="Developer Icon">
+                        </ng-container>
+                        <ng-container *ngIf="member.role.includes('UI/UX') || member.role.includes('Designer')">
+                          <img src="assets/svgs/team-section/design.svg" alt="Designer Icon">
+                        </ng-container>
+                      </div>
+                      <div class="member-role">{{ member.role }}</div>
+                    </div>
+                    <h3 class="member-name">{{ member.name }}</h3>
+                  </div>
+                  <div class="flip-card-back">
+                    <p class="member-find">You'll Find Him Here:</p>
+                    <div class="link-container">
+                      <a href="{{ member.link }}" class="member-link" target="_blank" (click)="flipBack($event, member)">{{ member.displayUrl || member.link }}</a>
+                      <img src="assets/svgs/arrow.svg" alt="Arrow" class="arrow-icon">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Duplicated set for seamless looping -->
+            <div class="team-member" *ngFor="let member of topRowMembers"
+                 (mouseenter)="flipCard(member, true, $event)"
+                 (mouseleave)="flipCard(member, false, $event)">
+              <div class="flip-card" [class.flipped]="member.isFlipped">
+                <div class="flip-card-inner">
+                  <div class="flip-card-front">
+                    <div class="member-header">
+                      <div class="member-icon" [ngClass]="{'designer-icon': member.role.includes('UI/UX')}">
+                        <ng-container *ngIf="member.role.includes('Developer')">
+                          <img src="assets/svgs/team-section/developer.svg" alt="Developer Icon">
+                        </ng-container>
+                        <ng-container *ngIf="member.role.includes('UI/UX') || member.role.includes('Designer')">
+                          <img src="assets/svgs/team-section/design.svg" alt="Designer Icon">
+                        </ng-container>
+                      </div>
+                      <div class="member-role">{{ member.role }}</div>
+                    </div>
+                    <h3 class="member-name">{{ member.name }}</h3>
+                  </div>
+                  <div class="flip-card-back">
+                    <p class="member-find">You'll Find Him Here:</p>
+                    <div class="link-container">
+                      <a href="{{ member.link }}" class="member-link" target="_blank" (click)="flipBack($event, member)">{{ member.displayUrl || member.link }}</a>
+                      <img src="assets/svgs/arrow.svg" alt="Arrow" class="arrow-icon">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom row that moves left to right -->
+      <div class="carousel-wrapper">
+        <div class="carousel-container">
+          <div class="team-row row-bottom" #bottomRow>
+            <!-- Original set of members -->
+            <div class="team-member" *ngFor="let member of bottomRowMembers"
+                 (mouseenter)="flipCard(member, true, $event)"
+                 (mouseleave)="flipCard(member, false, $event)">
+              <div class="flip-card" [class.flipped]="member.isFlipped">
+                <div class="flip-card-inner">
+                  <div class="flip-card-front">
+                    <div class="member-header">
+                      <div class="member-icon" [ngClass]="{'designer-icon': member.role.includes('UI/UX')}">
+                        <ng-container *ngIf="member.role.includes('Developer')">
+                          <img src="assets/svgs/team-section/developer.svg" alt="Developer Icon">
+                        </ng-container>
+                        <ng-container *ngIf="member.role.includes('UI/UX') || member.role.includes('Designer')">
+                          <img src="assets/svgs/team-section/design.svg" alt="Designer Icon">
+                        </ng-container>
+                      </div>
+                      <div class="member-role">{{ member.role }}</div>
+                    </div>
+                    <h3 class="member-name">{{ member.name }}</h3>
+                  </div>
+                  <div class="flip-card-back">
+                    <p class="member-find">You'll Find Him Here:</p>
+                    <div class="link-container">
+                      <a href="{{ member.link }}" class="member-link" target="_blank" (click)="flipBack($event, member)">{{ member.displayUrl || member.link }}</a>
+                      <img src="assets/svgs/arrow.svg" alt="Arrow" class="arrow-icon">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Duplicated set for seamless looping -->
+            <div class="team-member" *ngFor="let member of bottomRowMembers"
+                 (mouseenter)="flipCard(member, true, $event)"
+                 (mouseleave)="flipCard(member, false, $event)">
+              <div class="flip-card" [class.flipped]="member.isFlipped">
+                <div class="flip-card-inner">
+                  <div class="flip-card-front">
+                    <div class="member-header">
+                      <div class="member-icon" [ngClass]="{'designer-icon': member.role.includes('UI/UX')}">
+                        <ng-container *ngIf="member.role.includes('Developer')">
+                          <img src="assets/svgs/team-section/developer.svg" alt="Developer Icon">
+                        </ng-container>
+                        <ng-container *ngIf="member.role.includes('UI/UX') || member.role.includes('Designer')">
+                          <img src="assets/svgs/team-section/design.svg" alt="Designer Icon">
+                        </ng-container>
+                      </div>
+                      <div class="member-role">{{ member.role }}</div>
+                    </div>
+                    <h3 class="member-name">{{ member.name }}</h3>
+                  </div>
+                  <div class="flip-card-back">
+                    <p class="member-find">You'll Find Him Here:</p>
+                    <div class="link-container">
+                      <a href="{{ member.link }}" class="member-link" target="_blank" (click)="flipBack($event, member)">{{ member.displayUrl || member.link }}</a>
+                      <img src="assets/svgs/arrow.svg" alt="Arrow" class="arrow-icon">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,22 @@
+<div class="content-box">
+  <div [class.animation-appearing]="animationLoaded" class="wrapper">
+    <div class="page-content" #pageContent @fadeInUp>
+      <app-coming-soon-heading
+        style="max-width: 100%; width: 100%;"
+      ></app-coming-soon-heading>
+      <app-coming-soon-input
+        style="max-width: 100%; width: 100%;"
+      ></app-coming-soon-input>
+    </div>
+
+    <!-- Unicorn Studio Animation replacing background blur -->
+    <div
+      #unicornContainer
+      class="unicorn-animation background-animation"
+      [class.loading]="!animationLoaded"
+      [class.loaded]="animationLoaded"
+      [class.error]="animationError"
+    >
+    </div>
+  </div>
+</div>

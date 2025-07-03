@@ -1,0 +1,106 @@
+@use "../../../../styles/mixins";
+@use "../../../../styles/variables";
+
+.page-section {
+  padding: 96px 48px 48px 48px;
+
+  .content-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 48px 108px;
+
+    .title {
+      font-family: General Sans;
+      font-weight: 500;
+      font-size: 36px;
+      line-height: 44px;
+      color: variables.$typography-green;
+    }
+
+    form {
+      display: flex;
+      width: 800px;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 16px 48px;
+
+      .form-group {
+        @include mixins.default-form-group;
+
+        &:nth-child(5) {
+            width: 565px;
+        }
+      }
+
+      button {
+        @include mixins.button-primary;
+        margin-bottom: 16px;
+      }
+    }
+  }
+}
+
+@media (max-width: 1000px) {
+  .page-section {
+    .content-box {
+      form {
+        .form-group {
+          width: calc(50% - 24px);
+
+        &:nth-child(5) {
+            width: 60%;
+            margin-right: auto;
+          input {
+            width: 100%;
+          }
+        }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .page-section {
+    padding: 24px;
+    .content-box {
+      .title {
+        text-align: center;
+      }
+      form {
+        gap: 24px;
+
+        .form-group {
+          width: calc(50% - 12px);
+        }
+          button, .form-group:nth-child(5) {
+            width: 100%;
+          }
+      }
+    }
+  }
+}
+
+
+@media (max-width: 500px) {
+  .page-section {
+    padding: 24px 0px;
+    .content-box {
+          .title {
+            font-size: 30px;
+            line-height: 36px;
+          }
+      gap: 24px;
+      form {
+        .form-group {
+          width: 100%;
+
+          input {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
