@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FeaturesSectionComponent } from './features-section/features-section.component';
 import { HowWeWorkSectionComponent } from './how-we-work-section/how-we-work-section.component';
 import { BenefitsSectionComponent} from './benefits-section/benefits-section.component';
-import { Cta } from './cta/cta';
 import { PageHeader } from './page-header/page-header';
 import { RouterModule } from '@angular/router';
+import { CtaSection } from './cta-section/cta-section';
 
 
 
@@ -14,8 +14,8 @@ import { RouterModule } from '@angular/router';
     FeaturesSectionComponent,
     HowWeWorkSectionComponent,
     BenefitsSectionComponent,
-    Cta,
-    PageHeader
+    PageHeader,
+    CtaSection
   ],
   imports: [
     CommonModule,
@@ -25,7 +25,7 @@ import { RouterModule } from '@angular/router';
     FeaturesSectionComponent,
     HowWeWorkSectionComponent,
     BenefitsSectionComponent,
-    Cta,
+    CtaSection,
     PageHeader
   ]
 })
