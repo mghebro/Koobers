@@ -199,3 +199,16 @@
     }
   }
 }
+
+@media (max-width: 375px) {
+  .page-section {
+    .content-box {
+      .heading {
+        .main-text {
+          font-size: 24px;
+          line-height: 30px;
+        }
+      }
+    }
+  }
+}
