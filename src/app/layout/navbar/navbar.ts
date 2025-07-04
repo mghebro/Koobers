@@ -37,8 +37,8 @@ export class Navbar {
   @ViewChildren('menuItem') menuItemsElements!: QueryList<ElementRef>;
 
   languages: Language[] = [
-    { code: 'en', name: 'English', flag: '../../../assets/svgs/Eng.png' },
-    { code: 'geo', name: 'Georgian', flag: '../../../assets/svgs/Geo.png' }
+    { code: 'en', name: 'English', flag: '../../../assets/images/Eng.png' },
+    { code: 'geo', name: 'Georgian', flag: '../../../assets/images/Geo.png' }
   ];
 
   selectedLanguage: Language = this.languages[0];
@@ -163,6 +163,7 @@ export class Navbar {
       this.isFadingIn = true;
 
       this.selectedLanguage = language;
+      this.toggleLanguageDropdown();
 
       setTimeout(() => {
         this.isFadingOut = false;
