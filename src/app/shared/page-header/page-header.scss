@@ -42,15 +42,46 @@
         }
 
         img {
-            width: 16px;
-            height: 16px;
-            transition: 200ms ease-in-out;
+          width: 16px;
+          height: 16px;
+          transition: 200ms ease-in-out;
         }
 
         &:hover {
-            img {
-                transform: translateX(12px);
+          img {
+            transform: translateX(12px);
+          }
+        }
+      }
+
+      .info {
+        display: flex;
+        gap: 48px;
+        margin-top: 48px;
+
+        .info-column {
+          display: flex;
+          gap: 24px;
+
+          .icon {
+            width: 32px;
+            height: 32px;
+            margin-top: 4px;
+          }
+
+          .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+
+            p {
+              font-weight: 500;
+              font-style: Medium;
+              font-size: 20px;
+              line-height: 28px;
             }
+
+          }
         }
       }
 
@@ -66,11 +97,9 @@
 
         .green-text {
           font-family: "General Sans", sans-serif;
-          background: radial-gradient(
-            40% 50% at 45% 50%,
-            variables.$bg-green-light 0%,
-            variables.$bg-green-dark 100%
-          );
+          background: radial-gradient(40% 50% at 45% 50%,
+              variables.$bg-green-light 0%,
+              variables.$bg-green-dark 100%);
           background-clip: text;
           -webkit-text-fill-color: transparent;
         }
@@ -82,12 +111,14 @@
         font-size: 16px;
         font-style: normal;
         font-weight: 400;
-        line-height: 24px; /* 150% */
+        line-height: 24px;
+        /* 150% */
         letter-spacing: 0.96px;
       }
     }
   }
 }
+
 .blob {
   width: 1000px;
   max-width: 100%;
@@ -99,13 +130,11 @@
   transform: translateX(-50%);
   border-radius: 1000px;
   opacity: 0.64;
-  background: radial-gradient(
-    50% 50% at 50% 50%,
-    var(--Gradients-Light, #f5f5e1) 15.87%,
-    var(--Gradients-Light, #f5f5e1) 62.5%,
-    var(--Gradients-Green, #34b84a) 76.44%,
-    var(--Gradients-Tealish, #42eb85) 85.1%
-  );
+  background: radial-gradient(50% 50% at 50% 50%,
+      var(--Gradients-Light, #f5f5e1) 15.87%,
+      var(--Gradients-Light, #f5f5e1) 62.5%,
+      var(--Gradients-Green, #34b84a) 76.44%,
+      var(--Gradients-Tealish, #42eb85) 85.1%);
   mix-blend-mode: hard-light;
   filter: blur(250px);
 }
@@ -120,6 +149,7 @@
     padding: 70px 48px 48px 48px;
     min-height: 550px;
     @include mixins.flex-center;
+
     .inner-content {
       .heading {
         .heading-title {
@@ -128,5 +158,11 @@
         }
       }
     }
+  }
+}
+
+@media (max-width: 800px) {
+  .content-box {
+    padding: 70px 48px 48px 48px;
   }
 }

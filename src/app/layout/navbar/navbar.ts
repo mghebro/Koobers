@@ -19,8 +19,7 @@ interface MenuItem {
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss'
 })
-export class Navbar {
-  activeLink = 'Home';
+export class Navbar {activeLink = 'Home';
   isLanguageDropdownOpen = false;
   menuItemPosition = 0;
 
@@ -31,14 +30,14 @@ export class Navbar {
     { label: 'Work', route: '/work' },
     { label: 'Blog', route: '/blog' },
     { label: 'About', route: '/about' },
-    { label: 'Contact', route: '/contact' }
+    { label: 'Contact', route: '/contact' },
   ];
 
   @ViewChildren('menuItem') menuItemsElements!: QueryList<ElementRef>;
 
   languages: Language[] = [
     { code: 'en', name: 'English', flag: '../../../assets/images/Eng.png' },
-    { code: 'geo', name: 'Georgian', flag: '../../../assets/images/Geo.png' }
+    { code: 'geo', name: 'Georgian', flag: '../../../assets/images/Geo.png' },
   ];
 
   selectedLanguage: Language = this.languages[0];
@@ -46,10 +45,7 @@ export class Navbar {
   isFadingOut = false;
   isFadingIn = false;
 
-  constructor(
-    private elementRef: ElementRef,
-    private router: Router
-  ) {}
+  constructor(private elementRef: ElementRef, private router: Router) {}
 
   ngOnInit() {
     // Initialize with current language
@@ -59,11 +55,11 @@ export class Navbar {
     this.setActiveLinkFromRoute();
 
     // Listen to route changes to update active link
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe(() => {
-      this.setActiveLinkFromRoute();
-    });
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.setActiveLinkFromRoute();
+      });
   }
 
   ngAfterViewInit() {
@@ -75,9 +71,10 @@ export class Navbar {
   // Set active link based on current route
   private setActiveLinkFromRoute(): void {
     const currentRoute = this.router.url;
-    const matchedItem = this.menuItems.find(item =>
-      item.route === currentRoute ||
-      (item.route !== '/' && currentRoute.startsWith(item.route))
+    const matchedItem = this.menuItems.find(
+      (item) =>
+        item.route === currentRoute ||
+        (item.route !== '/' && currentRoute.startsWith(item.route))
     );
 
     if (matchedItem) {
@@ -104,14 +101,16 @@ export class Navbar {
 
   // Keep the old setActive method for backward compatibility
   setActive(link: string): void {
-    const menuItem = this.menuItems.find(item => item.label === link);
+    const menuItem = this.menuItems.find((item) => item.label === link);
     if (menuItem) {
       this.navigateTo(menuItem);
     }
   }
 
   updateGlowPosition(): void {
-    const activeIndex = this.menuItems.findIndex(item => item.label === this.activeLink);
+    const activeIndex = this.menuItems.findIndex(
+      (item) => item.label === this.activeLink
+    );
     if (activeIndex >= 0) {
       const items = document.querySelectorAll('.menu-items');
       if (items[activeIndex]) {
@@ -121,7 +120,8 @@ export class Navbar {
 
         if (menuRect) {
           // Position in the middle of the active item
-          this.menuItemPosition = (itemRect.left - menuRect.left) + (itemRect.width / 2);
+          this.menuItemPosition =
+            itemRect.left - menuRect.left + itemRect.width / 2;
         }
       }
     }
@@ -144,7 +144,8 @@ export class Navbar {
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
-    const languageSelector = this.elementRef.nativeElement.querySelector('.language-selector');
+    const languageSelector =
+      this.elementRef.nativeElement.querySelector('.language-selector');
     const clickedInside = languageSelector.contains(event.target as Node);
 
     if (!clickedInside && this.isLanguageDropdownOpen) {
@@ -182,5 +183,10 @@ export class Navbar {
       return 'Geo';
     }
     return 'Eng/Geo';
+  }
+  menuOpen = false;
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
   }
 }
