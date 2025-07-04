@@ -1,0 +1,42 @@
+<div class="code-display">
+    <div class="code-tabs">
+      <div class="tab" [class.active]="activeTab === 'angular'" (click)="setTab('angular')">Angular</div>
+      <div class="tab" [class.active]="activeTab === 'react'" (click)="setTab('react')">React</div>
+      <div class="tab" [class.active]="activeTab === 'csharp'" (click)="setTab('csharp')">C#</div>
+    </div>
+  
+  
+  
+    <div class="code-content">
+       <pre><code [innerHTML]="displayedCode" [class.typing]="isTyping"></code></pre>
+    </div>
+  
+  
+  
+    
+    <div class="code-footer">
+      <span> <h3 class="contact-us-text">Contact Us</h3> <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 13L10 9L6 5" stroke="#BBCCBB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        </span>
+      <span class="copy-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_40_15511)">
+        <g clip-path="url(#clip1_40_15511)">
+        <path d="M11.333 18.667C10.597 18.667 10 18.07 10 17.333V11.333C10 10.597 10.597 10 11.333 10H17.333C18.07 10 18.667 10.597 18.667 11.333V17.333C18.667 18.07 18.07 18.667 17.333 18.667H11.333Z" stroke="#BBCCBB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M7.33301 14H6.66701C5.93001 14 5.33301 13.403 5.33301 12.667V6.66701C5.33301 5.93001 5.93001 5.33301 6.66701 5.33301H12.667C13.403 5.33301 14 5.93001 14 6.66701V7.33301" stroke="#BBCCBB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        </g>
+        <defs>
+        <clipPath id="clip0_40_15511">
+        <rect width="24" height="24" fill="white"/>
+        </clipPath>
+        <clipPath id="clip1_40_15511">
+        <rect width="16" height="16" fill="white" transform="translate(4 4)"/>
+        </clipPath>
+        </defs>
+        </svg>
+        </span>
+    </div>
+  </div>
+  

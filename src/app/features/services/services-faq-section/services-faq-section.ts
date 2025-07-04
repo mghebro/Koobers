@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 interface FaqItem {
   title: string;
@@ -14,13 +14,12 @@ interface FaqItem {
 }
 
 @Component({
-  selector: 'app-faq',
+  selector: 'app-services-faq-section',
   standalone: false,
-  templateUrl: './faq.html',
-  styleUrl: './faq.scss'
+  templateUrl: './services-faq-section.html',
+  styleUrl: './services-faq-section.scss'
 })
-
-export class Faq {
+export class ServicesFaqSection {
   faqItems: FaqItem[] = [
     {
       title: 'Web Application Development',
