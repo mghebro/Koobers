@@ -64,3 +64,10 @@ a {
 .Secondary-Default {
   @include mixins.button-secondary;
 }
+
+@media (max-width:375px) {
+  .Primary-Default, .Secondary-Default {
+    font-size: 14px;
+    line-height: 18px;
+  }
+}
