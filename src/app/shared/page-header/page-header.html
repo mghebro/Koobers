@@ -14,16 +14,32 @@
       <p class="heading-description">
         {{ headingDescription }}
       </p>
+
+      <div *ngIf="contactInfo" class="info">
+        <div class="info-column">
+          <div class="icon"></div>
+
+          <div class="info-list">
+            <p>{{contactInfo.phone}}</p>
+            <p>{{contactInfo.phoneAlternative}}</p>
+          </div>
+        </div>
+        <div class="info-column">
+          <div class="icon"></div>
+
+          <div class="info-list">
+            <p>{{contactInfo.email}}</p>
+            <p>{{contactInfo.emailAlternative}}</p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="cta-buttons">
       <button (click)="navigateTo(primaryButtonTarget)" class="Primary-Default">
         {{ primaryButtonContent }}
       </button>
-      <button
-        (click)="navigateTo(secondaryButtonTarget)"
-        class="Secondary-Default"
-      >
+      <button (click)="navigateTo(secondaryButtonTarget)" class="Secondary-Default">
         {{ secondaryButtonContent }}
       </button>
     </div>

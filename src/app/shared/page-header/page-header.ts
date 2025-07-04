@@ -1,6 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
+interface ContactInfo {
+  phone: string;
+  phoneAlternative: string;
+  email: string;
+  emailAlternative: string;
+}
+
 @Component({
   selector: 'app-page-header',
   standalone: false,
@@ -17,6 +24,7 @@ export class PageHeader {
   @Input() primaryButtonTarget: string = ""
   @Input() secondaryButtonContent: string = ""
   @Input() secondaryButtonTarget: string = ""
+  @Input() contactInfo: ContactInfo | null = null
 
   constructor(private router: Router) {}
 

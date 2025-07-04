@@ -41,6 +41,14 @@ const routes: Routes = [
         (m) => m.ServicesModule
       ),
   },
+
+  {
+    path: 'work',
+    loadChildren: () =>
+      import('./features/work/work-module').then(
+        (m) => m.WorkModule
+      ),
+  },
 ];
 
 @NgModule({

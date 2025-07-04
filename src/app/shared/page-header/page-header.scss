@@ -114,3 +114,19 @@
   display: flex;
   gap: 16px;
 }
+
+@media (max-width: 1050px) {
+  .content-box {
+    padding: 70px 48px 48px 48px;
+    min-height: 550px;
+    @include mixins.flex-center;
+    .inner-content {
+      .heading {
+        .heading-title {
+          font-size: 48px;
+          line-height: 56px;
+        }
+      }
+    }
+  }
+}
