@@ -18,6 +18,7 @@ $line-color: #42eb85;
     text-shadow: 0 0 8px rgba($primary-color, 0.6);
   }
   .explore-arrow {
+    transform: translateX(50%);
     fill: $primary-color;
     filter: drop-shadow(0 0 4px rgba($primary-color, 0.6));
   }
@@ -109,12 +110,14 @@ body {
 
     .line {
       width: 2px;
+      transition: 200ms ease-in-out;
       height: 24px;
       background-color: $line-color;
       border-radius: 4px;
     }
 
     .explore-text {
+      transition: 200ms ease-in-out;
       color: $primary-color;
       font-family: "Open Sans", sans-serif;
       font-weight: 700;
@@ -126,7 +129,8 @@ body {
     .explore-arrow {
       color: $primary-color;
       width: 6.5px;
-      height: 11.5px;
+      transition: 200ms ease-in-out;
+      height: 16px;
     }
   }
 
@@ -188,7 +192,7 @@ body {
   margin-top: 1rem;
 
   button {
-    display: block;
+    width: 180px;
   }
 }
 

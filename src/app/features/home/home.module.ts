@@ -9,6 +9,7 @@ import { HowWeWorkSectionComponent } from '../../shared/how-we-work-section/how-
 import { HomeHeroSection } from './home-hero-section/home-hero-section';
 import { CodeDisplay } from './code-display/code-display';
 import { HomeFaqSection } from './home-faq-section/home-faq-section';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { HomeFaqSection } from './home-faq-section/home-faq-section';
     CommonModule,
     HomeRoutingModule,
     SharedModule,
+    RouterModule
   ]
 })
 export class HomeModule { }
