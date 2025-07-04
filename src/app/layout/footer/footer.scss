@@ -264,7 +264,13 @@ footer {
 }
 
 @media (max-width: 500px) {
-  footer {
+  footer { 
+    padding-top: 144px;
+    .footer-watermark-wrapper {
+      .footer-watermark {
+        transform: translateX(-1dvh);
+      }
+    }
     .content-box {
       .right-side {
         gap: 24px;

@@ -163,7 +163,7 @@
 
 @media (max-width: 800px) {
   .content-box {
-
+    border-radius: 48px;
     .inner-content {
       .heading {
         .heading-title {
@@ -205,6 +205,7 @@
         .heading-title {
           font-size: 30px;
           line-height: 36px;
+          letter-spacing: 0.5px;
         }
 
         .info {

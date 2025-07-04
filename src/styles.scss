@@ -66,8 +66,12 @@ a {
 }
 
 @media (max-width:375px) {
+  .page-wrapper {
+    padding: 12px 12px 0 12px;
+  }
+
   .Primary-Default, .Secondary-Default {
-    font-size: 14px;
+    font-size: 12px;
     line-height: 18px;
   }
 }
