@@ -49,6 +49,11 @@ const routes: Routes = [
         (m) => m.WorkModule
       ),
   },
+
+  {
+    path: "**",
+    redirectTo: ""
+  }
 ];
 
 @NgModule({

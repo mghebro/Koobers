@@ -163,6 +163,14 @@
 
 @media (max-width: 800px) {
   .content-box {
-    padding: 70px 48px 48px 48px;
+
+    .inner-content {
+      .heading {
+        .heading-title {
+          font-size: 36px;
+          line-height: 44px;
+        }
+      }
+    }
   }
 }
