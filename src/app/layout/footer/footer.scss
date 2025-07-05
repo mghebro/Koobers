@@ -71,6 +71,7 @@ footer {
       }
 
       button {
+        height: 48px;
         @include mixins.button-primary;
       }
     }
