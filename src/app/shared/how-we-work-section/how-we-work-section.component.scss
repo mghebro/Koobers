@@ -11,8 +11,10 @@
     @include mixins.flex-center;
     flex-direction: column;
     gap: 48px;
+
     .heading {
-        width: 100%;
+      width: 100%;
+
       span {
         font-weight: 700;
         font-size: 16px;
@@ -124,7 +126,6 @@
 
 @media (max-width: 650px) {
   .page-section {
-    padding: 0;
     .content-box {
 
       .heading {
@@ -133,6 +134,7 @@
           line-height: 36px;
         }
       }
+
       .process {
         .card {
           width: 100%;
@@ -144,11 +146,30 @@
 
 @media (max-width: 375px) {
   .page-section {
+    padding: 12px;
+
     .content-box {
       .heading {
         .main-text {
           font-size: 24px;
           line-height: 30px;
+        }
+
+        .sub-text {
+          font-size: 14px;
+          line-height: 18px;
+        }
+      }
+
+      .process {
+        gap: 32px;
+        .card {
+
+          .description {
+            font-size: 14px;
+            line-height: 18px;
+
+          }
         }
       }
     }

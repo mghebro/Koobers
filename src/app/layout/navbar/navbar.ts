@@ -28,7 +28,6 @@ export class Navbar {activeLink = 'Home';
     { label: 'Home', route: '/' },
     { label: 'Services', route: '/services' },
     { label: 'Work', route: '/work' },
-    { label: 'Blog', route: '/blog' },
     { label: 'About', route: '/about' },
     { label: 'Contact', route: '/contact' },
   ];
@@ -92,6 +91,7 @@ export class Navbar {activeLink = 'Home';
   // Navigate to route when menu item is clicked
   navigateTo(menuItem: MenuItem): void {
     this.activeLink = menuItem.label;
+    this.toggleMenu();
     this.router.navigate([menuItem.route]);
 
     setTimeout(() => {

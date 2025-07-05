@@ -7,7 +7,8 @@
   margin: 0 auto;
   padding-top: 12px;
   position: relative;
-  z-index: 9999; /* Add high z-index to ensure navbar and glow stay above other elements */
+  z-index: 9999;
+  /* Add high z-index to ensure navbar and glow stay above other elements */
   position: fixed;
   top: 0;
   left: 0;
@@ -25,18 +26,13 @@ nav {
   background: v.$bg-nav-bar-blurry;
   backdrop-filter: blur(12px);
   position: relative;
-  z-index: 1; /* Add z-index to ensure proper stacking context */
+  z-index: 1;
+  /* Add z-index to ensure proper stacking context */
 }
 
 .logo {
   width: 48px;
   height: 48px;
-  padding: 4px;
-
-  img {
-      width: 100%;
-      height: 100%;
-  }
 }
 
 .menu {
@@ -52,7 +48,8 @@ nav {
   transform: translateX(-50%);
   transition: left 0.3s ease-in-out;
   pointer-events: none;
-  z-index: 9999; /* Match this with navbar-container's z-index */
+  z-index: 9999;
+  /* Match this with navbar-container's z-index */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -79,12 +76,10 @@ nav {
   width: 96px;
   height: 8px;
   bottom: 16px;
-  background: linear-gradient(
-    90deg,
-    rgba(66, 235, 133, 0) 0%,
-    rgba(66, 235, 133, 0.48) 51.44%,
-    rgba(66, 235, 133, 0) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(66, 235, 133, 0) 0%,
+      rgba(66, 235, 133, 0.48) 51.44%,
+      rgba(66, 235, 133, 0) 100%);
   filter: blur(24px);
 }
 
@@ -92,12 +87,10 @@ nav {
   width: 96px;
   height: 8px;
   bottom: 8px;
-  background: linear-gradient(
-    90deg,
-    rgba(66, 235, 133, 0) 0%,
-    v.$bg-green-light 51.44%,
-    rgba(66, 235, 133, 0) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(66, 235, 133, 0) 0%,
+      v.$bg-green-light 51.44%,
+      rgba(66, 235, 133, 0) 100%);
   filter: blur(24px);
 }
 
@@ -105,12 +98,10 @@ nav {
   width: 96px;
   height: 2px;
   bottom: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(66, 235, 133, 0) 0%,
-    v.$bg-green-light 51.44%,
-    rgba(66, 235, 133, 0) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(66, 235, 133, 0) 0%,
+      v.$bg-green-light 51.44%,
+      rgba(66, 235, 133, 0) 100%);
   filter: blur(1px);
 }
 
@@ -138,6 +129,12 @@ nav {
       path {
         transition: fill 0.3s ease;
       }
+    }
+
+    .globe-icon {
+
+      width: 32px;
+      height: 32px;
     }
 
     .arrow-icon {
@@ -195,6 +192,7 @@ nav {
 
     // Active state - when dropdown is open
     &.active {
+
       .globe-icon path,
       .arrow-icon path {
         fill: v.$bg-green-light;
@@ -236,6 +234,7 @@ nav {
       from {
         opacity: 0;
       }
+
       to {
         opacity: 1;
       }
@@ -245,6 +244,7 @@ nav {
       from {
         opacity: 1;
       }
+
       to {
         opacity: 0;
       }
@@ -312,53 +312,57 @@ nav {
     color: v.$bg-green-light;
   }
 }
-@import url("https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..700;1,400..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Outfit:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Space+Grotesk:wght@300..700&display=swap");
+
 .navbar {
   display: none;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1050px) {
   .navbar-container {
     display: none;
   }
+
   .navbar {
-    .language{
+    .language {
       width: 100%;
       display: flex;
       justify-content: flex-end;
     }
+
     width: calc(100% - 40px);
-    position: sticky;
+    position: fixed;
     top: 20px;
+    left: 20px;
     display: flex;
     justify-content: space-between;
-    background-color: #1b1f1c;
     height: 64px;
+    max-height: calc(100dvh - 40px);
     border-radius: 24px;
     border: 2px;
-    padding: 8px 12px 8px 8px;
-    gap: 38px;
-    overflow: hidden;
+    padding: 0;
     transition: all 0.3s ease;
     flex-direction: column;
     align-items: stretch;
-    /* From https://css.glass */
-    background: rgba(0, 0, 0, 0.26);
+    background-color: #1B1F1CA3;
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(6.7px);
-    -webkit-backdrop-filter: blur(6.7px);
-    border: 1px solid rgba(0, 0, 0, 1);
   }
 
   .logo {
     width: 100%;
-    height: 100%;
-    border-radius: 20px;
+    height: 64px;
+    padding: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    img {
+      width: 32px;
+      height: 32px;
+    }
   }
+
   li {
     height: 48px;
   }
@@ -375,10 +379,14 @@ nav {
     align-items: center;
     top: 12.69px;
   }
+
   .burger {
     padding: 8px;
-    background-color: #171a18;
+    background-color: v.$bg-section;
+    border: 1px solid v.$bg-section-secondary;
     border-radius: 16px;
+    width: 48px;
+    height: 48px;
   }
 
   .burger svg {
@@ -389,13 +397,15 @@ nav {
   .nav-links ul {
     width: 100%;
     height: 100%;
+    overflow: auto;
     padding: 0px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 24px;
-    padding: 36px 12px;
+    gap: 20px;
+    padding: 36px 0 20px 0;
   }
+
   .nav-links li {
     height: 48px;
     list-style: none;
@@ -405,7 +415,6 @@ nav {
     padding-right: 12px;
     font-weight: 700;
     font-size: 16px;
-    font-family: "Open Sans";
     cursor: pointer;
     color: #c4d6c4;
     position: relative;
@@ -414,13 +423,11 @@ nav {
     justify-content: center;
   }
 
-  li:hover {
-    background: linear-gradient(
-      90deg,
-      rgba(66, 235, 133, 0) 0%,
-      #42eb8659 51.44%,
-      rgba(66, 235, 133, 0) 100%
-    );
+  li.active {
+    background: linear-gradient(90deg,
+        rgba(66, 235, 133, 0) 0%,
+        #42eb8659 51.44%,
+        rgba(66, 235, 133, 0) 100%);
     backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(2px);
     width: 100%;
@@ -446,17 +453,15 @@ nav {
     bottom: 0;
   }
 
-  .nav-links li:hover::before,
-  .nav-links li:hover::after {
+  .nav-links li.active::before,
+  .nav-links li.active::after {
     opacity: 0.5;
     box-shadow: 0 0 10px 1px #42eb86;
     backdrop-filter: blur(24px);
-    background: linear-gradient(
-      90deg,
-      rgba(66, 235, 133, 0) 0%,
-      #42eb85 51.44%,
-      rgba(66, 235, 133, 0) 100%
-    );
+    background: linear-gradient(90deg,
+        rgba(66, 235, 133, 0) 0%,
+        #42eb85 51.44%,
+        rgba(66, 235, 133, 0) 100%);
   }
 }
 
@@ -473,6 +478,11 @@ nav {
 .navbar.open {
   height: auto;
 }
-.navbar.open .logo {
-  background-color: #1b1f1ca3;
+
+
+@media (max-width: 375px) {
+  .navbar {
+    width: calc(100% - 24px);
+    left: 12px;
+  }
 }
