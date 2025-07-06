@@ -11,18 +11,15 @@ $line-color: #42eb85;
 @mixin explore-hover-effect {
   .line {
     background-color: $line-color;
-    box-shadow: 0 0 8px 2px rgba($primary-color, 0.6);
   }
 
   .explore-text {
     color: $primary-color;
-    text-shadow: 0 0 8px rgba($primary-color, 0.6);
   }
 
   .explore-arrow {
     transform: translateX(50%);
     fill: $primary-color;
-    filter: drop-shadow(0 0 4px rgba($primary-color, 0.6));
   }
 }
 

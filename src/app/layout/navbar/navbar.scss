@@ -46,7 +46,7 @@ nav {
 .glow-container {
   position: absolute;
   transform: translateX(-50%);
-  transition: left 0.3s ease-in-out;
+  transition: left 0.6s cubic-bezier(0.25, 1, 0.5, 1.05);
   pointer-events: none;
   z-index: 9999;
   /* Match this with navbar-container's z-index */
@@ -279,11 +279,11 @@ nav {
       .language-name {
         font-weight: 600;
         font-size: 16px;
-        color: white;
+        color: v.$typography-200;
         transition: color 0.3s ease;
 
         &:hover {
-          color: v.$typography-200;
+          color: v.$typography-100;
         }
       }
 
