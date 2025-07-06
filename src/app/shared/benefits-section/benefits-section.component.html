@@ -1,9 +1,9 @@
-<div class="page-section">
+<div class="page-section" #benefitsSection>
   <div class="content-box">
     <div class="heading">
       <span>Benefits of working with us</span>
       <div class="main-text">
-        “What do I actually gain by working with Koober Coders?”
+        "What do I actually gain by working with Koober Coders?"
       </div>
     </div>
 
@@ -22,5 +22,21 @@
         </div>
       </div>
     </div>
+    
+    <!-- Optional: Progress dots -->
+    <div class="benefit-dots" *ngIf="isLocked">
+      <span 
+        *ngFor="let benefit of benefits" 
+        class="dot"
+        [class.active]="benefit.id === activeIndex"
+        (click)="selectBenefit(benefit.id)"
+      ></span>
+    </div>
+  </div>
+  
+  <!-- Optional: Scroll indicator -->
+  <div class="scroll-indicator" [class.visible]="isLocked && activeIndex < benefits.length">
+    <span class="indicator-text">Scroll to explore</span>
+    <div class="indicator-icon"></div>
   </div>
 </div>
