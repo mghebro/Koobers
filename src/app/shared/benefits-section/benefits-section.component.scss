@@ -6,18 +6,50 @@
   background-color: variables.$bg-section;
   border-radius: 96px;
 
+  // Tablet styles
+  @media (max-width: 1024px) {
+    padding: 64px 32px;
+    border-radius: 64px;
+  }
+
+  // Mobile styles
+  @media (max-width: 768px) {
+    padding: 32px 16px;
+    border-radius: 32px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 24px 12px;
+    border-radius: 24px;
+  }
+
   .content-box {
     @include mixins.flex-center;
     flex-direction: column;
     gap: 48px;
+
+    @media (max-width: 768px) {
+      gap: 32px;
+    }
+
+    @media (max-width: 480px) {
+      gap: 24px;
+    }
+
     .heading {
       width: 100%;
+
       span {
         font-weight: 700;
         font-size: 16px;
         line-height: 24px;
         letter-spacing: 2%;
         color: variables.$button-primary-bg-light;
+
+        @media (max-width: 480px) {
+          font-size: 14px;
+          line-height: 20px;
+        }
       }
 
       .main-text {
@@ -28,6 +60,21 @@
         line-height: 44px;
         letter-spacing: 4%;
         color: variables.$typography-100;
+
+        @media (max-width: 1024px) {
+          font-size: 32px;
+          line-height: 40px;
+        }
+
+        @media (max-width: 768px) {
+          font-size: 28px;
+          line-height: 36px;
+        }
+
+        @media (max-width: 480px) {
+          font-size: 24px;
+          line-height: 32px;
+        }
       }
     }
 
@@ -35,17 +82,44 @@
       display: flex;
       gap: 8px;
       width: 100%;
+      overflow-x: auto; // Allow horizontal scrolling on small screens
+      
+      @media (max-width: 768px) {
+        gap: 6px;
+      }
+
+      @media (max-width: 480px) {
+        gap: 4px;
+      }
 
       .benefit {
         width: 21%;
+        min-width: 200px; // Prevent benefits from becoming too narrow
         overflow: hidden;
         cursor: pointer;
         transition: cubic-bezier(0.49, 0.16, 0.02, 1.23) 500ms;
+        flex-shrink: 0; // Prevent shrinking when scrolling
+
+        @media (max-width: 768px) {
+          min-width: 180px;
+        }
+
+        @media (max-width: 480px) {
+          min-width: 160px;
+        }
 
         &:not(:first-child) {
-            .text-content {
-                padding-left: 24px;
+          .text-content {
+            padding-left: 24px;
+
+            @media (max-width: 768px) {
+              padding-left: 16px;
             }
+
+            @media (max-width: 480px) {
+              padding-left: 12px;
+            }
+          }
         }
 
         .progress-bar {
@@ -59,10 +133,22 @@
           margin-top: 24px;
           transition: 500ms;
 
+          @media (max-width: 768px) {
+            margin-top: 16px;
+          }
+
+          @media (max-width: 480px) {
+            margin-top: 12px;
+          }
+
           .id {
             margin-left: 4px;
+
+            @media (max-width: 480px) {
+              margin-left: 2px;
+            }
           }
-          
+
           .id,
           .title {
             font-weight: 700;
@@ -71,10 +157,21 @@
             letter-spacing: 2%;
             color: variables.$typography-disabled;
             transition: 500ms;
+
+            @media (max-width: 768px) {
+              font-size: 14px;
+              line-height: 20px;
+            }
+
+            @media (max-width: 480px) {
+              font-size: 12px;
+              line-height: 18px;
+            }
           }
 
           .description {
             width: 390px;
+            max-width: calc(100vw - 100px); // Responsive max-width
             max-height: 48px;
             opacity: 0;
             font-weight: 400;
@@ -84,11 +181,41 @@
             overflow: hidden;
             color: variables.$typography-300;
             transition: 500ms;
+
+            @media (max-width: 1024px) {
+              width: 300px;
+              max-width: calc(100vw - 80px);
+            }
+
+            @media (max-width: 768px) {
+              width: 250px;
+              max-width: calc(100vw - 60px);
+              font-size: 14px;
+              line-height: 20px;
+              max-height: 40px;
+            }
+
+            @media (max-width: 480px) {
+              width: 200px;
+              max-width: calc(100vw - 40px);
+              font-size: 12px;
+              line-height: 18px;
+              max-height: 36px;
+            }
           }
         }
 
         &.active {
           width: 37%;
+          min-width: 300px; // Ensure active benefit has enough space
+
+          @media (max-width: 768px) {
+            min-width: 250px;
+          }
+
+          @media (max-width: 480px) {
+            min-width: 200px;
+          }
 
           .progress-bar {
             background: linear-gradient(90deg, #34b84a 0%, #42eb85 100%);
@@ -96,6 +223,7 @@
 
           .text-content {
             padding-left: 0;
+
             .id,
             .title {
               color: variables.$typography-200;
