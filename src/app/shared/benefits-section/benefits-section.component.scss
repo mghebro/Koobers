@@ -82,8 +82,13 @@
       display: flex;
       gap: 8px;
       width: 100%;
-      overflow-x: auto; // Allow horizontal scrolling on small screens
+      // Remove overflow-x: auto from here - it was applying to all screen sizes
       
+      // Apply horizontal scrolling on screens smaller than 1300px
+      @media (max-width: 1300px) {
+        overflow-x: auto;
+      }
+
       @media (max-width: 768px) {
         gap: 6px;
       }
