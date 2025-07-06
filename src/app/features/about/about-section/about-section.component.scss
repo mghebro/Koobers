@@ -6,6 +6,7 @@
   color: v.$typography-100;
   overflow-x: hidden;
   width: 100%;
+  min-height: 100vh;
 }
 
 p {
@@ -18,15 +19,39 @@ p {
   position: relative;
   perspective: 1000px;
   perspective-origin: center center;
-  // Add padding to prevent last line from disappearing
   padding-bottom: 200px;
+  
+  // Responsive heights
+  @media (max-width: 480px) {
+    height: 700px;
+    padding-bottom: 150px;
+  }
+  
+  @media (min-width: 481px) and (max-width: 768px) {
+    height: 800px;
+    padding-bottom: 175px;
+  }
+  
+  @media (min-width: 769px) and (max-width: 1024px) {
+    height: 850px;
+    padding-bottom: 185px;
+  }
+  
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    height: 950px;
+    padding-bottom: 220px;
+  }
+  
+  @media (min-width: 1441px) {
+    height: 1000px;
+    padding-bottom: 250px;
+  }
 }
 
 .text-block {
   position: fixed;
   top: 50%;
   left: 50%;
-  // Increased from 25deg to 45deg for more dramatic lean
   transform: translate(-50%, -50%) rotateX(45deg);
   text-align: center;
   width: 80%;
@@ -36,6 +61,54 @@ p {
   font-family: 'Saira Condensed', 'Oswald', 'Barlow Condensed', 'Impact', 'Arial Black', 'Arial Narrow', sans-serif;
   letter-spacing: -0.3px;
   font-stretch: ultra-condensed;
+  
+  // Very small screens (280px and below)
+  @media (max-width: 320px) {
+    width: 98%;
+    max-width: 100%;
+    transform: translate(-50%, -50%) rotateX(15deg);
+    padding: 0 8px;
+    left: 50%;
+    right: auto;
+    margin: 0;
+  }
+  
+  // Mobile phones (portrait)
+  @media (min-width: 321px) and (max-width: 480px) {
+    width: 95%;
+    max-width: 100%;
+    transform: translate(-50%, -50%) rotateX(25deg);
+    padding: 0 10px;
+  }
+  
+  // Mobile phones (landscape) and small tablets
+  @media (min-width: 481px) and (max-width: 768px) {
+    width: 90%;
+    max-width: 700px;
+    transform: translate(-50%, -50%) rotateX(30deg);
+    padding: 0 15px;
+  }
+  
+  // Tablets
+  @media (min-width: 769px) and (max-width: 1024px) {
+    width: 85%;
+    max-width: 800px;
+    transform: translate(-50%, -50%) rotateX(35deg);
+  }
+  
+  // Large tablets and small laptops
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 80%;
+    max-width: 900px;
+    transform: translate(-50%, -50%) rotateX(40deg);
+  }
+  
+  // Large screens
+  @media (min-width: 1441px) {
+    width: 75%;
+    max-width: 1000px;
+    transform: translate(-50%, -50%) rotateX(45deg);
+  }
 }
 
 .text-line {
@@ -50,43 +123,291 @@ p {
   line-height: 1.4;
   font-weight: 700;
   text-transform: uppercase;
-
+  word-wrap: break-word;
+  hyphens: auto;
+  
+  // Very small screens (280px and below)
+  @media (max-width: 320px) {
+    margin: 15px 0;
+    font-size: 0.9rem;
+    line-height: 1.25;
+    font-weight: 600;
+    transform: translateY(30px) scale(0.3);
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                opacity 0.3s ease;
+    letter-spacing: -0.1px;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    
+    &.active {
+      transform: translateY(0) scale(1.0);
+    }
+    
+    &.scrolled-past {
+      transform: translateY(-15px) scale(0.3);
+    }
+  }
+  
+  // Mobile phones (portrait)
+  @media (min-width: 321px) and (max-width: 480px) {
+    margin: 25px 0;
+    font-size: 1.1rem;
+    line-height: 1.3;
+    font-weight: 600;
+    transform: translateY(50px) scale(0.3);
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                opacity 0.4s ease;
+    
+    &.active {
+      transform: translateY(0) scale(1.2);
+    }
+    
+    &.scrolled-past {
+      transform: translateY(-20px) scale(0.4);
+    }
+  }
+  
+  // Mobile phones (landscape) and small tablets
+  @media (min-width: 481px) and (max-width: 768px) {
+    margin: 35px 0;
+    font-size: 1.3rem;
+    line-height: 1.35;
+    font-weight: 650;
+    transform: translateY(60px) scale(0.3);
+    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                opacity 0.45s ease;
+    
+    &.active {
+      transform: translateY(0) scale(1.5);
+    }
+    
+    &.scrolled-past {
+      transform: translateY(-25px) scale(0.5);
+    }
+  }
+  
+  // Tablets
+  @media (min-width: 769px) and (max-width: 1024px) {
+    margin: 45px 0;
+    font-size: 1.5rem;
+    line-height: 1.38;
+    font-weight: 675;
+    transform: translateY(75px) scale(0.3);
+    
+    &.active {
+      transform: translateY(0) scale(1.8);
+    }
+    
+    &.scrolled-past {
+      transform: translateY(-35px) scale(0.6);
+    }
+  }
+  
+  // Large tablets and small laptops
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    margin: 55px 0;
+    font-size: 1.7rem;
+    line-height: 1.4;
+    font-weight: 700;
+    transform: translateY(90px) scale(0.3);
+    
+    &.active {
+      transform: translateY(0) scale(2.2);
+    }
+    
+    &.scrolled-past {
+      transform: translateY(-45px) scale(0.7);
+    }
+  }
+  
+  // Large screens
+  @media (min-width: 1441px) {
+    margin: 70px 0;
+    font-size: 2rem;
+    line-height: 1.4;
+    font-weight: 700;
+    transform: translateY(100px) scale(0.3);
+    
+    &.active {
+      transform: translateY(0) scale(2.5);
+    }
+    
+    &.scrolled-past {
+      transform: translateY(-50px) scale(0.8);
+    }
+  }
+  
   // When text is active/visible during scroll
   &.active {
     opacity: 1;
     transform: translateY(0) scale(2.5);
   }
-
+  
   // When text is scrolled past
   &.scrolled-past {
     opacity: 0.3;
     transform: translateY(-50px) scale(0.8);
   }
-
+  
   // Ensure last line stays visible
   &:last-child {
     margin-bottom: 100px;
+    
+    @media (max-width: 320px) {
+      margin-bottom: 30px;
+    }
+    
+    @media (min-width: 321px) and (max-width: 480px) {
+      margin-bottom: 50px;
+    }
+    
+    @media (min-width: 481px) and (max-width: 768px) {
+      margin-bottom: 70px;
+    }
+    
+    @media (min-width: 769px) and (max-width: 1024px) {
+      margin-bottom: 80px;
+    }
+    
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      margin-bottom: 90px;
+    }
+    
+    @media (min-width: 1441px) {
+      margin-bottom: 120px;
+    }
   }
 }
 
-@media (max-width: 768px) {
-  .text-block {
-    width: 90%;
-    // Slightly less lean on mobile for better readability
-    transform: translate(-50%, -50%) rotateX(35deg);
+// Orientation-specific adjustments
+@media (orientation: landscape) and (max-height: 500px) {
+  .text-container {
+    height: 600px;
+    padding-bottom: 100px;
   }
-
+  
+  .text-block {
+    transform: translate(-50%, -50%) rotateX(10deg);
+    
+    @media (max-width: 320px) {
+      transform: translate(-50%, -50%) rotateX(5deg);
+    }
+  }
+  
   .text-line {
-    margin: 40px 0;
-    font-size: 1.4rem;
-    transform: translateY(70px) scale(0.3);
+    margin: 20px 0;
+    font-size: 1rem;
+    
+    @media (max-width: 320px) {
+      margin: 12px 0;
+      font-size: 0.8rem;
+    }
+    
+    &:last-child {
+      margin-bottom: 40px;
+      
+      @media (max-width: 320px) {
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
 
+// Very small screens specific adjustments
+@media (max-width: 280px) {
+  .about-section {
+    min-height: 80vh;
+  }
+  
+  .text-container {
+    height: 500px;
+    padding-bottom: 80px;
+  }
+  
+  .text-block {
+    width: 99%;
+    padding: 0 5px;
+    transform: translate(-50%, -50%) rotateX(10deg);
+  }
+  
+  .text-line {
+    margin: 12px 0;
+    font-size: 0.85rem;
+    line-height: 1.2;
+    letter-spacing: -0.05px;
+    
     &.active {
-      transform: translateY(0) scale(1.8);
+      transform: translateY(0) scale(0.95);
     }
+    
+    &:last-child {
+      margin-bottom: 25px;
+    }
+  }
+}
 
-    &.scrolled-past {
-      transform: translateY(-30px) scale(0.6);
+// High DPI display adjustments
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .text-line {
+    font-weight: 650;
+    letter-spacing: -0.2px;
+  }
+}
+
+// Reduced motion preference
+@media (prefers-reduced-motion: reduce) {
+  .text-line {
+    transition: opacity 0.3s ease;
+    transform: none !important;
+    
+    &.active {
+      opacity: 1;
     }
+    
+    &.scrolled-past {
+      opacity: 0.5;
+    }
+  }
+  
+  .text-block {
+    transform: translate(-50%, -50%) rotateX(0deg) !important;
+  }
+}
+
+// Dark mode considerations (if applicable)
+@media (prefers-color-scheme: dark) {
+  .text-line {
+    color: rgb(255, 232, 31);
+    text-shadow: 0 0 10px rgba(255, 232, 31, 0.3);
+  }
+}
+
+// Print styles
+@media print {
+  .about-section {
+    background: white;
+    color: black;
+  }
+  
+  .text-container {
+    height: auto;
+    padding-bottom: 0;
+  }
+  
+  .text-block {
+    position: static;
+    transform: none;
+    width: 100%;
+    max-width: none;
+  }
+  
+  .text-line {
+    opacity: 1 !important;
+    transform: none !important;
+    color: black;
+    margin: 20px 0;
+    font-size: 14pt;
+    page-break-inside: avoid;
   }
 }

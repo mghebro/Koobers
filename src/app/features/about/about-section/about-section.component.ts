@@ -1,54 +1,95 @@
-import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy, NgZone } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  OnDestroy,
+  NgZone,
+} from '@angular/core';
 
 @Component({
   selector: 'app-about-section',
   standalone: false,
   templateUrl: './about-section.component.html',
-  styleUrl: './about-section.component.scss'
+  styleUrl: './about-section.component.scss',
 })
 export class AboutSectionComponent implements AfterViewInit, OnDestroy {
   @ViewChild('textBlock') textBlock!: ElementRef;
   private textLines: HTMLElement[] = [];
   private scrollListener: () => void = () => {};
+  private resizeListener: () => void = () => {};
   private ticking = false;
   private windowHeight = 0;
+  private windowWidth = 0;
+  private isMobile = false;
+  private isTablet = false;
 
   constructor(private ngZone: NgZone) {}
 
   ngAfterViewInit(): void {
-    this.textLines = Array.from(document.querySelectorAll('.text-line'));
-    this.windowHeight = window.innerHeight;
-
-    // Forcefully hide all lines on initialization
-    this.hideAllLines();
-
-    // Setup scroll listener outside Angular zone for better performance
-    this.ngZone.runOutsideAngular(() => {
-      this.scrollListener = this.handleScroll.bind(this);
-      window.addEventListener('scroll', this.scrollListener);
-      window.addEventListener('resize', this.handleResize.bind(this));
-    });
-
-    // Initialize on load
-    setTimeout(() => this.updateTextTransform(), 100);
-
-    // Make sure lines are hidden even after the initial update
-    setTimeout(() => {
-      // Force check if we're not in the visible area and hide lines if needed
-      const scrollY = window.scrollY;
-      const textContainer = this.textBlock.nativeElement.closest('.text-container');
-      const containerTop = this.getOffsetTop(textContainer);
-
-      if (scrollY < containerTop - this.windowHeight * 0.3) {
-        this.hideAllLines();
-      }
-    }, 150);
+    this.initializeComponent();
   }
 
   ngOnDestroy(): void {
-    // Cleanup
+    this.cleanup();
+  }
+
+  private initializeComponent(): void {
+    this.textLines = Array.from(document.querySelectorAll('.text-line'));
+    this.updateViewportDimensions();
+    this.setDeviceType();
+    this.hideAllLines();
+    this.setupEventListeners();
+
+    // Initialize with delays for better performance
+    setTimeout(() => this.updateTextTransform(), 100);
+    setTimeout(() => this.handleInitialVisibility(), 150);
+  }
+
+  private updateViewportDimensions(): void {
+    this.windowHeight = window.innerHeight;
+    this.windowWidth = window.innerWidth;
+  }
+
+  private setDeviceType(): void {
+    this.isMobile = this.windowWidth <= 768;
+    this.isTablet = this.windowWidth > 768 && this.windowWidth <= 1024;
+
+    // Special handling for very small screens
+    if (this.windowWidth <= 320) {
+      this.isMobile = true;
+    }
+  }
+
+  private setupEventListeners(): void {
+    this.ngZone.runOutsideAngular(() => {
+      this.scrollListener = this.handleScroll.bind(this);
+      this.resizeListener = this.handleResize.bind(this);
+
+      window.addEventListener('scroll', this.scrollListener, { passive: true });
+      window.addEventListener('resize', this.resizeListener, { passive: true });
+      window.addEventListener('orientationchange', this.resizeListener, {
+        passive: true,
+      });
+    });
+  }
+
+  private cleanup(): void {
     window.removeEventListener('scroll', this.scrollListener);
-    window.removeEventListener('resize', this.handleResize.bind(this));
+    window.removeEventListener('resize', this.resizeListener);
+    window.removeEventListener('orientationchange', this.resizeListener);
+  }
+
+  private handleInitialVisibility(): void {
+    const scrollY = window.scrollY;
+    const textContainer =
+      this.textBlock.nativeElement.closest('.text-container');
+    const containerTop = this.getOffsetTop(textContainer);
+    const visibilityThreshold = this.getVisibilityThreshold();
+
+    if (scrollY < containerTop - visibilityThreshold) {
+      this.hideAllLines();
+    }
   }
 
   private hideAllLines(): void {
@@ -56,15 +97,57 @@ export class AboutSectionComponent implements AfterViewInit, OnDestroy {
       this.textLines = Array.from(document.querySelectorAll('.text-line'));
     }
 
-    this.textLines.forEach(line => {
+    this.textLines.forEach((line) => {
       line.style.opacity = '0';
-      line.style.transform = 'translateY(100px)';
+      line.style.transform = this.getHiddenTransform();
     });
   }
 
+  private getHiddenTransform(): string {
+    if (this.windowWidth <= 320) {
+      return 'translateY(30px)';
+    } else if (this.isMobile) {
+      return 'translateY(50px)';
+    } else if (this.isTablet) {
+      return 'translateY(75px)';
+    }
+    return 'translateY(100px)';
+  }
+
+  private getVisibilityThreshold(): number {
+    if (this.windowWidth <= 320) {
+      return this.windowHeight * 0.15;
+    } else if (this.isMobile) {
+      return this.windowHeight * 0.2;
+    } else if (this.isTablet) {
+      return this.windowHeight * 0.25;
+    }
+    return this.windowHeight * 0.3;
+  }
+
+  private getAnimationSpeed(): number {
+    if (this.windowWidth <= 320) {
+      return 2.5; // Fastest for very small screens
+    } else if (this.isMobile) {
+      return 2.0; // Faster on mobile
+    } else if (this.isTablet) {
+      return 1.7;
+    }
+    return 1.5;
+  }
+
   private handleResize(): void {
-    this.windowHeight = window.innerHeight;
-    this.updateTextTransform();
+    this.updateViewportDimensions();
+    this.setDeviceType();
+
+    // Debounce resize updates
+    if (!this.ticking) {
+      window.requestAnimationFrame(() => {
+        this.updateTextTransform();
+        this.ticking = false;
+      });
+      this.ticking = true;
+    }
   }
 
   private handleScroll(): void {
@@ -81,72 +164,119 @@ export class AboutSectionComponent implements AfterViewInit, OnDestroy {
     if (!this.textBlock || !this.textLines.length) return;
 
     const scrollY = window.scrollY;
-    const textContainer = this.textBlock.nativeElement.closest('.text-container');
+    const textContainer =
+      this.textBlock.nativeElement.closest('.text-container');
     const containerTop = this.getOffsetTop(textContainer);
     const containerHeight = textContainer.offsetHeight;
+    const visibilityThreshold = this.getVisibilityThreshold();
 
-    // Use a smaller threshold to ensure text doesn't show too early
-    const visibilityThreshold = this.windowHeight * 0.3;
-
-    // Check if we're in the text container area
-    const inContainer = scrollY >= containerTop - visibilityThreshold &&
-                       scrollY <= containerTop + containerHeight;
+    const inContainer =
+      scrollY >= containerTop - visibilityThreshold &&
+      scrollY <= containerTop + containerHeight;
 
     if (inContainer) {
-      // Show the text block
-      this.textBlock.nativeElement.style.display = 'block';
-
-      // Calculate scroll progress through the container - make it faster by reducing the total scroll distance
-      const totalScrollDistance = containerHeight * 1; // Reduced from 1.5 * windowHeight for faster animation
-      const scrollOffset = scrollY - (containerTop - visibilityThreshold); // Start animation sooner
-      const scrollProgress = Math.max(0, Math.min(1, scrollOffset / totalScrollDistance));
-
-      // Distribute the animation across the total number of lines - make it faster by showing more lines at once
-      const linesCount = this.textLines.length;
-      // Increase multiplier for faster text appearance
-      const visibleLinesCount = Math.min(linesCount, Math.ceil(scrollProgress * linesCount * 1.5));
-
-      this.textLines.forEach((line, index) => {
-        // Check if this line should be visible based on scroll progress
-        if (index < visibleLinesCount) {
-          // For the currently revealing line, calculate its individual animation progress
-          if (index === visibleLinesCount - 1) {
-            // This is the line currently being revealed
-            // Calculate animation progress for just this line - make it faster with higher multiplier
-            const lineProgress = Math.min(1, ((scrollProgress * linesCount * 1.5) % 1) * 1.5);
-
-            // Animate from bottom with faster motion
-            line.style.opacity = lineProgress.toString();
-            line.style.transform = `translateY(${100 * (1 - lineProgress)}px)`;
-          } else {
-            // Lines that are already fully visible
-            line.style.opacity = '1';
-            line.style.transform = 'translateY(0)';
-          }
-        } else {
-          // Lines that should not be visible yet
-          line.style.opacity = '0';
-          line.style.transform = 'translateY(100px)';
-        }
-      });
+      this.handleInContainerAnimation(
+        scrollY,
+        containerTop,
+        containerHeight,
+        visibilityThreshold
+      );
     } else if (scrollY < containerTop - visibilityThreshold) {
-      // Before the container, hide all lines
-      this.textBlock.nativeElement.style.display = 'block';
-      this.hideAllLines();
+      this.handleBeforeContainer();
     } else {
-      // After the container, show all lines
-      this.textBlock.nativeElement.style.display = 'block';
-      this.textLines.forEach(line => {
-        line.style.opacity = '1';
-        line.style.transform = 'translateY(0)';
-      });
+      this.handleAfterContainer();
     }
   }
 
-  // Helper function to get offset top accounting for all parent elements
+  private handleInContainerAnimation(
+    scrollY: number,
+    containerTop: number,
+    containerHeight: number,
+    visibilityThreshold: number
+  ): void {
+    this.textBlock.nativeElement.style.display = 'block';
+
+    const totalScrollDistance = containerHeight * (this.isMobile ? 0.8 : 1);
+    const scrollOffset = scrollY - (containerTop - visibilityThreshold);
+    const scrollProgress = Math.max(
+      0,
+      Math.min(1, scrollOffset / totalScrollDistance)
+    );
+
+    const linesCount = this.textLines.length;
+    const animationSpeed = this.getAnimationSpeed();
+    const visibleLinesCount = Math.min(
+      linesCount,
+      Math.ceil(scrollProgress * linesCount * animationSpeed)
+    );
+
+    this.textLines.forEach((line, index) => {
+      if (index < visibleLinesCount) {
+        if (index === visibleLinesCount - 1) {
+          this.animateCurrentLine(
+            line,
+            scrollProgress,
+            linesCount,
+            animationSpeed
+          );
+        } else {
+          this.showCompleteLine(line);
+        }
+      } else {
+        this.hideLine(line);
+      }
+    });
+  }
+
+  private animateCurrentLine(
+    line: HTMLElement,
+    scrollProgress: number,
+    linesCount: number,
+    animationSpeed: number
+  ): void {
+    const lineProgress = Math.min(
+      1,
+      ((scrollProgress * linesCount * animationSpeed) % 1) * animationSpeed
+    );
+    const translateY = this.getTranslateY(lineProgress);
+
+    line.style.opacity = lineProgress.toString();
+    line.style.transform = `translateY(${translateY}px)`;
+  }
+
+  private getTranslateY(progress: number): number {
+    if (this.windowWidth <= 320) {
+      return 30 * (1 - progress);
+    }
+    const baseTranslate = this.isMobile ? 50 : this.isTablet ? 75 : 100;
+    return baseTranslate * (1 - progress);
+  }
+
+  private showCompleteLine(line: HTMLElement): void {
+    line.style.opacity = '1';
+    line.style.transform = 'translateY(0)';
+  }
+
+  private hideLine(line: HTMLElement): void {
+    line.style.opacity = '0';
+    line.style.transform = this.getHiddenTransform();
+  }
+
+  private handleBeforeContainer(): void {
+    this.textBlock.nativeElement.style.display = 'block';
+    this.hideAllLines();
+  }
+
+  private handleAfterContainer(): void {
+    this.textBlock.nativeElement.style.display = 'block';
+    this.textLines.forEach((line) => {
+      this.showCompleteLine(line);
+    });
+  }
+
   private getOffsetTop(element: HTMLElement): number {
     let offsetTop = 0;
-    while(element) {
+    while (element) {
       offsetTop += element.offsetTop;
       element = element.offsetParent as HTMLElement;
     }
