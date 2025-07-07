@@ -319,7 +319,12 @@ nav {
 
 @media (max-width: 1050px) {
   .navbar-container {
-    display: none;
+    height: 0;
+    overflow: hidden;
+
+    .glow-container {
+      display: none;
+    }
   }
 
   .navbar {
