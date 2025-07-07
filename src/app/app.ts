@@ -20,10 +20,11 @@ export class App {
     // Listen to route changes for animations
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        // Add a small delay to ensure smooth animation
         setTimeout(() => {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }, 100);
+        
+
       }
     });
   }

@@ -1,9 +1,18 @@
 <div class="page-section" #processSection>
     <div class="content-box">
         <div class="heading">
-            <span>How we work</span>
-            <div class="main-text">Quality. Growth. Success. Our Process Covers It All.</div>
-            <div class="sub-text">From first idea to final launch (and beyond), our process is clear, collaborative, and focused on real results. Here's how we bring your vision to life — step by step.</div>
+            <span class="section-label">
+                <span class="label-line"></span>
+                How we work
+                <span class="label-line"></span>
+            </span>
+            <div class="main-text">
+                Our <span class="text-gradient">5-Step Process</span> 
+                to Success
+            </div>
+            <div class="sub-text">
+                From concept to launch, we follow a proven methodology that delivers results.
+            </div>
         </div>
 
         <div class="process" [class.locked]="isLocked">
@@ -30,9 +39,9 @@
                         <div class="icon-bg"></div>
                         <img class="logo" [src]="step.icon" [alt]="step.title">
                         <div class="icon-ring"></div>
-                        <div class="connector-dot" [class.active]="step.id <= activeIndex"></div>
                     </div>
                     <div class="heading">
+                        <p class="highlight-badge">{{step.highlight}}</p>
                         <p class="title">{{step.title}}</p>
                         <p class="timeline">{{step.timeline}}</p>
                     </div>
