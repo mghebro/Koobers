@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, HostListener } from '@angular/core';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import { trigger, state, style, transition, animate, query, stagger, keyframes } from '@angular/animations';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -8,24 +8,60 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   templateUrl: './modal-form.html',
   styleUrl: './modal-form.scss',
   animations: [
-    trigger('fadeInOut', [
-      state('in', style({ opacity: 1 })),
-      transition('void => *', [
-        style({ opacity: 0 }),
-        animate('300ms ease-in')
+    trigger('overlayAnimation', [
+      transition(':enter', [
+        style({ opacity: 0, backdropFilter: 'blur(0px)' }),
+        animate('400ms cubic-bezier(0.4, 0, 0.2, 1)', 
+          style({ opacity: 1, backdropFilter: 'blur(8px)' })
+        )
       ]),
-      transition('* => void', [
-        animate('300ms ease-out', style({ opacity: 0 }))
+      transition(':leave', [
+        animate('300ms cubic-bezier(0.4, 0, 0.2, 1)', 
+          style({ opacity: 0, backdropFilter: 'blur(0px)' })
+        )
       ])
     ]),
-    trigger('slideInOut', [
-      state('in', style({ transform: 'translateY(0)', opacity: 1 })),
-      transition('void => *', [
-        style({ transform: 'translateY(-50px)', opacity: 0 }),
-        animate('300ms ease-out')
+    trigger('modalAnimation', [
+      transition(':enter', [
+        animate('500ms cubic-bezier(0.34, 1.56, 0.64, 1)', 
+          keyframes([
+            style({ 
+              opacity: 0, 
+              transform: 'scale(0.9) translateY(20px)',
+              offset: 0 
+            }),
+            style({ 
+              opacity: 1, 
+              transform: 'scale(1.02) translateY(-5px)',
+              offset: 0.7 
+            }),
+            style({ 
+              opacity: 1, 
+              transform: 'scale(1) translateY(0)',
+              offset: 1 
+            })
+          ])
+        )
       ]),
-      transition('* => void', [
-        animate('300ms ease-in', style({ transform: 'translateY(-50px)', opacity: 0 }))
+      transition(':leave', [
+        animate('300ms cubic-bezier(0.4, 0, 0.2, 1)', 
+          style({ 
+            opacity: 0, 
+            transform: 'scale(0.95) translateY(10px)' 
+          })
+        )
+      ])
+    ]),
+    trigger('formFieldAnimation', [
+      transition(':enter', [
+        query('.stagger-item', [
+          style({ opacity: 0, transform: 'translateY(30px)' }),
+          stagger(100, [
+            animate('600ms cubic-bezier(0.4, 0, 0.2, 1)', 
+              style({ opacity: 1, transform: 'translateY(0)' })
+            )
+          ])
+        ], { optional: true })
       ])
     ])
   ]
@@ -41,6 +77,8 @@ export class ModalForm implements OnInit, OnDestroy {
 
   @Output() onClose = new EventEmitter<void>();
   @Output() onConfirm = new EventEmitter<void>();
+  
+  animationState = 'in';
 
   ngOnInit() {
     // Prevent body scroll when modal is open
