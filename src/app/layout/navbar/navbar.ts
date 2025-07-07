@@ -147,12 +147,37 @@ export class Navbar {activeLink = 'Home';
     const languageSelector =
       this.elementRef.nativeElement.querySelector('.language-selector');
     const clickedInside = languageSelector.contains(event.target as Node);
+    const navbarMenu =
+      this.elementRef.nativeElement.querySelector('.navbar');
+      const clickedInsideNavbar = navbarMenu.contains(event.target as Node);
 
     if (!clickedInside && this.isLanguageDropdownOpen) {
       this.isLanguageDropdownOpen = false;
     }
+
+    if (!clickedInsideNavbar && this.menuOpen) {
+      this.menuOpen = false
+    }
   }
 
+  @HostListener('window:resize', ['$event'])
+  onWindowResize(event: Event) {
+    // Close the mobile menu when window is resized
+    if (this.menuOpen) {
+      this.menuOpen = false;
+    }
+    
+    // Close language dropdown as well
+    if (this.isLanguageDropdownOpen) {
+      this.isLanguageDropdownOpen = false;
+    }
+    
+    // Update glow position after resize
+    setTimeout(() => {
+      this.updateGlowPosition();
+    }, 100);
+  }
+  
   selectLanguage(language: Language, event?: MouseEvent): void {
     if (event) {
       event.stopPropagation();
@@ -188,5 +213,11 @@ export class Navbar {activeLink = 'Home';
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
+
+    if (this.menuOpen) {
+      document.body.style.overflow = 'hidden'; // Prevent scroll
+    } else {
+      document.body.style.overflow = ''; // Restore scroll
+    }
   }
 }

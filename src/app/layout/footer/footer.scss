@@ -10,27 +10,27 @@ footer {
   overflow: hidden;
   position: relative;
 
-.blob {
-  width: 1000px;
-  max-width: 100%;
-  height: 1000px;
-  z-index: -1;
-  position: absolute;
-  top: 75%;
-  left: 50%;
-  transform: translateX(-50%);
-  border-radius: 1000px;
-  opacity: 0.64;
-  background: radial-gradient(
-    50% 50% at 50% 50%,
-    var(--Gradients-Light, #f5f5e1) 15.87%,
-    var(--Gradients-Light, #f5f5e1) 62.5%,
-    var(--Gradients-Green, #34b84a) 76.44%,
-    var(--Gradients-Tealish, #42eb85) 85.1%
-  );
-  mix-blend-mode: hard-light;
-  filter: blur(250px);
-}
+  .blob {
+    width: 1000px;
+    max-width: 100%;
+    height: 1000px;
+    z-index: -1;
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 1000px;
+    opacity: 0.64;
+    background: radial-gradient(
+      50% 50% at 50% 50%,
+      var(--Gradients-Light, #58e971) 15.87%,
+      var(--Gradients-Light, #53db4a) 62.5%,
+      var(--Gradients-Green, #78ff8e) 76.44%,
+      var(--Gradients-Tealish, #38ff87) 85.1%
+    );
+    mix-blend-mode: hard-light;
+    filter: blur(250px);
+  }
 
   .input-box {
     display: flex;
@@ -73,6 +73,7 @@ footer {
       button {
         height: 48px;
         @include mixins.button-primary;
+        overflow: visible;
       }
     }
   }
@@ -265,7 +266,7 @@ footer {
 }
 
 @media (max-width: 500px) {
-  footer { 
+  footer {
     padding-top: 144px;
     .footer-watermark-wrapper {
       .footer-watermark {
@@ -294,14 +295,14 @@ footer {
     }
 
     .input-box {
-
-        .left-side {
-            text-align: center;
-        }
+      .left-side {
+        text-align: center;
+      }
       .right-side {
         flex-direction: column;
 
-        input, button {
+        input,
+        button {
           width: 100%;
         }
       }
@@ -312,12 +313,10 @@ footer {
 @media (max-width: 450px) {
   footer {
     .content-box {
-      .right-side {       
+      .right-side {
         justify-content: center;
         flex-wrap: wrap;
         justify-content: space-around;
-
-         
 
         .column {
           .title {

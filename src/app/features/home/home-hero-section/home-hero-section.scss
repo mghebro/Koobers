@@ -9,20 +9,19 @@ $line-color: #42eb85;
 
 // Mixin for hover effects on the explore button
 @mixin explore-hover-effect {
+  filter: brightness(1.2);
   .line {
     background-color: $line-color;
-    box-shadow: 0 0 8px 2px rgba($primary-color, 0.6);
   }
 
   .explore-text {
+    transform: translateX(8px);
     color: $primary-color;
-    text-shadow: 0 0 8px rgba($primary-color, 0.6);
   }
 
   .explore-arrow {
-    transform: translateX(50%);
+    transform: translateX(8px);
     fill: $primary-color;
-    filter: drop-shadow(0 0 4px rgba($primary-color, 0.6));
   }
 }
 
@@ -129,9 +128,9 @@ body {
 
     .explore-arrow {
       color: $primary-color;
-      width: 6.5px;
+      font-size: 16px;
+      line-height: 16px;
       transition: 200ms ease-in-out;
-      height: 16px;
     }
   }
 
@@ -272,7 +271,7 @@ body {
 @media (max-width: 1200px) {
   .hero {
     border-radius: 48px;
-    padding: 70px 48px 4px 48px;
+    padding: 70px 48px 48px 48px;
   }
 
   .hero-content {
@@ -477,4 +476,9 @@ body {
     padding: 70px 24px 24px 24px;
     border-radius: 24px;
   }
+}
+@media (max-width:375px) {
+ .hero{
+  padding: 0px;
+ } 
 }

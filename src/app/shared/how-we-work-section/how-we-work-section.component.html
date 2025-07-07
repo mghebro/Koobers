@@ -1,61 +1,54 @@
-<div class="page-section">
+<div class="page-section" #processSection>
     <div class="content-box">
         <div class="heading">
             <span>How we work</span>
             <div class="main-text">Quality. Growth. Success. Our Process Covers It All.</div>
-            <div class="sub-text">From first idea to final launch (and beyond), our process is clear, collaborative, and focused on real results. Here’s how we bring your vision to life — step by step.</div>
+            <div class="sub-text">From first idea to final launch (and beyond), our process is clear, collaborative, and focused on real results. Here's how we bring your vision to life — step by step.</div>
         </div>
 
-        <div class="process">
-            <div class="card">
-                <div class="heading">
-                    <img class="logo" src="../../../assets/svgs/how-we-work/discovery.svg" alt="">
-                    <div class="heading-text">
-                        <p class="title">1. Discovery & Analysis</p>
-                        <p class="timeline">Timeline: 1-2 Weeks</p>
-                    </div>
-                </div>
-                <p class="description">We explore your goals, challenges, and audience to define clear project requirements.</p>
+        <div class="process" [class.locked]="isLocked">
+            <div class="progress-line-container">
+                <div class="progress-line-bg"></div>
+                <div class="progress-line-fill" [style.width.%]="getProgressPercentage()"></div>
+                <div class="progress-line-glow" [style.left.%]="getProgressPercentage()"></div>
             </div>
-            <div class="card">
-                <div class="heading">
-                    <img class="logo" src="../../../assets/svgs/how-we-work/design.svg" alt="">
-                    <div class="heading-text">
-                        <p class="title">2. Design & Prototyping</p>
-                        <p class="timeline">Timeline: 2-4 Weeks</p>
-                    </div>
+            <div class="card" 
+                 *ngFor="let step of steps; let i = index" 
+                 [attr.data-step]="step.id"
+                 [class.active]="isStepActive(step.id)"
+                 [class.completed]="step.id < activeIndex"
+                 [class.clickable]="isLocked"
+                 (click)="onStepClick(step.id)">
+                <div class="step-number">
+                    <div class="number-bg"></div>
+                    <div class="number-outline"></div>
+                    <span class="number-text">{{step.number}}</span>
+                    <div class="number-decoration"></div>
                 </div>
-                <p class="description">We craft the visual direction, wireframes, and a prototype so you can review and validate before development.</p>
+                <div class="card-content">
+                    <div class="icon-wrapper">
+                        <div class="icon-bg"></div>
+                        <img class="logo" [src]="step.icon" [alt]="step.title">
+                        <div class="icon-ring"></div>
+                        <div class="connector-dot" [class.active]="step.id <= activeIndex"></div>
+                    </div>
+                    <div class="heading">
+                        <p class="title">{{step.title}}</p>
+                        <p class="timeline">{{step.timeline}}</p>
+                    </div>
+                    <p class="description">{{step.description}}</p>
+                </div>
+                <div class="ripple"></div>
             </div>
-            <div class="card">
-                <div class="heading">
-                    <img class="logo" src="../../../assets/svgs/how-we-work/development.svg" alt="">
-                    <div class="heading-text">
-                        <p class="title">3. Development & Testing</p>
-                        <p class="timeline">Timeline: 4-12+ Weeks</p>
-                    </div>
+        </div>
+
+        <div class="progress-indicator" *ngIf="isLocked">
+            <div class="progress-dots">
+                <div class="dot" 
+                     *ngFor="let step of steps" 
+                     [class.active]="isStepActive(step.id)"
+                     [class.completed]="step.id < activeIndex">
                 </div>
-                <p class="description">We write clean code, build functionality, and test thoroughly to ensure smooth performance across all devices.</p>
-            </div>
-            <div class="card">
-                <div class="heading">
-                    <img class="logo" src="../../../assets/svgs/how-we-work/launch.svg" alt="">
-                    <div class="heading-text">
-                        <p class="title">4. Launch & Monitoring</p>
-                        <p class="timeline">Timeline: 1 Week</p>
-                    </div>
-                </div>
-                <p class="description">We go live, ensuring a smooth launch while monitoring performance in a real-world environment.</p>
-            </div>
-            <div class="card">
-                <div class="heading">
-                    <img class="logo" src="../../../assets/svgs/how-we-work/support.svg" alt="">
-                    <div class="heading-text">
-                        <p class="title">5. Support & Growth</p>
-                        <p class="timeline">Ongoing</p>
-                    </div>
-                </div>
-                <p class="description">After launch, we continue to optimize, support, and scale your product as your business evolves.</p>
             </div>
         </div>
     </div>

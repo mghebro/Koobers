@@ -12,9 +12,9 @@
         >
           {{ item.label }}
         </button>
+        <div class="glow-wrapper" [style.left]="menuItemPosition + 'px'">
         <div
           class="glow-container bottom-glow"
-          [style.left]="menuItemPosition + 'px'"
         >
           <div class="glow-effect glow-blur-large"></div>
           <div class="glow-effect glow-blur-medium"></div>
@@ -22,11 +22,11 @@
         </div>
         <div
           class="glow-container top-glow"
-          [style.left]="menuItemPosition + 'px'"
         >
           <div class="glow-effect glow-blur-large"></div>
           <div class="glow-effect glow-blur-medium"></div>
           <div class="glow-effect glow-blur-small"></div>
+        </div>
         </div>
       </div>
   

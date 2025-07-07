@@ -6,6 +6,7 @@ import { App } from './app';
 import { Footer } from './layout/footer/footer';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from './layout/layout-module';
+import { SharedModule } from "./shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -15,8 +16,9 @@ import { LayoutModule } from './layout/layout-module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    LayoutModule
-  ],
+    LayoutModule,
+    SharedModule
+],
   providers: [
     provideBrowserGlobalErrorListeners()
   ],

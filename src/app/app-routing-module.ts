@@ -8,6 +8,7 @@ const routes: Routes = [
       import('./features/home/home.module').then(
         (m) => m.HomeModule
       ),
+    data: { animation: 'HomePage' }
   },
 
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
       import('./features/coming-soon/coming-soon-module').then(
         (m) => m.ComingSoonModule
       ),
+    data: { animation: 'ComingSoonPage' }
   },
 
   {
@@ -24,6 +26,7 @@ const routes: Routes = [
       import('./features/contact/contact.module').then(
         (m) => m.ContactModule
       ),
+    data: { animation: 'ContactPage' }
   },
 
   {
@@ -32,6 +35,7 @@ const routes: Routes = [
       import('./features/about/about-module').then(
         (m) => m.AboutModule
       ),
+    data: { animation: 'AboutPage' }
   },
 
   {
@@ -40,6 +44,7 @@ const routes: Routes = [
       import('./features/services/services-module').then(
         (m) => m.ServicesModule
       ),
+    data: { animation: 'ServicesPage' }
   },
 
   {
@@ -48,11 +53,11 @@ const routes: Routes = [
       import('./features/work/work-module').then(
         (m) => m.WorkModule
       ),
+    data: { animation: 'WorkPage' }
   },
-
   {
     path: "**",
-    redirectTo: ""
+    redirectTo: "coming-soon",
   }
 ];
 

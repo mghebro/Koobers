@@ -58,7 +58,7 @@
 .faq-item {
   display: flex;
   width: 100%;
-  padding: 12px 24px;
+  padding: 24px;
   flex-direction: column;
   align-items: center;
   border-radius: 32px;
@@ -69,6 +69,7 @@
   border: 1px solid rgba(235, 245, 225, 0);
   opacity: 0.95;
   transition: all 0.3s ease, box-shadow 0.4s ease, border-color 0.4s ease, opacity 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
 }
 
 .faq-item:hover,
@@ -89,13 +90,10 @@
   gap: 12px;
   justify-content: space-between;
   align-items: center;
-  cursor: pointer;
-  padding: 8px;
   // position: absolute;
   // top: 50%;
   // transform: translateY(-50%);
   position: relative;
-
 }
 
 .faq-question h3 {
@@ -124,7 +122,7 @@
 .liner {
   position: absolute;
 
-  bottom: -8px;
+  bottom: -12px;
   left: 0;
   height: 2px;
   width: 100%;
@@ -162,7 +160,7 @@
   line-height: 22px;
   letter-spacing: 0.28px;
   margin: 0;
-  padding: 16px 0;
+  padding: 24px 0 0 0;
 }
 
 .faq-answer.visible {

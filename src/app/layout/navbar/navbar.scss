@@ -2,12 +2,12 @@
 @use "../../../styles/mixins" as m;
 
 .navbar-container {
-  max-width: calc(100% - 24px); // 12px margin on each side
-  width: 100%;
+  width: calc(100% - 24px); // 12px margin on each side
+  max-width: 1440px;
   margin: 0 auto;
   padding-top: 12px;
   position: relative;
-  z-index: 9999;
+  z-index: 100;
   /* Add high z-index to ensure navbar and glow stay above other elements */
   position: fixed;
   top: 0;
@@ -33,6 +33,7 @@ nav {
 .logo {
   width: 48px;
   height: 48px;
+  cursor: pointer;
 }
 
 .menu {
@@ -43,31 +44,39 @@ nav {
   position: relative;
 }
 
-.glow-container {
+.glow-wrapper {
   position: absolute;
   transform: translateX(-50%);
-  transition: left 0.3s ease-in-out;
-  pointer-events: none;
+  top: -16px;
+  transition: left 0.6s cubic-bezier(0.25, 1, 0.5, 1.05);
   z-index: 9999;
-  /* Match this with navbar-container's z-index */
+  pointer-events: none;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: space-between;
+  width: 150px;
+  height: 72px;
+  overflow-y: hidden;
+  overflow-x: visible;
+}
+
+.glow-container {
+  width: 96px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 96px;
 }
 
 .bottom-glow {
-  bottom: -15px;
+  transform: translateY(0px);
 }
 
 .top-glow {
-  top: -15px;
-  transform: translateX(-50%) rotate(180deg);
+  transform: translateY(-15px);
 }
 
 .glow-effect {
-  position: absolute;
-  left: 0;
   width: 100%;
   border-radius: 24px;
 }
@@ -75,7 +84,6 @@ nav {
 .glow-blur-large {
   width: 96px;
   height: 8px;
-  bottom: 16px;
   background: linear-gradient(90deg,
       rgba(66, 235, 133, 0) 0%,
       rgba(66, 235, 133, 0.48) 51.44%,
@@ -202,6 +210,16 @@ nav {
         color: v.$bg-green-light;
       }
     }
+
+    &:hover {
+      .globe-icon path, .arrow-icon path {
+        fill: v.$typography-100;
+      }
+
+      .language-current {
+        color: v.$typography-100;
+      }
+    }
   }
 
   .language-dropdown {
@@ -279,11 +297,11 @@ nav {
       .language-name {
         font-weight: 600;
         font-size: 16px;
-        color: white;
+        color: v.$typography-200;
         transition: color 0.3s ease;
 
         &:hover {
-          color: v.$typography-200;
+          color: v.$typography-100;
         }
       }
 
@@ -319,7 +337,12 @@ nav {
 
 @media (max-width: 1050px) {
   .navbar-container {
-    display: none;
+    height: 0;
+    overflow: hidden;
+
+    .glow-container {
+      display: none;
+    }
   }
 
   .navbar {
@@ -336,17 +359,18 @@ nav {
     display: flex;
     justify-content: space-between;
     height: 64px;
+    border: 0;
+    outline: 2px solid v.$bg-section-secondary;
     max-height: calc(100dvh - 40px);
     border-radius: 24px;
-    border: 2px;
     padding: 0;
     transition: all 0.3s ease;
     flex-direction: column;
     align-items: stretch;
     background-color: #1B1F1CA3;
     border-radius: 16px;
-    backdrop-filter: blur(32px);
-    z-index: 5;
+    backdrop-filter: blur(24px);
+    z-index: 100;
   }
 
   .logo {
@@ -458,10 +482,7 @@ nav {
     opacity: 0.5;
     box-shadow: 0 0 10px 1px #42eb86;
     backdrop-filter: blur(24px);
-    background: linear-gradient(90deg,
-        rgba(66, 235, 133, 0) 0%,
-        #42eb85 51.44%,
-        rgba(66, 235, 133, 0) 100%);
+    background: linear-gradient(90deg, rgb(66 235 133 / 17%) 0%, #42eb85 51.44%, rgb(66 235 133 / 17%) 100%);
   }
 }
 
@@ -473,6 +494,11 @@ nav {
 
 .nav-links.show {
   max-height: 500px;
+  
+  ul {
+    height: fit-content;
+    overflow-y: auto;
+  }
 }
 
 .navbar.open {
