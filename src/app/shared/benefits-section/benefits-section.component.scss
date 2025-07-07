@@ -8,7 +8,7 @@
   // Add will-change for better scroll performance
   will-change: transform;
   // Fix height to prevent jumping
-  min-height: 600px;
+  min-height: 450px;
   position: relative;
   
   // Scroll indicator
@@ -144,7 +144,7 @@
       gap: 8px;
       width: 100%;
       position: relative;
-      min-height: 200px; // Consistent height
+      min-height: 160px; // Consistent height
       align-items: stretch; // Keep all items same height
       
       // Apply horizontal scrolling on screens smaller than 1300px
@@ -168,11 +168,12 @@
       @media (max-width: 480px) {
         gap: 4px;
       }
+      
 
       .benefit {
         width: 21%;
         min-width: 200px;
-        min-height: 180px; // Consistent minimum height
+        min-height: 120px; // Consistent minimum height
         overflow: hidden;
         cursor: pointer;
         // Enhanced transition for smoother animations with better easing
@@ -187,7 +188,7 @@
         
         // Subtle initial state
         border-radius: 16px;
-        padding: 12px;
+        padding: 0 12px 12px 12px;
         background-color: transparent;
         border: 1px solid transparent;
         
@@ -419,14 +420,6 @@
     margin-top: 24px;
     gap: 8px;
     
-    .dot {
-      width: 6px;
-      height: 6px;
-      
-      &.active {
-        width: 20px;
-      }
-    }
   }
 }
 
