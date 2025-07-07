@@ -150,11 +150,29 @@
 }
 
 .contact-us-text {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  p {
   font-family: "Roboto Mono", monospace;
   font-weight: 700;
-  font-size: 14px;
-  line-height: 16.8px;
+  line-height: 16px;
   color: #bbccbb;
+  }
+.arrow-icon {
+  font-size: 14px;
+  line-height: 14px;
+  transition: 200ms;
+}
+
+
+  &:hover {
+    .arrow-icon {
+      transform: translateX(100%);
+    }
+  }
 }
 
 /* Responsive styles */

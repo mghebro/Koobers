@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnIni
 import { CommonModule } from '@angular/common';
 import { CodeSnippets, TabType, CodeSnippetsService } from '../../../core/services/code-snippets.service';
 import { PrismHighlightService } from '../../../core/services/prism-highlight.service';
+import { ModalService } from '../../../core/services/modal.service';
 
 
 @Component({
@@ -28,12 +29,16 @@ export class CodeDisplay  implements OnChanges, OnInit {
     react: ['react', 'Greeting', 'useState', 'Koober Coders', 'message', '"greeting"'],
     csharp: ['System', 'Greeting', 'Message', '"Koober Coders"', 'DisplayGreeting']
   };
-  
+
   constructor(
     private prismService: PrismHighlightService,
-    private codeSnippetsService: CodeSnippetsService
+    private codeSnippetsService: CodeSnippetsService,
+    private modalService: ModalService
   ) {}
   
+openModal() {
+  this.modalService.openModal()
+}
   ngOnInit(): void {
     // Start typewriter animation when component initializes
     this.startTypewriterAnimation();

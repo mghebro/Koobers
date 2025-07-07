@@ -7,6 +7,7 @@ import { PageHeader } from './page-header/page-header';
 import { RouterModule } from '@angular/router';
 import { CtaSection } from './cta-section/cta-section';
 import { ModalForm } from './modal-form/modal-form';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -21,14 +22,16 @@ import { ModalForm } from './modal-form/modal-form';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    ReactiveFormsModule
   ],
   exports: [
     FeaturesSectionComponent,
     HowWeWorkSectionComponent,
     BenefitsSectionComponent,
     CtaSection,
-    PageHeader
+    PageHeader,
+    ModalForm
   ]
 })
 export class SharedModule { }

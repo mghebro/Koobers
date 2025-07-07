@@ -7,7 +7,7 @@
   margin: 0 auto;
   padding-top: 12px;
   position: relative;
-  z-index: 9999;
+  z-index: 100;
   /* Add high z-index to ensure navbar and glow stay above other elements */
   position: fixed;
   top: 0;
@@ -497,6 +497,11 @@ nav {
 
 .nav-links.show {
   max-height: 500px;
+  
+  ul {
+    height: fit-content;
+    overflow-y: auto;
+  }
 }
 
 .navbar.open {
