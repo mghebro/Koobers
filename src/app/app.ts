@@ -1,26 +1,38 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { slideInAnimation } from './shared/animations/route-animations';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.html',
   standalone: false,
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
+  animations: [
+    slideInAnimation
+  ]
 })
 export class App {
   protected title = 'KooberCoders';
+  isLoading = false;
   constructor(private location: Location, private router: Router) {
-    // Optional: Listen to route changes to trigger change detection
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
-        // This will trigger change detection when route changes
-      });
+    // Listen to route changes for animations
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        // Add a small delay to ensure smooth animation
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 100);
+      }
+    });
   }
 
   isComingSoonPage(): boolean {
     return this.location.path() === '/coming-soon';
+  }
+  
+  prepareRoute(outlet: RouterOutlet) {
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
   }
 }

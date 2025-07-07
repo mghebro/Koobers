@@ -164,7 +164,7 @@ export class ComingSoonPage implements OnInit, AfterViewInit, OnDestroy {
     return await UnicornStudio.addScene({
       elementId: container.id,
       filePath: 'assets/animations/polaris.json',
-      fps: 120,
+      fps: 90,
       scale: 1,
       dpi: 1.5,
       lazyLoad: false,

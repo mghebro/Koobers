@@ -5,6 +5,72 @@
   padding: 96px;
   background-color: variables.$bg-section;
   border-radius: 96px;
+  // Add will-change for better scroll performance
+  will-change: transform;
+  // Fix height to prevent jumping
+  min-height: 600px;
+  position: relative;
+  
+  // Scroll indicator
+  .scroll-indicator {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    height: 24px; // Fixed height to prevent jumping
+    
+    &.visible {
+      opacity: 1;
+    }
+    
+    .indicator-text {
+      font-size: 14px;
+      color: variables.$typography-disabled;
+      font-weight: 500;
+    }
+    
+    .indicator-icon {
+      width: 20px;
+      height: 20px;
+      position: relative;
+      
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        width: 10px;
+        height: 2px;
+        background: variables.$typography-disabled;
+        transform-origin: center;
+        transition: transform 0.3s ease;
+      }
+      
+      &::before {
+        top: 8px;
+        transform: translateX(-50%) rotate(45deg) translateX(-2px);
+      }
+      
+      &::after {
+        top: 8px;
+        transform: translateX(-50%) rotate(-45deg) translateX(2px);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      bottom: 24px;
+      
+      .indicator-text {
+        font-size: 12px;
+      }
+    }
+  }
 
   // Tablet styles
   @media (max-width: 1024px) {
@@ -82,11 +148,22 @@
       display: flex;
       gap: 8px;
       width: 100%;
-      // Remove overflow-x: auto from here - it was applying to all screen sizes
+      position: relative;
+      min-height: 200px; // Consistent height
+      align-items: stretch; // Keep all items same height
       
       // Apply horizontal scrolling on screens smaller than 1300px
       @media (max-width: 1300px) {
         overflow-x: auto;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        
+        // Hide scrollbar for cleaner look
+        &::-webkit-scrollbar {
+          display: none;
+        }
+        -ms-overflow-style: none;
+        scrollbar-width: none;
       }
 
       @media (max-width: 768px) {
@@ -99,11 +176,32 @@
 
       .benefit {
         width: 21%;
-        min-width: 200px; // Prevent benefits from becoming too narrow
+        min-width: 200px;
+        min-height: 180px; // Consistent minimum height
         overflow: hidden;
         cursor: pointer;
-        transition: cubic-bezier(0.49, 0.16, 0.02, 1.23) 500ms;
-        flex-shrink: 0; // Prevent shrinking when scrolling
+        // Enhanced transition for smoother animations with better easing
+        transition: width 800ms cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                    transform 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                    box-shadow 300ms ease,
+                    background-color 400ms ease,
+                    padding 400ms ease,
+                    margin 400ms ease;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        
+        // Subtle initial state
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        border-radius: 16px;
+        padding: 12px;
+        background-color: transparent;
+        border: 1px solid transparent;
+        
+        &:hover:not(.active) {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        }
 
         @media (max-width: 768px) {
           min-width: 180px;
@@ -129,14 +227,49 @@
 
         .progress-bar {
           width: 100%;
-          height: 4px;
-          background: variables.$bg-disabled;
-          border-radius: 4px;
+          height: 3px;
+          background: rgba(0, 0, 0, 0.08);
+          border-radius: 3px;
+          position: relative;
+          overflow: hidden;
+          flex-shrink: 0; // Prevent height changes
+          
+          // Progress fill animation
+          &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, #34b84a 0%, #42eb85 100%);
+            border-radius: 3px;
+            transition: width 1200ms cubic-bezier(0.4, 0, 0.2, 1);
+          }
+          
+          // Glowing edge effect
+          &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -8px;
+            width: 8px;
+            height: 8px;
+            background: #42eb85;
+            border-radius: 50%;
+            transform: translateY(-50%) scale(0);
+            opacity: 0;
+            transition: all 600ms ease;
+            box-shadow: 0 0 8px rgba(66, 235, 133, 0.6);
+          }
         }
 
         .text-content {
           margin-top: 24px;
-          transition: 500ms;
+          transition: padding 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          flex: 1; // Take remaining height
+          display: flex;
+          flex-direction: column;
 
           @media (max-width: 768px) {
             margin-top: 16px;
@@ -156,12 +289,12 @@
 
           .id,
           .title {
-            font-weight: 700;
+            font-weight: 600;
             font-size: 16px;
             line-height: 24px;
-            letter-spacing: 2%;
+            letter-spacing: -0.01em;
             color: variables.$typography-disabled;
-            transition: 500ms;
+            transition: all 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
             @media (max-width: 768px) {
               font-size: 14px;
@@ -176,16 +309,19 @@
 
           .description {
             width: 390px;
-            max-width: calc(100vw - 100px); // Responsive max-width
-            max-height: 48px;
+            max-width: calc(100vw - 100px);
+            max-height: 0;
             opacity: 0;
             font-weight: 400;
-            font-size: 16px;
-            line-height: 24px;
-            letter-spacing: 6%;
+            font-size: 15px;
+            line-height: 1.6;
+            letter-spacing: 0;
             overflow: hidden;
-            color: variables.$typography-300;
-            transition: 500ms;
+            color: variables.$typography-400;
+            transition: opacity 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        max-height 800ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        margin-top 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            margin-top: 0;
 
             @media (max-width: 1024px) {
               width: 300px;
@@ -197,7 +333,6 @@
               max-width: calc(100vw - 60px);
               font-size: 14px;
               line-height: 20px;
-              max-height: 40px;
             }
 
             @media (max-width: 480px) {
@@ -205,14 +340,15 @@
               max-width: calc(100vw - 40px);
               font-size: 12px;
               line-height: 18px;
-              max-height: 36px;
             }
           }
         }
 
         &.active {
           width: 37%;
-          min-width: 300px; // Ensure active benefit has enough space
+          min-width: 300px;
+          transform: translateX(-2px);
+          box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
 
           @media (max-width: 768px) {
             min-width: 250px;
@@ -223,23 +359,175 @@
           }
 
           .progress-bar {
-            background: linear-gradient(90deg, #34b84a 0%, #42eb85 100%);
+            height: 5px;
+            background: rgba(0, 0, 0, 0.06);
+            
+            &::before {
+              width: 100%;
+              animation: fillProgress 1200ms ease-out;
+            }
+            
+            &::after {
+              transform: translateY(-50%) scale(1);
+              opacity: 1;
+              right: 0;
+              animation: glowPulse 2s ease-in-out infinite;
+            }
           }
 
           .text-content {
             padding-left: 0;
 
-            .id,
+            .id {
+              color: #34b84a;
+              font-weight: 700;
+              transition: color 600ms ease;
+            }
+            
             .title {
-              color: variables.$typography-200;
+              color: variables.$typography-100;
+              font-weight: 600;
+              margin-top: 2px;
             }
 
             .description {
               opacity: 1;
+              max-height: 100px; // Increased for better content fit
+              margin-top: 12px;
+              line-height: 1.6;
+              color: variables.$typography-300;
+              
+              @media (max-width: 768px) {
+                max-height: 80px;
+              }
+              
+              @media (max-width: 480px) {
+                max-height: 72px;
+              }
             }
           }
         }
       }
     }
   }
+}
+
+// Add this to your benefits-section.component.scss file
+
+.benefit-dots {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+  justify-content: center;
+  align-items: center;
+  
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: variables.$bg-disabled;
+    cursor: pointer;
+    transition: all 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    
+    &:hover {
+      transform: scale(1.3);
+      background: variables.$typography-disabled;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    &.active {
+      width: 24px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, #34b84a 0%, #42eb85 100%);
+      transform: scale(1.1);
+      
+      // Optional: Add a pulse animation
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        border-radius: 4px;
+        background: inherit;
+        animation: pulse 3s infinite;
+        opacity: 0.4;
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    margin-top: 24px;
+    gap: 8px;
+    
+    .dot {
+      width: 6px;
+      height: 6px;
+      
+      &.active {
+        width: 20px;
+      }
+    }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.8);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes fillProgress {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    transform: translateY(-50%) scale(1);
+    box-shadow: 0 0 8px rgba(66, 235, 133, 0.6);
+  }
+  50% {
+    transform: translateY(-50%) scale(1.2);
+    box-shadow: 0 0 16px rgba(66, 235, 133, 0.8);
+  }
+}
+
+// Global styles for scroll lock
+:global(.scroll-locked) {
+  overflow: hidden !important;
+  
+  // Prevent background scroll on mobile
+  -webkit-overflow-scrolling: touch;
+  touch-action: none !important;
+  
+  // Prevent text selection during scroll lock
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  
+  // Maintain layout when fixed
+  width: 100% !important;
 }
