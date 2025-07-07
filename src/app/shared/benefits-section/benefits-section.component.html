@@ -23,15 +23,7 @@
       </div>
     </div>
     
-    <!-- Optional: Progress dots -->
-    <div class="benefit-dots" *ngIf="isLocked">
-      <span 
-        *ngFor="let benefit of benefits" 
-        class="dot"
-        [class.active]="benefit.id === activeIndex"
-        (click)="selectBenefit(benefit.id)"
-      ></span>
-    </div>
+
   </div>
   
   <!-- Optional: Scroll indicator -->
