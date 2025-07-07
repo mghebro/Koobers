@@ -9,16 +9,18 @@ $line-color: #42eb85;
 
 // Mixin for hover effects on the explore button
 @mixin explore-hover-effect {
+  filter: brightness(1.2);
   .line {
     background-color: $line-color;
   }
 
   .explore-text {
+    transform: translateX(8px);
     color: $primary-color;
   }
 
   .explore-arrow {
-    transform: translateX(50%);
+    transform: translateX(8px);
     fill: $primary-color;
   }
 }
@@ -126,9 +128,9 @@ body {
 
     .explore-arrow {
       color: $primary-color;
-      width: 6.5px;
+      font-size: 16px;
+      line-height: 16px;
       transition: 200ms ease-in-out;
-      height: 16px;
     }
   }
 

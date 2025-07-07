@@ -33,6 +33,7 @@ nav {
 .logo {
   width: 48px;
   height: 48px;
+  cursor: pointer;
 }
 
 .menu {
@@ -200,6 +201,16 @@ nav {
 
       .language-display {
         color: v.$bg-green-light;
+      }
+    }
+
+    &:hover {
+      .globe-icon path, .arrow-icon path {
+        fill: v.$typography-100;
+      }
+
+      .language-current {
+        color: v.$typography-100;
       }
     }
   }
