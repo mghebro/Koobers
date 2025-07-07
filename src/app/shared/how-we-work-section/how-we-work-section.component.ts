@@ -12,6 +12,7 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
   activeIndex: number = 1;
   isLocked: boolean = false;
   private hasCompletedSection: boolean = false;
+  private hasExitedFromTop: boolean = false;
   private scrollThreshold: number = 50;
   private lastScrollTime: number = 0;
   private scrollDelay: number = 300;
@@ -24,42 +25,47 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
     {
       id: 1,
       number: '01',
-      title: 'Discovery & Analysis',
+      title: 'Discovery',
       timeline: '1-2 Weeks',
-      description: 'We explore your goals, challenges, and audience to define clear project requirements.',
-      icon: '../../../assets/svgs/how-we-work/discovery.svg'
+      description: 'Understand your vision and define clear goals.',
+      icon: '../../../assets/svgs/how-we-work/discovery.svg',
+      highlight: 'Strategy'
     },
     {
       id: 2,
       number: '02',
-      title: 'Design & Prototyping',
+      title: 'Design',
       timeline: '2-4 Weeks',
-      description: 'We craft the visual direction, wireframes, and a prototype so you can review and validate before development.',
-      icon: '../../../assets/svgs/how-we-work/design.svg'
+      description: 'Create beautiful, intuitive user experiences.',
+      icon: '../../../assets/svgs/how-we-work/design.svg',
+      highlight: 'UX/UI'
     },
     {
       id: 3,
       number: '03',
-      title: 'Development & Testing',
-      timeline: '4-12+ Weeks',
-      description: 'We write clean code, build functionality, and test thoroughly to ensure smooth performance across all devices.',
-      icon: '../../../assets/svgs/how-we-work/development.svg'
+      title: 'Development',
+      timeline: '4-12 Weeks',
+      description: 'Build scalable solutions with clean code.',
+      icon: '../../../assets/svgs/how-we-work/development.svg',
+      highlight: 'Engineering'
     },
     {
       id: 4,
       number: '04',
-      title: 'Launch & Monitoring',
+      title: 'Launch',
       timeline: '1 Week',
-      description: 'We go live, ensuring a smooth launch while monitoring performance in a real-world environment.',
-      icon: '../../../assets/svgs/how-we-work/launch.svg'
+      description: 'Deploy smoothly with zero downtime.',
+      icon: '../../../assets/svgs/how-we-work/launch.svg',
+      highlight: 'Go Live'
     },
     {
       id: 5,
       number: '05',
-      title: 'Support & Growth',
+      title: 'Support',
       timeline: 'Ongoing',
-      description: 'After launch, we continue to optimize, support, and scale your product as your business evolves.',
-      icon: '../../../assets/svgs/how-we-work/support.svg'
+      description: 'Continuous optimization and growth.',
+      icon: '../../../assets/svgs/how-we-work/support.svg',
+      highlight: 'Maintain'
     }
   ];
 
@@ -75,6 +81,7 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.unlockScroll();
     this.removeEventListeners();
   }
 
@@ -111,8 +118,18 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
     // Check if section is in the viewport for locking
     if (!this.isLocked && !this.hasCompletedSection) {
       if (this.scrollDirection === 'down' && sectionTop <= windowHeight * 0.3 && sectionTop > -sectionHeight * 0.5) {
+        // Reset to first step when entering from top
+        this.activeIndex = 1;
+        this.hasExitedFromTop = false;
         this.lockScroll();
       }
+    }
+    
+    // Handle re-entry from top after exiting
+    if (this.hasExitedFromTop && !this.isLocked && this.scrollDirection === 'down' && sectionTop <= windowHeight * 0.3) {
+      this.activeIndex = 1;
+      this.hasExitedFromTop = false;
+      this.lockScroll();
     }
 
     // Check if we've scrolled past the section
@@ -232,7 +249,9 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
           this.isTransitioning = false;
         }, 600);
       });
-    } else if (this.scrollDirection === 'up') {
+    } else if (this.activeIndex === 1) {
+      // When on first step and scrolling up, unlock and scroll to top
+      this.hasExitedFromTop = true;
       this.unlockScroll();
     }
   }
@@ -266,6 +285,17 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
         });
       }, 100);
     }
+  }
+
+  private scrollToTop(): void {
+    // Scroll to a position above the section
+    const sectionTop = this.processSection.nativeElement.offsetTop;
+    setTimeout(() => {
+      window.scrollTo({
+        top: sectionTop - window.innerHeight * 0.8,
+        behavior: 'smooth'
+      });
+    }, 100);
   }
 
   isStepActive(stepId: number): boolean {
