@@ -166,7 +166,7 @@ export class ComingSoonPage implements OnInit, AfterViewInit, OnDestroy {
       filePath: 'assets/animations/polaris.json',
       fps: 90,
       scale: 1,
-      dpi: 1,
+      dpi: 1.5,
       lazyLoad: false,
       altText: 'Background animation',
       ariaLabel: 'Animated background canvas',

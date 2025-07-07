@@ -41,15 +41,16 @@
           line-height: 24px;
         }
 
-        img {
-          width: 16px;
-          height: 16px;
+        span {
+          font-size: 16px;
+          line-height: 16px;
           transition: 200ms ease-in-out;
         }
 
         &:hover {
-          img {
-            transform: translateX(12px);
+          filter: brightness(1.2);
+          span {
+            transform: translateX(100%);
           }
         }
       }
