@@ -6,14 +6,19 @@
   width: 1344px;
   max-width: 100%;
   padding: 48px 96px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
 
   .content-box {
     @include mixins.flex-center;
     flex-direction: column;
-    gap: 48px;
+    gap: 64px;
+    width: 100%;
 
     .heading {
       width: 100%;
+      text-align: center;
 
       span {
         font-weight: 700;
@@ -35,6 +40,9 @@
 
       .sub-text {
         margin-top: 8px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
         font-weight: 400;
         font-size: 16px;
         line-height: 24px;
@@ -44,33 +52,177 @@
     }
 
     .process {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 48px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
       width: 100%;
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 60px;
+        left: 10%;
+        right: 10%;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          variables.$bg-section-secondary 0%,
+          variables.$button-primary-bg-light 20%,
+          variables.$button-primary-bg-light 80%,
+          variables.$bg-section-secondary 100%
+        );
+        z-index: 0;
+        opacity: 0.3;
+        transition: opacity 0.5s ease;
+      }
+
+      &.locked::before {
+        opacity: 1;
+      }
 
       .card {
-        width: 352px;
-        max-width: 100%;
+        position: relative;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+        z-index: 1;
+        opacity: 0.5;
+        transform: scale(0.9);
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 
-        .heading {
-          display: flex;
-          align-items: center;
-          gap: 16px;
+        &.completed {
+          opacity: 0.7;
+          transform: scale(0.95);
 
-          .logo {
-            width: 48px;
-            height: 48px;
+          .step-number {
+            color: variables.$button-primary-bg-light;
+            opacity: 0.3;
           }
 
-          .heading-text {
+          .icon-wrapper {
+            background-color: variables.$bg-section;
+            
+            &::before {
+              background-color: variables.$button-primary-bg-light;
+              opacity: 0.5;
+            }
+          }
+        }
+
+        &.active {
+          opacity: 1;
+          transform: scale(1);
+
+          .step-number {
+            opacity: 1;
+            color: variables.$button-primary-bg-light;
+            transform: scale(1.2);
+          }
+
+          .card-content {
+            transform: translateY(-10px);
+
+            .icon-wrapper {
+              transform: scale(1.15);
+              background-color: variables.$button-primary-bg-light;
+              box-shadow: 0 20px 40px rgba(variables.$button-primary-bg-light, 0.4);
+
+              &::before {
+                width: 16px;
+                height: 16px;
+                transform: translateX(-50%) scale(1);
+                opacity: 1;
+                box-shadow: 0 0 30px rgba(variables.$button-primary-bg-light, 0.8);
+              }
+
+              .logo {
+                filter: brightness(0) invert(1);
+                transform: rotate(5deg) scale(1.1);
+              }
+            }
+
+            .heading {
+              .title {
+                color: variables.$button-primary-bg-light;
+              }
+
+              .timeline {
+                opacity: 1;
+                transform: scale(1.05);
+              }
+            }
+
+            .description {
+              color: variables.$typography-100;
+              transform: scale(1.05);
+            }
+          }
+        }
+
+        .step-number {
+          position: absolute;
+          top: 0;
+          right: 20px;
+          font-family: General Sans;
+          font-weight: 600;
+          font-size: 48px;
+          line-height: 1;
+          color: variables.$bg-section-secondary;
+          opacity: 0.5;
+          transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          gap: 16px;
+          transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+          .icon-wrapper {
+            width: 80px;
+            height: 80px;
+            border-radius: 24px;
+            background-color: variables.$bg-section-secondary;
+            @include mixins.flex-center;
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            &::before {
+              content: '';
+              position: absolute;
+              width: 12px;
+              height: 12px;
+              border-radius: 50%;
+              background-color: variables.$bg-section-secondary;
+              bottom: -26px;
+              left: 50%;
+              transform: translateX(-50%) scale(0);
+              opacity: 0;
+              transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .logo {
+              width: 48px;
+              height: 48px;
+              transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+          }
+
+          .heading {
+            margin-top: 24px;
+
             .title {
               font-weight: 700;
-              font-size: 16px;
+              font-size: 18px;
               line-height: 24px;
               letter-spacing: 2%;
               color: variables.$typography-100;
+              transition: all 0.5s ease;
             }
 
             .timeline {
@@ -79,19 +231,66 @@
               font-size: 14px;
               line-height: 16px;
               letter-spacing: 4%;
-              color: variables.$typography-200;
+              color: variables.$button-primary-bg-light;
+              opacity: 0.6;
+              transition: all 0.5s ease;
             }
+          }
+
+          .description {
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 20px;
+            letter-spacing: 4%;
+            color: variables.$typography-300;
+            transition: all 0.5s ease;
+            max-width: 200px;
           }
         }
 
-        .description {
-          margin-top: 8px;
-          width: 100%;
-          font-weight: 400;
-          font-size: 16px;
-          line-height: 24px;
-          letter-spacing: 6%;
-          color: variables.$typography-300;
+        &:hover:not(.active) {
+          opacity: 0.8;
+          transform: scale(0.95);
+
+          .card-content {
+            transform: translateY(-4px);
+          }
+        }
+      }
+    }
+
+    .progress-indicator {
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: variables.$bg-section-secondary;
+      padding: 16px 32px;
+      border-radius: 32px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      z-index: 100;
+
+      .progress-dots {
+        display: flex;
+        gap: 12px;
+
+        .dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background-color: variables.$bg-section;
+          transition: all 0.3s ease;
+
+          &.completed {
+            background-color: variables.$button-primary-bg-light;
+            opacity: 0.5;
+          }
+
+          &.active {
+            width: 24px;
+            background-color: variables.$button-primary-bg-light;
+            opacity: 1;
+          }
         }
       }
     }
@@ -104,30 +303,42 @@
   }
 }
 
-
 @media (max-width: 1150px) {
   .page-section {
     .content-box {
       .process {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+
+        &::before {
+          display: none;
+        }
+
         .card {
-          width: calc(50% - 24px);
+          opacity: 1;
+          transform: scale(1);
+
+          .card-content {
+            .icon-wrapper::before {
+              display: none;
+            }
+          }
         }
       }
     }
   }
 }
 
-
 @media (max-width: 850px) {
   .page-section {
     padding: 24px;
+    min-height: auto;
   }
 }
 
 @media (max-width: 650px) {
   .page-section {
     .content-box {
-
       .heading {
         .main-text {
           font-size: 30px;
@@ -136,8 +347,37 @@
       }
 
       .process {
+        grid-template-columns: 1fr;
+        gap: 32px;
+
         .card {
-          width: 100%;
+          .step-number {
+            font-size: 36px;
+          }
+
+          .card-content {
+            .description {
+              max-width: 100%;
+            }
+          }
+        }
+      }
+
+      .progress-indicator {
+        bottom: 20px;
+        padding: 12px 24px;
+
+        .progress-dots {
+          gap: 8px;
+
+          .dot {
+            width: 6px;
+            height: 6px;
+
+            &.active {
+              width: 18px;
+            }
+          }
         }
       }
     }
@@ -162,13 +402,34 @@
       }
 
       .process {
-        gap: 32px;
+        gap: 24px;
+        
         .card {
+          .step-number {
+            font-size: 28px;
+          }
 
-          .description {
-            font-size: 14px;
-            line-height: 18px;
+          .card-content {
+            .icon-wrapper {
+              width: 64px;
+              height: 64px;
 
+              .logo {
+                width: 36px;
+                height: 36px;
+              }
+            }
+
+            .heading {
+              .title {
+                font-size: 16px;
+              }
+            }
+
+            .description {
+              font-size: 14px;
+              line-height: 18px;
+            }
           }
         }
       }

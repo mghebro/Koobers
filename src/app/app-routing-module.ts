@@ -55,10 +55,9 @@ const routes: Routes = [
       ),
     data: { animation: 'WorkPage' }
   },
-
   {
     path: "**",
-    redirectTo: ""
+    redirectTo: "coming-soon",
   }
 ];
 
