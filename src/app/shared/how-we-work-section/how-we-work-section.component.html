@@ -7,15 +7,30 @@
         </div>
 
         <div class="process" [class.locked]="isLocked">
+            <div class="progress-line-container">
+                <div class="progress-line-bg"></div>
+                <div class="progress-line-fill" [style.width.%]="getProgressPercentage()"></div>
+                <div class="progress-line-glow" [style.left.%]="getProgressPercentage()"></div>
+            </div>
             <div class="card" 
-                 *ngFor="let step of steps" 
+                 *ngFor="let step of steps; let i = index" 
                  [attr.data-step]="step.id"
                  [class.active]="isStepActive(step.id)"
-                 [class.completed]="step.id < activeIndex">
-                <div class="step-number">{{step.number}}</div>
+                 [class.completed]="step.id < activeIndex"
+                 [class.clickable]="isLocked"
+                 (click)="onStepClick(step.id)">
+                <div class="step-number">
+                    <div class="number-bg"></div>
+                    <div class="number-outline"></div>
+                    <span class="number-text">{{step.number}}</span>
+                    <div class="number-decoration"></div>
+                </div>
                 <div class="card-content">
                     <div class="icon-wrapper">
+                        <div class="icon-bg"></div>
                         <img class="logo" [src]="step.icon" [alt]="step.title">
+                        <div class="icon-ring"></div>
+                        <div class="connector-dot" [class.active]="step.id <= activeIndex"></div>
                     </div>
                     <div class="heading">
                         <p class="title">{{step.title}}</p>
@@ -23,6 +38,7 @@
                     </div>
                     <p class="description">{{step.description}}</p>
                 </div>
+                <div class="ripple"></div>
             </div>
         </div>
 

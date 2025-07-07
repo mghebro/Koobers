@@ -272,6 +272,29 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
     return stepId === this.activeIndex;
   }
 
+  getProgressPercentage(): number {
+    if (this.activeIndex === 1) return 0;
+    if (this.activeIndex === this.steps.length) return 100;
+    
+    // Calculate percentage based on active step
+    const segmentWidth = 100 / (this.steps.length - 1);
+    return (this.activeIndex - 1) * segmentWidth;
+  }
+
+  onStepClick(stepId: number): void {
+    if (!this.isLocked) return;
+    
+    // Allow clicking on any step
+    if (stepId !== this.activeIndex && !this.isTransitioning) {
+      this.isTransitioning = true;
+      this.activeIndex = stepId;
+      
+      setTimeout(() => {
+        this.isTransitioning = false;
+      }, 800);
+    }
+  }
+
   @HostListener('window:resize')
   onResize(): void {
     // Handle resize events if needed
