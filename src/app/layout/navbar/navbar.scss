@@ -2,8 +2,8 @@
 @use "../../../styles/mixins" as m;
 
 .navbar-container {
-  max-width: calc(100% - 24px); // 12px margin on each side
-  width: 100%;
+  width: calc(100% - 24px); // 12px margin on each side
+  max-width: 1440px;
   margin: 0 auto;
   padding-top: 12px;
   position: relative;
