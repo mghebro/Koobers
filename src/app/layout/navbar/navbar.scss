@@ -482,10 +482,7 @@ nav {
     opacity: 0.5;
     box-shadow: 0 0 10px 1px #42eb86;
     backdrop-filter: blur(24px);
-    background: linear-gradient(90deg,
-        rgba(66, 235, 133, 0) 0%,
-        #42eb85 51.44%,
-        rgba(66, 235, 133, 0) 100%);
+    background: linear-gradient(90deg, rgb(66 235 133 / 17%) 0%, #42eb85 51.44%, rgb(66 235 133 / 17%) 100%);
   }
 }
 
