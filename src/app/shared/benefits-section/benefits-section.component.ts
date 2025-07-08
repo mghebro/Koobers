@@ -8,7 +8,8 @@ import { Component, OnInit, OnDestroy, HostListener, ViewChild, ElementRef, NgZo
 })
 export class BenefitsSectionComponent implements OnInit, OnDestroy {
   @ViewChild('benefitsSection', { static: false }) benefitsSection!: ElementRef;
-  
+  @ViewChild('benefitsContainer', { static: false }) benefitsContainer!: ElementRef;
+
   activeIndex: number = 1;
   isLocked: boolean = false;
   private hasCompletedSection: boolean = false;
@@ -117,7 +118,7 @@ export class BenefitsSectionComponent implements OnInit, OnDestroy {
     }
 
     this.animationFrameId = requestAnimationFrame(() => {
-      const rect = this.benefitsSection.nativeElement.getBoundingClientRect();
+      const rect = this.benefitsContainer.nativeElement.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
       
       // Check if we've scrolled completely past the section
@@ -129,15 +130,13 @@ export class BenefitsSectionComponent implements OnInit, OnDestroy {
         this.hasScrolledPast = false;
       }
       
-      // Lock when section is in view
-      const lockThresholdTop = 200;
-      const lockThresholdBottom = viewportHeight - 200;
-      
-      // Check if section is in the lock zone and we haven't scrolled past it
-      if (!this.isLocked && 
-          !this.hasScrolledPast &&
-          rect.top <= lockThresholdTop && 
-          rect.bottom > lockThresholdBottom) {
+      const rectCenter = rect.top + rect.height / 2;
+const screenCenter = viewportHeight / 2 + 60;
+const lockThreshold = 40; // pixels of tolerance
+
+if (!this.isLocked &&
+    !this.hasScrolledPast &&
+    Math.abs(rectCenter - screenCenter) < lockThreshold) {
         
         // Set initial benefit based on scroll direction
         if (this.scrollDirection === 'up') {

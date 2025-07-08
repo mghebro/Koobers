@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <div class="process" [class.locked]="isLocked">
+        <div class="process" [class.locked]="isLocked" #processContent>
             <div class="progress-line-container">
                 <div class="progress-line-bg"></div>
                 <div class="progress-line-fill" [style.width.%]="getProgressPercentage()"></div>

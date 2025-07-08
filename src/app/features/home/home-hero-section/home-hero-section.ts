@@ -11,7 +11,7 @@ export class HomeHeroSection implements OnInit {
   // Property for template interpolation in code examples
   message = 'message';
   
-  words: string[] = ['Developers', 'Startups', 'Big Corporations'];
+  words: string[] = [ 'Big Corporations'];
   currentWordIndex: number = 0;
   displayedText: string = '';
   isDeleting: boolean = false;
