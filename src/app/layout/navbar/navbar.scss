@@ -338,9 +338,10 @@ nav {
 @media (max-width: 1050px) {
   .navbar-container {
     height: 0;
+    opacity: 0;
     overflow: hidden;
 
-    .glow-container {
+    .glow-wrapper {
       display: none;
     }
   }
