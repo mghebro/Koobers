@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy, NgZone, HostListener } from '@angular/core';
+import { ScrollLockService } from '../../core/services/scroll-lock.service';
 
 @Component({
   selector: 'app-how-we-work-section',
@@ -15,8 +16,20 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
   // State management
   private hasEnteredSection: boolean = false;
   private sectionCompleted: boolean = false;
+  private hasEverLocked: boolean = false;
   private lastScrollY: number = 0;
   private scrollDirection: 'up' | 'down' = 'down';
+  
+  // Lock/unlock debouncing
+  private lockDebounceTimer: any = null;
+  private unlockDebounceTimer: any = null;
+  private lockDebounceDelay: number = 200;
+  private unlockDebounceDelay: number = 300;
+  
+  // Hysteresis thresholds
+  private lockThreshold: number = 0.2;
+  private unlockThreshold: number = 0.4;
+  private wasInLockZone: boolean = false;
   
   // Scroll control
   private scrollAccumulator: number = 0;
@@ -77,7 +90,12 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
     }
   ];
 
-  constructor(private ngZone: NgZone) {}
+  private readonly SECTION_ID = 'how-we-work';
+  
+  constructor(
+    private ngZone: NgZone,
+    private scrollLockService: ScrollLockService
+  ) {}
 
   ngAfterViewInit(): void {
     this.setupScrollListener();
@@ -86,6 +104,18 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.unlockScroll();
     this.removeEventListeners();
+    this.clearDebounceTimers();
+  }
+  
+  private clearDebounceTimers(): void {
+    if (this.lockDebounceTimer) {
+      clearTimeout(this.lockDebounceTimer);
+      this.lockDebounceTimer = null;
+    }
+    if (this.unlockDebounceTimer) {
+      clearTimeout(this.unlockDebounceTimer);
+      this.unlockDebounceTimer = null;
+    }
   }
 
   private setupScrollListener(): void {
@@ -122,21 +152,41 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
     const sectionCenter = sectionTop + (sectionHeight / 2);
     const screenCenter = windowHeight / 2;
     const distanceFromCenter = Math.abs(sectionCenter - screenCenter);
-    const centerThreshold = windowHeight * 0.1;
-    const isAtCenter = distanceFromCenter <= centerThreshold;
-
+    const lockDistance = windowHeight * this.lockThreshold;
+    const unlockDistance = windowHeight * this.unlockThreshold;
+    
     // Check if section is visible in viewport
     const sectionVisible = sectionTop < windowHeight && (sectionTop + sectionHeight) > 0;
+    const isInLockZone = distanceFromCenter <= lockDistance && sectionVisible;
+    const shouldUnlock = !sectionVisible || distanceFromCenter > unlockDistance;
 
-    // Determine if we should lock scroll
-    if (!this.isLocked && isAtCenter && sectionVisible) {
-      this.lockScroll();
+    // Apply hysteresis logic with scroll lock service
+    if (!this.isLocked && isInLockZone && !this.wasInLockZone && !this.hasEverLocked) {
+      // Only lock once, when scrolling down for the first time
+      if (this.scrollDirection === 'down' && this.scrollLockService.canSectionLock(this.SECTION_ID, this.scrollDirection)) {
+        // Entering lock zone - debounce the lock
+        this.clearDebounceTimers();
+        this.lockDebounceTimer = setTimeout(() => {
+          if (isInLockZone && this.scrollLockService.canSectionLock(this.SECTION_ID, this.scrollDirection)) {
+            this.lockScroll();
+          }
+        }, this.lockDebounceDelay);
+      }
+    } else if (this.isLocked && shouldUnlock) {
+      // Should unlock - debounce the unlock
+      this.clearDebounceTimers();
+      this.unlockDebounceTimer = setTimeout(() => {
+        const rect = this.processSection.nativeElement.getBoundingClientRect();
+        const center = rect.top + (rect.height / 2);
+        const dist = Math.abs(center - (window.innerHeight / 2));
+        if (dist > windowHeight * this.unlockThreshold || !sectionVisible) {
+          const exitDirection = this.scrollDirection;
+          this.unlockScroll(exitDirection);
+        }
+      }, this.unlockDebounceDelay);
     }
-
-    // Determine if we should unlock scroll
-    if (this.isLocked && (!sectionVisible || distanceFromCenter > windowHeight * 0.4)) {
-      this.unlockScroll();
-    }
+    
+    this.wasInLockZone = isInLockZone;
   }
 
   private handleWheel(event: WheelEvent): void {
@@ -226,7 +276,8 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
     } else {
       // Completed all steps, unlock and continue scrolling
       this.sectionCompleted = true;
-      this.unlockScroll();
+      this.clearDebounceTimers();
+      this.unlockScroll('down');
       this.scrollPastSection();
     }
   }
@@ -242,7 +293,8 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
       });
     } else {
       // At first step, unlock and scroll up
-      this.unlockScroll();
+      this.clearDebounceTimers();
+      this.unlockScroll('up');
       this.scrollBeforeSection();
     }
   }
@@ -250,8 +302,16 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
   private lockScroll(): void {
     if (this.isLocked) return;
     
+    // Clear any pending unlocks
+    if (this.unlockDebounceTimer) {
+      clearTimeout(this.unlockDebounceTimer);
+      this.unlockDebounceTimer = null;
+    }
+    
     this.isLocked = true;
+    this.hasEverLocked = true;
     this.scrollAccumulator = 0;
+    this.scrollLockService.lockSection(this.SECTION_ID);
     document.body.style.overflow = 'hidden';
     
     // Set initial step based on scroll direction
@@ -264,12 +324,22 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
     this.centerSection();
   }
 
-  private unlockScroll(): void {
+  private unlockScroll(exitDirection?: 'up' | 'down'): void {
     if (!this.isLocked) return;
+    
+    // Clear any pending locks
+    if (this.lockDebounceTimer) {
+      clearTimeout(this.lockDebounceTimer);
+      this.lockDebounceTimer = null;
+    }
+    
+    const direction = exitDirection || this.scrollDirection;
+    this.scrollLockService.unlockSection(this.SECTION_ID, direction);
     
     this.isLocked = false;
     this.scrollAccumulator = 0;
     document.body.style.overflow = '';
+    this.wasInLockZone = false;
   }
 
   private centerSection(): void {
@@ -291,7 +361,7 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
     
     setTimeout(() => {
       window.scrollTo({
-        top: sectionBottom + window.innerHeight * 0.2,
+        top: sectionBottom + window.innerHeight * 0.5,
         behavior: 'smooth'
       });
     }, 300);

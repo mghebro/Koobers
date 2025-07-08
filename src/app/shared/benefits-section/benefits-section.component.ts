@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, HostListener, ViewChild, ElementRef, NgZone } from '@angular/core';
+import { ScrollLockService } from '../../core/services/scroll-lock.service';
 
 @Component({
   selector: 'app-benefits-section',
@@ -13,9 +14,10 @@ export class BenefitsSectionComponent implements OnInit, OnDestroy {
   activeIndex: number = 1;
   isLocked: boolean = false;
   private hasCompletedSection: boolean = false;
-  private scrollThreshold: number = 50;
+  private hasEverLocked: boolean = false;
+  private scrollThreshold: number = 30;
   private lastScrollTime: number = 0;
-  private scrollDelay: number = 200;
+  private scrollDelay: number = 300;
   private unlockDelay: number = 300;
   private scrollSensitivity: number = 0.8;
   private isScrolling: boolean = false;
@@ -60,7 +62,12 @@ export class BenefitsSectionComponent implements OnInit, OnDestroy {
   private animationFrameId: number | null = null;
   // Removed observers for simpler, more reliable implementation
 
-  constructor(private ngZone: NgZone) {}
+  private readonly SECTION_ID = 'benefits';
+  
+  constructor(
+    private ngZone: NgZone,
+    private scrollLockService: ScrollLockService
+  ) {}
 
   ngOnInit(): void {
     this.setupEventListeners();
@@ -131,12 +138,18 @@ export class BenefitsSectionComponent implements OnInit, OnDestroy {
       }
       
       const rectCenter = rect.top + rect.height / 2;
-const screenCenter = viewportHeight / 2 + 60;
-const lockThreshold = 40; // pixels of tolerance
+      const screenCenter = viewportHeight / 2;
+      const lockThreshold = viewportHeight * 0.2; // 20% of viewport height
 
-if (!this.isLocked &&
-    !this.hasScrolledPast &&
-    Math.abs(rectCenter - screenCenter) < lockThreshold) {
+      // Only lock if we're sufficiently within the section and have never locked before
+      const isComingFromTop = this.scrollDirection === 'down' && rect.top > -100;
+      
+      if (!this.isLocked &&
+          !this.hasEverLocked &&
+          !this.hasScrolledPast &&
+          Math.abs(rectCenter - screenCenter) < lockThreshold &&
+          isComingFromTop &&
+          this.scrollLockService.canSectionLock(this.SECTION_ID, this.scrollDirection)) {
         
         // Set initial benefit based on scroll direction
         if (this.scrollDirection === 'up') {
@@ -156,7 +169,14 @@ if (!this.isLocked &&
   private lockScroll(): void {
     if (this.isLocked || this.isTransitioning) return;
     
+    // Double-check with service before locking
+    if (!this.scrollLockService.canSectionLock(this.SECTION_ID, this.scrollDirection)) {
+      return;
+    }
+    
     this.isLocked = true;
+    this.hasEverLocked = true;
+    this.scrollLockService.lockSection(this.SECTION_ID);
     
     // Save exact scroll position before any changes
     this.originalScrollY = window.pageYOffset || document.documentElement.scrollTop;
@@ -193,8 +213,11 @@ if (!this.isLocked &&
     document.body.classList.add('scroll-locked');
   }
 
-  private unlockScroll(): void {
+  private unlockScroll(exitDirection?: 'up' | 'down'): void {
     if (!this.isLocked) return;
+    
+    const direction = exitDirection || this.scrollDirection;
+    this.scrollLockService.unlockSection(this.SECTION_ID, direction);
     
     this.isLocked = false;
     this.unlockCooldown = true;
@@ -227,7 +250,7 @@ if (!this.isLocked &&
     // Set cooldown to prevent immediate re-lock
     setTimeout(() => {
       this.unlockCooldown = false;
-    }, 1500); // 1.5 second cooldown
+    }, 800); // 0.8 second cooldown
   }
 
   private onWheel(event: WheelEvent): void {
@@ -294,12 +317,12 @@ if (!this.isLocked &&
         const sectionBottom = section.offsetTop + section.offsetHeight;
         this.originalScrollY = sectionBottom - window.innerHeight + 100;
         
-        this.unlockScroll();
+        this.unlockScroll('down');
         
-        // Continue scrolling forward
+        // Continue scrolling forward with more force
         setTimeout(() => {
           window.scrollBy({
-            top: 200,
+            top: 600,
             behavior: 'smooth'
           });
         }, 100);
@@ -328,7 +351,7 @@ if (!this.isLocked &&
         const section = this.benefitsSection.nativeElement;
         this.originalScrollY = section.offsetTop - 100;
         
-        this.unlockScroll();
+        this.unlockScroll('up');
         
         // Continue scrolling backward
         setTimeout(() => {
