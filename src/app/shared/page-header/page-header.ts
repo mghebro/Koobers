@@ -38,7 +38,10 @@ export class PageHeader {
   scrollToContact(): void {
     const el = document.getElementById('contactForm');
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+      const yOffset = -75; // scroll 75px above the element
+      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+  
+      window.scrollTo({ top: y, behavior: 'smooth' });
     }
   }
 }
