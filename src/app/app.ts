@@ -20,10 +20,12 @@ export class App {
     // Listen to route changes for animations
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
+
+        document.body.style.overflow = '';
         setTimeout(() => {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }, 100);
-        
+
 
       }
     });
@@ -32,7 +34,7 @@ export class App {
   isComingSoonPage(): boolean {
     return this.location.path() === '/coming-soon';
   }
-  
+
   prepareRoute(outlet: RouterOutlet) {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
   }
