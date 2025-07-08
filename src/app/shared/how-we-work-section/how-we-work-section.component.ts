@@ -11,15 +11,23 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
   
   activeIndex: number = 1;
   isLocked: boolean = false;
-  private hasCompletedSection: boolean = false;
-  private hasExitedFromTop: boolean = false;
-  private scrollThreshold: number = 50;
+  
+  // State management
+  private hasEnteredSection: boolean = false;
+  private sectionCompleted: boolean = false;
+  private lastScrollY: number = 0;
+  private scrollDirection: 'up' | 'down' = 'down';
+  
+  // Scroll control
+  private scrollAccumulator: number = 0;
+  private requiredScroll: number = 120;
   private lastScrollTime: number = 0;
   private scrollDelay: number = 300;
   private isTransitioning: boolean = false;
-  private lastScrollY: number = 0;
-  private scrollDirection: 'up' | 'down' = 'down';
-  private hasScrolledPast: boolean = false;
+  
+  // Touch handling
+  private touchStartY: number = 0;
+  private touchSensitivity: number = 50;
   
   steps = [
     {
@@ -69,11 +77,6 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
     }
   ];
 
-  private scrollAccumulator: number = 0;
-  private requiredScroll: number = 120;
-  private touchStartY: number = 0;
-  private touchSensitivity: number = 50;
-
   constructor(private ngZone: NgZone) {}
 
   ngAfterViewInit(): void {
@@ -115,38 +118,24 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
     const sectionHeight = sectionRect.height;
     const windowHeight = window.innerHeight;
 
-    // Check if section is in the viewport for locking
-    if (!this.isLocked && !this.hasCompletedSection) {
-      if (this.scrollDirection === 'down' && sectionTop <= windowHeight * 0.3 && sectionTop > -sectionHeight * 0.5) {
-        // Reset to first step when entering from top
-        this.activeIndex = 1;
-        this.hasExitedFromTop = false;
-        this.lockScroll();
-      }
-    }
-    
-    // Handle re-entry from top after exiting
-    if (this.hasExitedFromTop && !this.isLocked && this.scrollDirection === 'down' && sectionTop <= windowHeight * 0.3) {
-      this.activeIndex = 1;
-      this.hasExitedFromTop = false;
+    // Calculate if section center is near screen center
+    const sectionCenter = sectionTop + (sectionHeight / 2);
+    const screenCenter = windowHeight / 2;
+    const distanceFromCenter = Math.abs(sectionCenter - screenCenter);
+    const centerThreshold = windowHeight * 0.1;
+    const isAtCenter = distanceFromCenter <= centerThreshold;
+
+    // Check if section is visible in viewport
+    const sectionVisible = sectionTop < windowHeight && (sectionTop + sectionHeight) > 0;
+
+    // Determine if we should lock scroll
+    if (!this.isLocked && isAtCenter && sectionVisible) {
       this.lockScroll();
     }
 
-    // Check if we've scrolled past the section
-    if (this.scrollDirection === 'down' && sectionTop < -sectionHeight * 0.7) {
-      this.hasScrolledPast = true;
-      if (this.isLocked) {
-        this.unlockScroll();
-      }
-    }
-
-    // Handle scroll up re-entry
-    if (this.scrollDirection === 'up' && this.hasScrolledPast && sectionTop >= -sectionHeight * 0.3) {
-      this.hasScrolledPast = false;
-      this.activeIndex = 5;
-      if (!this.isLocked && sectionTop <= windowHeight * 0.5) {
-        this.lockScroll();
-      }
+    // Determine if we should unlock scroll
+    if (this.isLocked && (!sectionVisible || distanceFromCenter > windowHeight * 0.4)) {
+      this.unlockScroll();
     }
   }
 
@@ -235,8 +224,10 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
         }, 600);
       });
     } else {
+      // Completed all steps, unlock and continue scrolling
+      this.sectionCompleted = true;
       this.unlockScroll();
-      this.hasCompletedSection = true;
+      this.scrollPastSection();
     }
   }
 
@@ -249,53 +240,73 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
           this.isTransitioning = false;
         }, 600);
       });
-    } else if (this.activeIndex === 1) {
-      // When on first step and scrolling up, unlock and scroll to top
-      this.hasExitedFromTop = true;
+    } else {
+      // At first step, unlock and scroll up
       this.unlockScroll();
+      this.scrollBeforeSection();
     }
   }
 
   private lockScroll(): void {
+    if (this.isLocked) return;
+    
     this.isLocked = true;
     this.scrollAccumulator = 0;
     document.body.style.overflow = 'hidden';
     
-    // Ensure the section stays in view
-    const sectionTop = this.processSection.nativeElement.offsetTop;
-    const offset = window.innerHeight * 0.1;
+    // Set initial step based on scroll direction
+    if (!this.hasEnteredSection) {
+      this.activeIndex = this.scrollDirection === 'down' ? 1 : this.steps.length;
+      this.hasEnteredSection = true;
+    }
+    
+    // Center the section on screen
+    this.centerSection();
+  }
+
+  private unlockScroll(): void {
+    if (!this.isLocked) return;
+    
+    this.isLocked = false;
+    this.scrollAccumulator = 0;
+    document.body.style.overflow = '';
+  }
+
+  private centerSection(): void {
+    const sectionElement = this.processSection.nativeElement;
+    const sectionTop = sectionElement.offsetTop;
+    const sectionHeight = sectionElement.offsetHeight;
+    const windowHeight = window.innerHeight;
+    const centerOffset = (windowHeight - sectionHeight) / 2;
+    
     window.scrollTo({
-      top: sectionTop - offset,
+      top: sectionTop - centerOffset,
       behavior: 'smooth'
     });
   }
 
-  private unlockScroll(): void {
-    this.isLocked = false;
-    this.scrollAccumulator = 0;
-    document.body.style.overflow = '';
+  private scrollPastSection(): void {
+    const sectionElement = this.processSection.nativeElement;
+    const sectionBottom = sectionElement.offsetTop + sectionElement.offsetHeight;
     
-    // If scrolling down and completed, scroll past the section
-    if (this.scrollDirection === 'down' && this.activeIndex === this.steps.length) {
-      const sectionBottom = this.processSection.nativeElement.offsetTop + this.processSection.nativeElement.offsetHeight;
-      setTimeout(() => {
-        window.scrollTo({
-          top: sectionBottom - window.innerHeight * 0.5,
-          behavior: 'smooth'
-        });
-      }, 100);
-    }
-  }
-
-  private scrollToTop(): void {
-    // Scroll to a position above the section
-    const sectionTop = this.processSection.nativeElement.offsetTop;
     setTimeout(() => {
       window.scrollTo({
-        top: sectionTop - window.innerHeight * 0.8,
+        top: sectionBottom + window.innerHeight * 0.2,
         behavior: 'smooth'
       });
-    }, 100);
+    }, 300);
+  }
+
+  private scrollBeforeSection(): void {
+    const sectionElement = this.processSection.nativeElement;
+    const sectionTop = sectionElement.offsetTop;
+    
+    setTimeout(() => {
+      window.scrollTo({
+        top: sectionTop - window.innerHeight * 1.2,
+        behavior: 'smooth'
+      });
+    }, 300);
   }
 
   isStepActive(stepId: number): boolean {
@@ -306,7 +317,6 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
     if (this.activeIndex === 1) return 0;
     if (this.activeIndex === this.steps.length) return 100;
     
-    // Calculate percentage based on active step
     const segmentWidth = 100 / (this.steps.length - 1);
     return (this.activeIndex - 1) * segmentWidth;
   }
@@ -314,7 +324,6 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
   onStepClick(stepId: number): void {
     if (!this.isLocked) return;
     
-    // Allow clicking on any step
     if (stepId !== this.activeIndex && !this.isTransitioning) {
       this.isTransitioning = true;
       this.activeIndex = stepId;
@@ -327,6 +336,8 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
 
   @HostListener('window:resize')
   onResize(): void {
-    // Handle resize events if needed
+    if (this.isLocked) {
+      this.centerSection();
+    }
   }
 }
