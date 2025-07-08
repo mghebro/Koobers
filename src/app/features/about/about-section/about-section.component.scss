@@ -6,7 +6,7 @@
   color: v.$typography-100;
   overflow-x: hidden;
   width: 100%;
-  min-height: 100vh;
+  min-height: unset;
 }
 
 p {
@@ -317,7 +317,7 @@ p {
 // Very small screens specific adjustments
 @media (max-width: 280px) {
   .about-section {
-    min-height: 80vh;
+    min-height: unset;
   }
   
   .text-container {
