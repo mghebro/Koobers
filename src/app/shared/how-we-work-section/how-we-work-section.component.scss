@@ -6,7 +6,6 @@
   width: 1344px;
   max-width: 100%;
   padding: 48px 96px;
-  min-height: 100vh;
   display: flex;
   align-items: center;
 
@@ -170,6 +169,7 @@
         align-items: center;
         justify-content: flex-start;
         cursor: pointer;
+        user-select: none;
         z-index: 1;
         opacity: 0.4;
         transform: scale(0.95) translateY(10px);
