@@ -145,6 +145,7 @@
       width: 100%;
       position: relative;
       min-height: 160px; // Consistent height
+      display: flex;
       align-items: stretch; // Keep all items same height
       
       // Apply horizontal scrolling on screens smaller than 1300px

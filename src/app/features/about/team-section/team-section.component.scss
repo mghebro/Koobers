@@ -102,9 +102,9 @@
     &::after {
       content: "";
       position: absolute;
-      top: 0;
+      top: -24px;
       width: 144px;
-      height: 100%;
+      height: calc(100% + 48px);
       pointer-events: none;
       z-index: 2;
     }
