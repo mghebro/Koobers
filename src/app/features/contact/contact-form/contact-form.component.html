@@ -1,87 +1,123 @@
-<div class="page-section">
+<div id="contactForm" class="page-section">
     <div class="content-box">
-        <p class="title">Or Get in Touch</p>
-        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
-            <div class="form-group">
-                <label for="firstName">First Name</label>
-                <input 
-                    type="text" 
-                    id="firstName"
-                    formControlName="firstName"
-                    placeholder="John"
-                    [class.error]="hasError('firstName')"
-                >
-                <span class="error-message" *ngIf="hasError('firstName')">
-                    {{ getErrorMessage('firstName') }}
-                </span>
-            </div>
-            
-            <div class="form-group">
-                <label for="lastName">Last Name</label>
-                <input 
-                    type="text" 
-                    id="lastName"
-                    formControlName="lastName"
-                    placeholder="Smith"
-                    [class.error]="hasError('lastName')"
-                >
-                <span class="error-message" *ngIf="hasError('lastName')">
-                    {{ getErrorMessage('lastName') }}
-                </span>
-            </div>
-            
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input 
-                    type="email" 
-                    id="email"
-                    formControlName="email"
-                    placeholder="Example@gmail.com"
-                    [class.error]="hasError('email')"
-                >
-                <span class="error-message" *ngIf="hasError('email')">
-                    {{ getErrorMessage('email') }}
-                </span>
-            </div>
-            
+        <div class="left-side">
+            <p class="title">Or Get in Touch</p>
 
-            <div class="form-group">
-                <label for="phoneNumber">Phone Number (Optional)</label>
-                <input 
-                    type="tel" 
-                    id="phoneNumber"
-                    formControlName="phoneNumber"
-                    placeholder="+995 568096543"
-                    [class.error]="hasError('phoneNumber')"
-                    (input)="onPhoneInput($event)"
-                    (keydown)="onPhoneKeydown($event)"
-                    (focus)="onPhoneFocus($event)"
-                >
-                <div class="error-message" *ngIf="hasError('phoneNumber')">
-                    {{ getErrorMessage('phoneNumber') }}
+            <div class="info-wrapper">
+                <div class="contact-info">
+                    <div class="icon">
+                        <img src="../../../../assets/svgs/contact/phone.svg" alt="">
+                    </div>
+                    <div class="info">
+                        <p>+995 595 299 995</p>
+                        <p>+995 591 299 899</p>
+                    </div>
+                </div>
+    
+                <div class="contact-info">
+                    <div class="icon">
+                        <img src="../../../../assets/svgs/contact/mail.svg" alt="">
+                    </div>
+                    <div class="info">
+                        <p>info&#64;koobercoders.com</p>
+                    </div>
+                </div>
+    
+                <div class="contact-info">
+                    <div class="icon">
+                        <img src="../../../../assets/svgs/contact/location.svg" alt="">
+                    </div>
+                    <div class="info">
+                        <p>Tbilisi, Alexander Kazbegi Ave. 34/34b</p>
+                    </div>
                 </div>
             </div>
-            
-            <div class="form-group">
-                <label for="message">Message</label>
-                <input 
-                    id="message"
-                    formControlName="message"
-                    placeholder="Here Goes Your Interest"
-                    [class.error]="hasError('message')"
+        </div>
+
+        <div class="right-side">
+            <p class="title">Or Submit This Form</p>
+            <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input 
+                        type="text" 
+                        id="firstName"
+                        formControlName="firstName"
+                        placeholder="John"
+                        [class.error]="hasError('firstName')"
+                    >
+                    <span class="error-message" *ngIf="hasError('firstName')">
+                        {{ getErrorMessage('firstName') }}
+                    </span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input 
+                        type="text" 
+                        id="lastName"
+                        formControlName="lastName"
+                        placeholder="Smith"
+                        [class.error]="hasError('lastName')"
+                    >
+                    <span class="error-message" *ngIf="hasError('lastName')">
+                        {{ getErrorMessage('lastName') }}
+                    </span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input 
+                        type="email" 
+                        id="email"
+                        formControlName="email"
+                        placeholder="Example@gmail.com"
+                        [class.error]="hasError('email')"
+                    >
+                    <span class="error-message" *ngIf="hasError('email')">
+                        {{ getErrorMessage('email') }}
+                    </span>
+                </div>
+                
+    
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number (Optional)</label>
+                    <input 
+                        type="tel" 
+                        id="phoneNumber"
+                        formControlName="phoneNumber"
+                        placeholder="+995 568096543"
+                        [class.error]="hasError('phoneNumber')"
+                        (input)="onPhoneInput($event)"
+                        (keydown)="onPhoneKeydown($event)"
+                        (focus)="onPhoneFocus($event)"
+                    >
+                    <div class="error-message" *ngIf="hasError('phoneNumber')">
+                        {{ getErrorMessage('phoneNumber') }}
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <input 
+                        id="message"
+                        formControlName="message"
+                        placeholder="Here Goes Your Interest"
+                        [class.error]="hasError('message')"
+                    >
+                    <span class="error-message" *ngIf="hasError('message')">
+                        {{ getErrorMessage('message') }}
+                    </span>
+                </div>
+                
+                <button 
+                    type="submit" 
+                    [disabled]="contactForm.invalid && submitted"
+                    [class.disabled]="contactForm.invalid && submitted"
                 >
-                <span class="error-message" *ngIf="hasError('message')">
-                    {{ getErrorMessage('message') }}
-                </span>
-            </div>
-            
-            <button 
-                type="submit" 
-                [disabled]="contactForm.invalid && submitted"
-                [class.disabled]="contactForm.invalid && submitted"
-            >
-                Submit the Form
-            </button>
-        </form>
+                    Submit the Form
+                </button>
+            </form>
+        </div>
     </div>
 </div>

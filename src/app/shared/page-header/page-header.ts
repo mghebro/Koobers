@@ -24,7 +24,7 @@ export class PageHeader {
   @Input() primaryButtonTarget: string = ""
   @Input() secondaryButtonContent: string = ""
   @Input() secondaryButtonTarget: string = ""
-  @Input() contactInfo: ContactInfo | null = null
+  @Input() contactHeader: boolean = false;
 
   constructor(private router: Router) {}
 
@@ -32,6 +32,13 @@ export class PageHeader {
   navigateTo(route: string): void {
     if (route) {
       this.router.navigate([route]);
+    }
+  }
+
+  scrollToContact(): void {
+    const el = document.getElementById('contactForm');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
     }
   }
 }

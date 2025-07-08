@@ -183,7 +183,7 @@ if (!this.isLocked &&
       width: 100% !important;
       overflow: hidden !important;
       touch-action: none !important;
-    `;
+    `;  
     
     // Also lock html element
     document.documentElement.style.overflow = 'hidden';
