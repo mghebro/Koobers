@@ -8,7 +8,6 @@
   // Add will-change for better scroll performance
   will-change: transform;
   // Fix height to prevent jumping
-  min-height: 450px;
   position: relative;
   
   // Scroll indicator
@@ -66,24 +65,6 @@
       }
     }
   }
-
-  // Tablet styles
-  @media (max-width: 1024px) {
-    padding: 64px 32px;
-    border-radius: 64px;
-  }
-
-  // Mobile styles
-  @media (max-width: 768px) {
-    padding: 32px 16px;
-    border-radius: 32px;
-  }
-
-  @media (max-width: 480px) {
-    padding: 24px 12px;
-    border-radius: 24px;
-  }
-
   .content-box {
     @include mixins.flex-center;
     flex-direction: column;
@@ -178,7 +159,7 @@
         overflow: hidden;
         cursor: pointer;
         // Enhanced transition for smoother animations with better easing
-        transition: width 800ms cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+        transition: width 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94), 
                     transform 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
                     background-color 400ms ease,
                     padding 400ms ease,
@@ -192,18 +173,6 @@
         padding: 0 12px 12px 12px;
         background-color: transparent;
         border: 1px solid transparent;
-        
-        &:hover:not(.active) {
-          transform: translateY(-2px);
-        }
-
-        @media (max-width: 768px) {
-          min-width: 180px;
-        }
-
-        @media (max-width: 480px) {
-          min-width: 160px;
-        }
 
         &:not(:first-child) {
           .text-content {
@@ -326,16 +295,6 @@
 
         &.active {
           width: 37%;
-          min-width: 300px;
-          transform: translateX(-2px);
-
-          @media (max-width: 768px) {
-            min-width: 250px;
-          }
-
-          @media (max-width: 480px) {
-            min-width: 200px;
-          }
 
           .progress-bar {
             height: 5px;
@@ -343,7 +302,7 @@
             
             &::before {
               width: 100%;
-              animation: fillProgress 1200ms ease-out;
+              animation: fillProgress 800ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
             }
           }
 
@@ -479,3 +438,22 @@
   // Maintain layout when fixed
   width: 100% !important;
 }
+
+
+  
+  @media (max-width: 1400px) {
+    .page-section {
+      padding: 96px 48px;
+      .content-box {
+        .benefits {
+          .benefit {
+            .text-content {
+              .description {
+                width: calc((100dvw - 192px) * 0.37 - 24px);
+              }
+            }
+          }
+        }
+      }
+    }
+  }

@@ -1,4 +1,4 @@
-<div class="page-section" #processSection>
+<div class="page-section">
     <div class="content-box">
         <div class="heading">
             <span class="section-label">
@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <div class="process" [class.locked]="isLocked" #processContent>
+        <div class="process" [class.locked]="isLocked" #processSection>
             <div class="progress-line-container">
                 <div class="progress-line-bg"></div>
                 <div class="progress-line-fill" [style.width.%]="getProgressPercentage()"></div>
@@ -26,7 +26,7 @@
                  [attr.data-step]="step.id"
                  [class.active]="isStepActive(step.id)"
                  [class.completed]="step.id < activeIndex"
-                 [class.clickable]="isLocked"
+                 [class.clickable]="!isLocked"
                  (click)="onStepClick(step.id)">
                 <div class="step-number">
                     <div class="number-bg"></div>

@@ -9,6 +9,7 @@ import { ScrollLockService } from '../../core/services/scroll-lock.service';
 })
 export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
   @ViewChild('processSection', { static: false }) processSection!: ElementRef;
+  @ViewChild('processContent', {static: false}) processContent!: ElementRef;
   
   activeIndex: number = 1;
   isLocked: boolean = false;
