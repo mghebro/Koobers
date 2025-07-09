@@ -274,11 +274,16 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
         }, 600);
       });
     } else {
-      // Completed all steps, unlock and continue scrolling
+      // Completed all steps - add a slight delay before unlocking
+      this.isTransitioning = true;
       this.sectionCompleted = true;
-      this.clearDebounceTimers();
-      this.unlockScroll('down');
-      this.scrollPastSection();
+      
+      setTimeout(() => {
+        this.clearDebounceTimers();
+        this.unlockScroll('down');
+        this.scrollPastSection();
+        this.isTransitioning = false;
+      }, 100); // Give user time to see completion
     }
   }
 
@@ -340,6 +345,9 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
     this.scrollAccumulator = 0;
     document.body.style.overflow = '';
     this.wasInLockZone = false;
+    
+    // Reset scroll tracking to prevent immediate re-lock
+    this.lastScrollTime = Date.now();
   }
 
   private centerSection(): void {
@@ -359,12 +367,16 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
     const sectionElement = this.processSection.nativeElement;
     const sectionBottom = sectionElement.offsetTop + sectionElement.offsetHeight;
     
-    setTimeout(() => {
+    // More conservative scroll - just move past the section edge
+    const targetScroll = sectionBottom + 50; // Just 50px past the section
+    
+    // Use requestAnimationFrame for smoother control
+    requestAnimationFrame(() => {
       window.scrollTo({
-        top: sectionBottom + window.innerHeight * 0.5,
+        top: targetScroll,
         behavior: 'smooth'
       });
-    }, 300);
+    });
   }
 
   private scrollBeforeSection(): void {
@@ -406,8 +418,10 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
 
   @HostListener('window:resize')
   onResize(): void {
-    if (this.isLocked) {
+    if (this.isLocked && this.processSection) {
       this.centerSection();
+    } else {
+      this.unlockScroll();
     }
   }
 }

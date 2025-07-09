@@ -112,12 +112,6 @@
         background-color: transparent;
         border: 1px solid transparent;
 
-        &:not(:first-child) {
-          .text-content {
-            padding-left: 24px;
-          }
-        }
-
         .progress-bar {
           width: 100%;
           height: 3px;
