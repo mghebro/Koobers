@@ -24,6 +24,7 @@
     </div>
 
     <div class="swiper-wrapper">
+        <div class="progress-bar"></div>
       <swiper-container
         #swiperEl
         class="custom-swiper"
@@ -34,7 +35,6 @@
         [attr.autoplay]="autoplayConfig"
       >
         <swiper-slide *ngFor="let benefit of benefits" class="benefit">
-          <div class="progress-bar"></div>
           <div class="text-content">
             <p class="id">{{ benefit.id }}</p>
             <p class="title">{{ benefit.title }}</p>

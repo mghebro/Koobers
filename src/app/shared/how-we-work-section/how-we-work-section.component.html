@@ -61,4 +61,26 @@
             </div>
         </div>
     </div>
+
+    <div class="content-box-mobile">
+        
+        <div class="heading">
+            <span>How we work</span>
+            <div class="main-text">Quality. Growth. Success. Our Process Covers It All.</div>
+            <div class="sub-text">From first idea to final launch (and beyond), our process is clear, collaborative, and focused on real results. Here’s how we bring your vision to life — step by step.</div>
+        </div>
+
+        <div class="process">
+            <div class="card" *ngFor="let step of steps">
+                <div class="heading">
+                    <img class="logo" [src]="step.icon" alt="">
+                    <div class="heading-text">
+                        <p class="title">{{step.number}}. {{step.title}}</p>
+                        <p class="timeline">{{step.timeline}}</p>
+                    </div>
+                </div>
+                <p class="description">{{step.description}}</p>
+            </div>
+        </div>
+    </div>
 </div>
