@@ -494,4 +494,26 @@ export class BenefitsSectionComponent implements OnInit, OnDestroy, AfterViewIni
       this.lastScrollTime = currentTime;
     }
   }
+
+  private centerSection(): void {
+    const sectionElement = this.benefitsContainer.nativeElement;
+    const sectionTop = sectionElement.offsetTop;
+    const sectionHeight = sectionElement.offsetHeight;
+    const windowHeight = window.innerHeight;
+    const centerOffset = (windowHeight - sectionHeight) / 2;
+    
+    window.scrollTo({
+      top: sectionTop - centerOffset,
+      behavior: 'smooth'
+    });
+  }
+  
+  @HostListener('window:resize')
+  onResize(): void {
+    if (this.isLocked && this.benefitsContainer) {
+      this.centerSection();
+    } else {
+      this.unlockScroll();
+    }
+  }
 }
