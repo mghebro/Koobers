@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FeaturesSectionComponent } from './features-section/features-section.component';
 import { HowWeWorkSectionComponent } from './how-we-work-section/how-we-work-section.component';
@@ -23,7 +23,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports: [
     FeaturesSectionComponent,
@@ -32,6 +32,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CtaSection,
     PageHeader,
     ModalForm
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SharedModule { }

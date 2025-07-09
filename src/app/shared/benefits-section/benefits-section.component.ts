@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener, ViewChild, ElementRef, NgZone } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ViewChild, ElementRef, NgZone, AfterViewInit } from '@angular/core';
 import { ScrollLockService } from '../../core/services/scroll-lock.service';
 
 @Component({
@@ -7,9 +7,10 @@ import { ScrollLockService } from '../../core/services/scroll-lock.service';
   templateUrl: './benefits-section.component.html',
   styleUrls: ['./benefits-section.component.scss']
 })
-export class BenefitsSectionComponent implements OnInit, OnDestroy {
+export class BenefitsSectionComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('benefitsSection', { static: false }) benefitsSection!: ElementRef;
   @ViewChild('benefitsContainer', { static: false }) benefitsContainer!: ElementRef;
+  @ViewChild('swiperEl') swiperEl!: ElementRef;
 
   activeIndex: number = 1;
   isLocked: boolean = false;
@@ -68,6 +69,37 @@ export class BenefitsSectionComponent implements OnInit, OnDestroy {
     private ngZone: NgZone,
     private scrollLockService: ScrollLockService
   ) {}
+
+  autoplayConfig = JSON.stringify({
+    delay: 3000,
+    disableOnInteraction: true,
+    pauseOnMouseEnter: true,
+  });
+
+  ngAfterViewInit() {
+    const swiperContainer = this.swiperEl.nativeElement;
+    
+    // Configure Swiper parameters
+    Object.assign(swiperContainer, {
+      slidesPerView: 1,
+      spaceBetween: 8,
+      loop: true, // Optional: enable infinite loop
+      // Disable built-in navigation since we're using custom
+      navigation: false,
+      pagination: false
+    });
+    
+    // Initialize Swiper
+    swiperContainer.initialize();
+  }
+
+  slidePrev() {
+    this.swiperEl.nativeElement.swiper.slidePrev();
+  }
+
+  slideNext() {
+    this.swiperEl.nativeElement.swiper.slideNext();
+  }
 
   ngOnInit(): void {
     this.setupEventListeners();

@@ -22,7 +22,39 @@
         </div>
       </div>
     </div>
-    
 
+    <div class="swiper-wrapper">
+      <swiper-container
+        #swiperEl
+        class="custom-swiper"
+        style="width: 100%"
+        slides-per-view="1"
+        init="false"
+        space-between="8"
+        [attr.autoplay]="autoplayConfig"
+      >
+        <swiper-slide *ngFor="let benefit of benefits" class="benefit">
+          <div class="progress-bar"></div>
+          <div class="text-content">
+            <p class="id">{{ benefit.id }}</p>
+            <p class="title">{{ benefit.title }}</p>
+            <p class="description">{{ benefit.description }}</p>
+          </div>
+        </swiper-slide>
+      </swiper-container>
+
+      <div class="custom-nav">
+        <button class="nav-button prev Primary-Default" (click)="slidePrev()">
+          <img src="../../../assets/svgs/swiper-arrow.svg" alt="" />
+        </button>
+        <button class="nav-button next Primary-Default" (click)="slideNext()">
+          <img
+            style="transform: rotateZ(180deg)"
+            src="../../../assets/svgs/swiper-arrow.svg"
+            alt=""
+          />
+        </button>
+      </div>
+    </div>
   </div>
 </div>
