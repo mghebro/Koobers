@@ -267,38 +267,37 @@
       }
     }
   }
+    .progress-bar {
+      width: 100%;
+      height: 5px;
+      border-radius: 5px;
+      background: linear-gradient(90deg, #34b84a 0%, #42eb85 100%);
+    }
 
   .custom-swiper {
     .benefit {
-          .progress-bar {
-            width: 100%;
-            height: 5px;
-            border-radius: 5px;
-            background: linear-gradient(90deg, #34b84a 0%, #42eb85 100%);
-          }
+      .id {
+        margin-top: 24px;
+      }
 
-          .id {
-            margin-top: 24px;
-          }
+      .id,
+      .title {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: -0.01em;
+        color: variables.$typography-100;
+      }
 
-          .id,
-          .title {
-            font-weight: 600;
-            font-size: 16px;
-            line-height: 24px;
-            letter-spacing: -0.01em;
-            color: variables.$typography-100;
-          }
-
-          .description {
-            width: 100%;
-            font-weight: 400;
-            font-size: 15px;
-            line-height: 1.6;
-            letter-spacing: 0;
-            color: variables.$typography-300;
-            margin-top: 0;
-          }
+      .description {
+        width: 100%;
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 1.6;
+        letter-spacing: 0;
+        color: variables.$typography-300;
+        margin-top: 0;
+      }
     }
   }
 }
