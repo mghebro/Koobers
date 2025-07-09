@@ -6,26 +6,60 @@
   color: v.$typography-100;
   overflow: hidden;
   width: 100%;
-  min-height: 150vh;
+  min-height: 200vh;
   position: relative;
   z-index: 1;
+
+
 }
 
 p {
   color: v.$typography-green;
   font-weight: 700;
+  font-size: 32px;
 }
 
 .text-container {
   height: 100vh;
   position: sticky;
   top: 0;
-  perspective: 300px;
+  perspective: 500px;
   perspective-origin: 50% 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: visible;
+  overflow: hidden;
+
+   &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 25%; // Increased fade area
+    pointer-events: none;
+    z-index: 100;
+  }
+  
+  &::before {
+    top: 0;
+    background: linear-gradient(
+      to bottom, 
+      v.$bg-background 0%, 
+      v.$bg-background 20%,
+      transparent 100%
+    );
+  }
+  
+  &::after {
+    bottom: 0;
+    background: linear-gradient(
+      to top, 
+      v.$bg-background 0%, 
+      v.$bg-background 20%,
+      transparent 100%
+    );
+  }
   
   // Responsive heights
   @media (max-width: 480px) {
@@ -57,17 +91,27 @@ p {
 .text-block {
   position: absolute;
   left: 50%;
-  width: 800px;
-  max-width: 90%;
+  top: 50%;
+  width: 900px; // Increased width
+  max-width: 85%;
   transform-style: preserve-3d;
   z-index: 10;
   text-align: center;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  line-height: 1.2;
-  transform: translateX(-50%) rotateX(25deg);
-  transform-origin: 50% 0;
+  font-weight: 700; // Increased weight
+  letter-spacing: 0.03em;
+  line-height: 1.1; // Tighter line height
+ transform: translate(-50%, -50%) rotateX(25deg) translateZ(0) translateY(600px);
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+  
+  // Mobile adjustments
+  @media (max-width: 768px) {
+    width: 95%;
+    max-width: 100%;
+    padding: 0 15px;
+    transform: translate(-50%, -50%) rotateX(20deg) translateZ(0) translateY(600px);
+  }
   
   // Very small screens (280px and below)
   @media (max-width: 320px) {
@@ -116,17 +160,18 @@ p {
 }
 
 .text-line {
-  display: block;
-  margin: 1.5em 0;
+ display: block;
+  margin: 1.5em 0; // Increased spacing
   color: v.$typography-green;
   opacity: 1;
-  font-size: 2.5rem;
-  line-height: 1.3;
-  font-weight: 600;
+  font-size: 3.5rem; // Base size increased
+  line-height: 1.2;
+  font-weight: 700;
   text-transform: none;
   word-wrap: break-word;
   hyphens: auto;
   visibility: visible;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); // Subtle shadow for readability
   
   &:empty {
     margin: 0.5em 0;
@@ -318,12 +363,16 @@ p {
   
   // Title lines (KOOBER CODERS)
   &.title {
-    font-size: 5rem;
-    margin: 0.5em 0;
-    letter-spacing: 0.1em;
-    line-height: 0.9;
-    font-weight: 700;
+    font-size: 7rem; // Much bigger title
+    margin: 0.4em 0;
+    letter-spacing: 0.2em;
+    line-height: 0.8;
+    font-weight: 900;
     text-transform: uppercase;
+    text-shadow: 
+      0 0 20px rgba(v.$typography-green, 0.5),
+      0 0 40px rgba(v.$typography-green, 0.3),
+      0 2px 4px rgba(0, 0, 0, 0.5);
     
     @media (max-width: 768px) {
       font-size: 3rem;
@@ -377,8 +426,22 @@ p {
     opacity: 1 !important;
     transform: none !important;
     color: black;
-    margin: 20px 0;
+    margin: 20px 0 !important;
     font-size: 14pt;
     page-break-inside: avoid;
+  }
+}
+
+* {
+  transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-block {
+    transform: translate(-50%, -50%) !important;
+  }
+  
+  * {
+    transition: none !important;
   }
 }
