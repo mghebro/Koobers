@@ -1,0 +1,12 @@
+
+<div class="page-wrapper">
+    <app-page-header headingTitle="{{ 'CONTACT.HEADING_TITLE' | translate }}"
+        headingTitleSpan="{{ 'CONTACT.HEADING_TITLE_SPAN' | translate }}"
+        headingDescription="{{ 'CONTACT.HEADING_DESCRIPTION' | translate }}"
+          primaryButtonContent="{{ 'CONTACT.BOOK_CONSULTATION' | translate }}"
+          secondaryButtonContent="{{ 'COMMON.SEE_OUR_WORK' | translate }}"
+          secondaryButtonTarget="/work"
+          [contactHeader]="true"></app-page-header>
+    <app-contact-form></app-contact-form>
+    <app-contact-next-steps></app-contact-next-steps>
+</div>

@@ -1,0 +1,17 @@
+<div class="page-wrapper">
+    <app-page-header headingTitle="{{ 'ABOUT.HEADING_TITLE' | translate }}"
+        headingTitleSpan="{{ 'ABOUT.HEADING_TITLE_SPAN' | translate }}"
+        headingDescription="{{ 'ABOUT.HEADING_DESCRIPTION' | translate }}"
+          primaryButtonContent="{{ 'ABOUT.SEE_OUR_WORK' | translate }}"
+          primaryButtonTarget="/work"
+          secondaryButtonContent="{{ 'ABOUT.EXPLORE_SERVICES' | translate }}"
+          secondaryButtonTarget="/services"></app-page-header>
+  <app-about-section></app-about-section>
+  <app-team-section></app-team-section>
+  <app-cta-section
+  ctaTitle="{{ 'ABOUT.CTA_TITLE' | translate }}"
+  ctaDescription="{{ 'ABOUT.CTA_DESCRIPTION' | translate }}"
+  buttonContent="{{ 'COMMON.START_PROJECT' | translate }}"
+  buttonTarget="/contact"
+  ></app-cta-section>
+</div>

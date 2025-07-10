@@ -1,0 +1,86 @@
+<div class="page-section">
+    <div class="content-box" #contentBox>
+        <div class="heading" #headingSection>
+            <span class="section-label">
+                <span class="label-line"></span>
+                {{ 'HOW_WE_WORK.TITLE' | translate }}
+                <span class="label-line"></span>
+            </span>
+            <div class="main-text">
+                {{ 'HOW_WE_WORK.MAIN_TITLE_START' | translate }} <span class="text-gradient">{{ 'HOW_WE_WORK.MAIN_TITLE_HIGHLIGHT' | translate }}</span>
+                {{ 'HOW_WE_WORK.MAIN_TITLE_END' | translate }}
+            </div>
+            <div class="sub-text">
+                {{ 'HOW_WE_WORK.SUB_TITLE' | translate }}
+            </div>
+        </div>
+
+        <div class="process" [class.locked]="isLocked" #processSection>
+            <div class="progress-line-container">
+                <div class="progress-line-bg"></div>
+                <div class="progress-line-fill" [style.width.%]="getProgressPercentage()"></div>
+                <div class="progress-line-glow" [style.left.%]="getProgressPercentage()"></div>
+            </div>
+            <div class="card"
+                 *ngFor="let step of steps; let i = index"
+                 [attr.data-step]="step.id"
+                 [class.active]="isStepActive(step.id)"
+                 [class.completed]="step.id < activeIndex"
+                 [class.clickable]="!isLocked"
+                 (click)="onStepClick(step.id)">
+                <div class="step-number">
+                    <div class="number-bg"></div>
+                    <div class="number-outline"></div>
+                    <span class="number-text">{{step.number}}</span>
+                    <div class="number-decoration"></div>
+                </div>
+                <div class="card-content">
+                    <div class="icon-wrapper">
+                        <div class="icon-bg"></div>
+                        <img class="logo" [src]="step.icon" [alt]="step.title | translate">
+                        <div class="icon-ring"></div>
+                    </div>
+                    <div class="heading">
+                        <p class="highlight-badge">{{ step.highlight | translate }}</p>
+                        <p class="title">{{ step.title | translate }}</p>
+                        <p class="timeline">{{ step.timeline | translate }}</p>
+                    </div>
+                    <p class="description">{{ step.description | translate }}</p>
+                </div>
+                <div class="ripple"></div>
+            </div>
+        </div>
+
+        <div class="progress-indicator" *ngIf="isLocked">
+            <div class="progress-dots">
+                <div class="dot"
+                     *ngFor="let step of steps"
+                     [class.active]="isStepActive(step.id)"
+                     [class.completed]="step.id < activeIndex">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-box-mobile">
+
+        <div class="heading">
+            <span>{{ 'HOW_WE_WORK.TITLE' | translate }}</span>
+            <div class="main-text">{{ 'HOW_WE_WORK.MOBILE_MAIN_TITLE' | translate }}</div>
+            <div class="sub-text">{{ 'HOW_WE_WORK.MOBILE_SUB_TITLE' | translate }}</div>
+        </div>
+
+        <div class="process">
+            <div class="card" *ngFor="let step of steps">
+                <div class="heading">
+                    <img class="logo" [src]="step.icon" alt="">
+                    <div class="heading-text">
+                        <p class="title">{{step.number}}. {{ step.title | translate }}</p>
+                        <p class="timeline">{{ step.timeline | translate }}</p>
+                    </div>
+                </div>
+                <p class="description">{{ step.description | translate }}</p>
+            </div>
+        </div>
+    </div>
+</div>

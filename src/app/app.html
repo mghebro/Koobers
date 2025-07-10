@@ -1,0 +1,10 @@
+@if(!isComingSoonPage()) 
+{
+<app-navbar></app-navbar>
+
+} 
+  <div [@routeAnimations]="prepareRoute(outlet)" class="route-container">
+  <router-outlet #outlet="outlet"></router-outlet>
+</div>  
+<app-footer *ngIf="!isComingSoonPage()"></app-footer>
+

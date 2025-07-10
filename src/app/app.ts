@@ -1,0 +1,49 @@
+import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { slideInAnimation } from './shared/animations/route-animations';
+import { TranslationService } from './core/services/translation.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.html',
+  standalone: false,
+  styleUrl: './app.scss',
+  animations: [
+    slideInAnimation
+  ]
+})
+export class App implements OnInit {
+  protected title = 'KooberCoders';
+  isLoading = false;
+
+  constructor(
+    private location: Location,
+    private router: Router,
+    private translationService: TranslationService
+  ) {
+    // Listen to route changes for animations
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        document.body.style.overflow = '';
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 100);
+      }
+    });
+  }
+
+  ngOnInit(): void {
+    // TranslationService will initialize itself with the correct language
+    // based on browser language or stored preference
+  }
+
+  isComingSoonPage(): boolean {
+    return this.location.path() === '/coming-soon';
+  }
+
+  prepareRoute(outlet: RouterOutlet) {
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
+  }
+}

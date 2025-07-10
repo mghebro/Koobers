@@ -1,0 +1,447 @@
+@use '../../../../styles/variables' as v;
+@use '../../../../styles/mixins' as m;
+
+.about-section {
+  background: v.$bg-background;
+  color: v.$typography-100;
+  overflow: hidden;
+  width: 100%;
+  min-height: 200vh;
+  position: relative;
+  z-index: 1;
+
+
+}
+
+p {
+  color: v.$typography-green;
+  font-weight: 700;
+  font-size: 32px;
+}
+
+.text-container {
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  perspective: 500px;
+  perspective-origin: 50% 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+   &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 25%; // Increased fade area
+    pointer-events: none;
+    z-index: 100;
+  }
+  
+  &::before {
+    top: 0;
+    background: linear-gradient(
+      to bottom, 
+      v.$bg-background 0%, 
+      v.$bg-background 20%,
+      transparent 100%
+    );
+  }
+  
+  &::after {
+    bottom: 0;
+    background: linear-gradient(
+      to top, 
+      v.$bg-background 0%, 
+      v.$bg-background 20%,
+      transparent 100%
+    );
+  }
+  
+  // Responsive heights
+  @media (max-width: 480px) {
+    height: 700px;
+    padding-bottom: 150px;
+  }
+  
+  @media (min-width: 481px) and (max-width: 768px) {
+    height: 800px;
+    padding-bottom: 175px;
+  }
+  
+  @media (min-width: 769px) and (max-width: 1024px) {
+    height: 850px;
+    padding-bottom: 185px;
+  }
+  
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    height: 950px;
+    padding-bottom: 220px;
+  }
+  
+  @media (min-width: 1441px) {
+    height: 1000px;
+    padding-bottom: 250px;
+  }
+}
+
+.text-block {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 900px; // Increased width
+  max-width: 85%;
+  transform-style: preserve-3d;
+  z-index: 10;
+  text-align: center;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-weight: 700; // Increased weight
+  letter-spacing: 0.03em;
+  line-height: 1.1; // Tighter line height
+ transform: translate(-50%, -50%) rotateX(25deg) translateZ(0) translateY(600px);
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+  
+  // Mobile adjustments
+  @media (max-width: 768px) {
+    width: 95%;
+    max-width: 100%;
+    padding: 0 15px;
+    transform: translate(-50%, -50%) rotateX(20deg) translateZ(0) translateY(600px);
+  }
+  
+  // Very small screens (280px and below)
+  @media (max-width: 320px) {
+    width: 98%;
+    max-width: 100%;
+    transform: translateX(-50%) rotateX(15deg);
+    padding: 0 8px;
+  }
+  
+  // Mobile phones (portrait)
+  @media (min-width: 321px) and (max-width: 480px) {
+    width: 95%;
+    max-width: 100%;
+    transform: translateX(-50%) rotateX(25deg);
+    padding: 0 10px;
+  }
+  
+  // Mobile phones (landscape) and small tablets
+  @media (min-width: 481px) and (max-width: 768px) {
+    width: 90%;
+    max-width: 700px;
+    transform: translateX(-50%) rotateX(25deg);
+    padding: 0 15px;
+  }
+  
+  // Tablets
+  @media (min-width: 769px) and (max-width: 1024px) {
+    width: 85%;
+    max-width: 800px;
+    transform: translateX(-50%) rotateX(25deg);
+  }
+  
+  // Large tablets and small laptops
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 80%;
+    max-width: 900px;
+    transform: translateX(-50%) rotateX(25deg);
+  }
+  
+  // Large screens
+  @media (min-width: 1441px) {
+    width: 75%;
+    max-width: 1000px;
+    transform: translateX(-50%) rotateX(25deg);
+  }
+}
+
+.text-line {
+ display: block;
+  margin: 1.5em 0; // Increased spacing
+  color: v.$typography-green;
+  opacity: 1;
+  font-size: 3.5rem; // Base size increased
+  line-height: 1.2;
+  font-weight: 700;
+  text-transform: none;
+  word-wrap: break-word;
+  hyphens: auto;
+  visibility: visible;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); // Subtle shadow for readability
+  
+  &:empty {
+    margin: 0.5em 0;
+  }
+  
+  // Very small screens (280px and below)
+  @media (max-width: 320px) {
+    margin: 1.2em 0;
+    font-size: 1.4rem;
+    line-height: 1.2;
+  }
+  
+  // Mobile phones (portrait)
+  @media (min-width: 321px) and (max-width: 480px) {
+    margin: 1.3em 0;
+    font-size: 1.6rem;
+    line-height: 1.3;
+  }
+  
+  // Mobile phones (landscape) and small tablets
+  @media (min-width: 481px) and (max-width: 768px) {
+    margin: 1.4em 0;
+    font-size: 2rem;
+    line-height: 1.3;
+  }
+  
+  // Tablets
+  @media (min-width: 769px) and (max-width: 1024px) {
+    margin: 1.5em 0;
+    font-size: 2.5rem;
+    line-height: 1.3;
+  }
+  
+  // Large tablets and small laptops
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    margin: 1.5em 0;
+    font-size: 3rem;
+    line-height: 1.3;
+  }
+  
+  // Large screens
+  @media (min-width: 1441px) {
+    margin: 1.5em 0;
+    font-size: 3.5rem;
+    line-height: 1.3;
+  }
+  
+  
+  // Ensure last line stays visible
+  &:last-child {
+    margin-bottom: 100px;
+    
+    @media (max-width: 320px) {
+      margin-bottom: 30px;
+    }
+    
+    @media (min-width: 321px) and (max-width: 480px) {
+      margin-bottom: 50px;
+    }
+    
+    @media (min-width: 481px) and (max-width: 768px) {
+      margin-bottom: 70px;
+    }
+    
+    @media (min-width: 769px) and (max-width: 1024px) {
+      margin-bottom: 80px;
+    }
+    
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      margin-bottom: 90px;
+    }
+    
+    @media (min-width: 1441px) {
+      margin-bottom: 120px;
+    }
+  }
+}
+
+// Orientation-specific adjustments
+@media (orientation: landscape) and (max-height: 500px) {
+  .text-container {
+    height: 600px;
+    padding-bottom: 100px;
+  }
+  
+  .text-block {
+    transform: translate(-50%, -50%) rotateX(10deg);
+    
+    @media (max-width: 320px) {
+      transform: translate(-50%, -50%) rotateX(5deg);
+    }
+  }
+  
+  .text-line {
+    margin: 20px 0;
+    font-size: 1rem;
+    
+    @media (max-width: 320px) {
+      margin: 12px 0;
+      font-size: 0.8rem;
+    }
+    
+    &:last-child {
+      margin-bottom: 40px;
+      
+      @media (max-width: 320px) {
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
+
+// Very small screens specific adjustments
+@media (max-width: 280px) {
+  .about-section {
+    min-height: unset;
+  }
+  
+  .text-container {
+    height: 500px;
+    padding-bottom: 80px;
+  }
+  
+  .text-block {
+    width: 99%;
+    padding: 0 5px;
+    transform: translate(-50%, -50%) rotateX(10deg);
+  }
+  
+  .text-line {
+    margin: 12px 0;
+    font-size: 0.85rem;
+    line-height: 1.2;
+    letter-spacing: -0.05px;
+    
+    &.active {
+      transform: translateY(0) scale(0.95);
+    }
+    
+    &:last-child {
+      margin-bottom: 25px;
+    }
+  }
+}
+
+// High DPI display adjustments
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .text-line {
+    font-weight: 650;
+    letter-spacing: -0.2px;
+  }
+}
+
+// Reduced motion preference
+@media (prefers-reduced-motion: reduce) {
+  .text-line {
+    transition: opacity 0.3s ease;
+    transform: none !important;
+    
+    &.active {
+      opacity: 1;
+    }
+    
+    &.scrolled-past {
+      opacity: 0.5;
+    }
+  }
+  
+  .text-block {
+    transform: translate(-50%, -50%) rotateX(0deg) !important;
+  }
+}
+
+
+// Authentic Star Wars title styling
+.text-line {
+  // Intro lines
+  &.intro {
+    font-size: 2.5rem;
+    opacity: 0.8;
+    font-weight: 400;
+    text-transform: lowercase;
+    letter-spacing: 0.05em;
+    
+    @media (max-width: 768px) {
+      font-size: 1.5rem;
+    }
+  }
+  
+  // Title lines (KOOBER CODERS)
+  &.title {
+    font-size: 7rem; // Much bigger title
+    margin: 0.4em 0;
+    letter-spacing: 0.2em;
+    line-height: 0.8;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-shadow: 
+      0 0 20px rgba(v.$typography-green, 0.5),
+      0 0 40px rgba(v.$typography-green, 0.3),
+      0 2px 4px rgba(0, 0, 0, 0.5);
+    
+    @media (max-width: 768px) {
+      font-size: 3rem;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 2.2rem;
+    }
+  }
+}
+
+
+// Fade overlay for top and bottom
+.fade-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 20;
+  background: linear-gradient(
+    to bottom,
+    v.$bg-background 0%,
+    transparent 10%,
+    transparent 90%,
+    v.$bg-background 100%
+  );
+}
+
+// Print styles
+@media print {
+  .about-section {
+    background: white;
+    color: black;
+  }
+  
+  .text-container {
+    height: auto;
+    padding-bottom: 0;
+  }
+  
+  .text-block {
+    position: static;
+    transform: none;
+    width: 100%;
+    max-width: none;
+  }
+  
+  .text-line {
+    opacity: 1 !important;
+    transform: none !important;
+    color: black;
+    margin: 20px 0 !important;
+    font-size: 14pt;
+    page-break-inside: avoid;
+  }
+}
+
+* {
+  transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-block {
+    transform: translate(-50%, -50%) !important;
+  }
+  
+  * {
+    transition: none !important;
+  }
+}

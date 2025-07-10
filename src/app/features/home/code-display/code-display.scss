@@ -1,0 +1,194 @@
+.code-display {
+  background: #1e2a25;
+  border: 1px solid #2a4339;
+  border-radius: 12px;
+  overflow: hidden;
+  width: 420px; /* Fixed width */
+  height: 464px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  font-family: "Menlo", "Monaco", "Courier New", monospace;
+  display: flex;
+  flex-direction: column;
+}
+
+.code-tabs {
+  display: flex;
+  background-color: #16241f;
+  border-bottom: 1px solid #2a4339;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 12px 24px;
+  cursor: pointer;
+  color: #a0b3ac;
+
+  border-right: 1px solid #2a4339;
+  transition: all 0.2s ease-in-out;
+
+  font-family: "Roboto Mono", monospace;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16.8px;
+  color: #bbccbb;
+}
+
+.tab:last-child {
+  border-right: none;
+}
+
+.tab.active {
+  color: #ffffff;
+  background-color: #1e2a25;
+  position: relative;
+}
+
+.tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: #1e2a25;
+}
+
+.code-content {
+  padding: 24px;
+  font-size: 14px;
+  line-height: 21px;
+  flex: 1;
+  background-color: #1e2a25;
+  border: 1px solid #2a4339;
+  border-top: none;
+  border-bottom: none;
+  overflow-y: auto;
+
+  pre {
+    margin: 0;
+    white-space: pre-wrap;
+    color: #e0e0e0;
+    background: #1e2a25 !important; /* Override Prism background */
+
+    code {
+      font-family: "Menlo", "Monaco", "Courier New", monospace;
+      background: transparent !important; /* Override Prism background */
+
+      .line {
+        display: block;
+        position: relative;
+        padding-left: 2.5em; /* Space for line numbers */
+        .line-number {
+          color: #6a8379;
+          width: 2em;
+          text-align: right;
+          margin-right: 5px;
+          user-select: none;
+          opacity: 0.6;
+        }
+      }
+    }
+  }
+}
+
+/* Override Prism styles to match our design */
+:host ::ng-deep {
+  /* Set all tokens to the same color */
+  .token {
+    color: #e0e0e0 !important;
+  }
+
+  /* Ensure green highlights stand out */
+  .green-highlight {
+    color: #42eb85 !important;
+    font-weight: bold;
+    // text-shadow: 0 0 5px rgba(66, 235, 133, 0.3);
+  }
+}
+
+/* Typewriter cursor effect */
+.code-content pre code.typing::after {
+  content: "|";
+  display: inline-block;
+  color: #ffffff;
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.code-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background-color: #16241f;
+  border-top: 1px solid #2a4339;
+  color: #a0b3ac;
+  font-size: 14px;
+  height: 30px;
+}
+
+.code-footer span:first-child {
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.copy-icon {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.contact-us-text {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  p {
+  font-family: "Roboto Mono", monospace;
+  font-weight: 700;
+  line-height: 16px;
+  color: #bbccbb;
+  }
+.arrow-icon {
+  font-size: 14px;
+  line-height: 14px;
+  transition: 200ms;
+}
+
+
+  &:hover {
+    .arrow-icon {
+      transform: translateX(100%);
+    }
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+  .code-display {
+    width: 100%; /* Full width on small screens */
+    max-width: 550px; /* But no wider than its normal size */
+  }
+}
+@media (max-width: 425px) {
+  .code-tabs {
+    .tab {
+      padding: 12px 0px;
+    }
+  }
+  .code-content {
+    padding: 12px;
+  }
+}

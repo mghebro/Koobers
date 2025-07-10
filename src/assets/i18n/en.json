@@ -1,0 +1,310 @@
+{
+  "NAVBAR": {
+    "HOME": "Home",
+    "SERVICES": "Services",
+    "WORK": "Work",
+    "ABOUT": "About",
+    "CONTACT": "Contact",
+    "GET_STARTED": "Get Started"
+  },
+  "FOOTER": {
+    "STAY_IN_LOOP": "Stay in the Loop",
+    "NO_SPAM": "Get occasional insights, tips, and updates — no spam.",
+    "EMAIL_PLACEHOLDER": "Example@gmail.com",
+    "SUBSCRIBE": "Subscribe",
+    "SLOGAN": "We turn ideas into high-performing digital products.",
+    "COPYRIGHT": "All Rights Reserved.",
+    "SOCIALS": "Socials",
+    "COMPANY": "Company",
+    "BLOG": "Blog",
+    "FAQS": "FAQs",
+    "CONTACT_US": "Contact Us",
+    "TEL": "Tel",
+    "EMAIL": "Email"
+  },
+  "HOME": {
+    "HERO_TITLE": "We build digital products that help businesses grow",
+    "HERO_SUBTITLE": "Our team of experienced developers and designers crafts beautiful, functional websites and applications tailored to your needs",
+    "EXPLORE_BLOGS": "Explore Blogs",
+    "BUILD_NEW_PRODUCTS": "Build new products",
+    "FOR": "for",
+    "HERO_DESCRIPTION_1": "Our framework component is built to handle scaling demands with agility.",
+    "HERO_DESCRIPTION_2": "Lightning-fast performance is our promise.",
+    "SEE_OUR_SERVICES": "See Our Services",
+    "FEATURES_TITLE": "Our Features",
+    "BENEFITS_TITLE": "Why Choose Us",
+    "FAQ_TITLE": "Frequently Asked Questions",
+    "FAQ_SUBTITLE": "Not sure how it all works? Here's what most of our clients ask us first.",
+    "TYPEWRITER": {
+      "DEVELOPERS": "Developers",
+      "STARTUPS": "Startups",
+      "BIG_CORPORATIONS": "Big Corporations"
+    },
+    "FAQ": {
+      "QUESTIONS": {
+        "COST": "How much does a website cost?",
+        "STARTUPS": "Do you work with startups or small businesses?",
+        "SUPPORT": "What if I need help after the site is launched?",
+        "INVOLVEMENT": "How involved will I be in the process?",
+        "REDESIGNS": "Do you offer redesigns or only full builds?"
+      },
+      "ANSWERS": {
+        "COST": "Pricing depends on the project's scope, features, and complexity. After a discovery call, we provide a custom quote tailored to your needs — no hidden fees, just transparent pricing.",
+        "STARTUPS": "Absolutely. Whether you're just launching or scaling up, we tailor each project to fit your business goals, size, and stage.",
+        "SUPPORT": "We offer ongoing support, updates, and growth-focused improvements. Whether it's bug fixes, feature updates, or scaling — we've got you covered.",
+        "INVOLVEMENT": "We keep things collaborative. You'll be involved in key decisions — from early ideas to design approvals — with regular updates and progress reviews.",
+        "REDESIGNS": "We do both. Whether you're starting from scratch or refreshing an existing site, we can help improve performance, design, and user experience."
+      }
+    },
+    "CTA": {
+      "TITLE": "Still Have Questions?",
+      "DESCRIPTION": "We're happy to walk you through the process — no pressure, no tech jargon.",
+      "BUTTON": "Subscribe"
+    }
+  },
+  "FEATURES": {
+    "TITLE": "Features",
+    "MAIN_TITLE": "Custom-Fit Solutions, Built With You",
+    "SUB_TITLE": "At Koober Coders, we combine cutting-edge technology, real-world experience, and a personalized approach to bring your digital ideas to life. Here's what sets us apart from the rest:",
+    "MODERN_TECH": {
+      "TITLE": "Modern Technologies",
+      "DESCRIPTION": "We use the latest, stable technology stack to ensure high performance, security, and scalability for every project."
+    },
+    "EXPERIENCED_TEAM": {
+      "TITLE": "Experienced Team",
+      "DESCRIPTION": "Our developers bring years of hands-on experience solving complex problems with clean, maintainable code."
+    },
+    "AGILE_PROCESS": {
+      "TITLE": "Flexible (Agile) Processes",
+      "DESCRIPTION": "We follow Agile methodology — delivering fast, adapting quickly to change, and keeping you in the loop every step of the way."
+    },
+    "PERSONAL_APPROACH": {
+      "TITLE": "Personalized Approach",
+      "DESCRIPTION": "No copy-paste templates here. Every solution is tailored to your business goals, industry, and vision."
+    },
+    "RESULT_ORIENTED": {
+      "TITLE": "Result-Oriented",
+      "DESCRIPTION": "Our job isn't done until your business grows. We focus on impact — not just deliverables."
+    },
+    "TRANSPARENT_COMM": {
+      "TITLE": "Transparent Communication",
+      "DESCRIPTION": "You'll always know what's happening. We believe in regular updates, honest feedback, and real collaboration."
+    },
+    "CTA": {
+      "TITLE": "Let's Build Something Great",
+      "SUBTITLE": "Tell us your challenge — we'll help solve it.",
+      "BUTTON": "Let's Talk"
+    }
+  },
+  "HOW_WE_WORK": {
+    "TITLE": "How we work",
+    "MAIN_TITLE_START": "Our",
+    "MAIN_TITLE_HIGHLIGHT": "5-Step Process",
+    "MAIN_TITLE_END": "to Success",
+    "SUB_TITLE": "From concept to launch, we follow a proven methodology that delivers results.",
+    "MOBILE_MAIN_TITLE": "Quality. Growth. Success. Our Process Covers It All.",
+    "MOBILE_SUB_TITLE": "From first idea to final launch (and beyond), our process is clear, collaborative, and focused on real results. Here's how we bring your vision to life — step by step.",
+    "STEPS": {
+      "DISCOVERY": {
+        "TITLE": "Discovery",
+        "TIMELINE": "1-2 Weeks",
+        "DESCRIPTION": "Understand your vision and define clear goals.",
+        "HIGHLIGHT": "Strategy"
+      },
+      "DESIGN": {
+        "TITLE": "Design",
+        "TIMELINE": "2-4 Weeks",
+        "DESCRIPTION": "Create beautiful, intuitive user experiences.",
+        "HIGHLIGHT": "UX/UI"
+      },
+      "DEVELOPMENT": {
+        "TITLE": "Development",
+        "TIMELINE": "4-12 Weeks",
+        "DESCRIPTION": "Build scalable solutions with clean code.",
+        "HIGHLIGHT": "Engineering"
+      },
+      "LAUNCH": {
+        "TITLE": "Launch",
+        "TIMELINE": "1 Week",
+        "DESCRIPTION": "Deploy smoothly with zero downtime.",
+        "HIGHLIGHT": "Go Live"
+      },
+      "SUPPORT": {
+        "TITLE": "Support",
+        "TIMELINE": "Ongoing",
+        "DESCRIPTION": "Continuous optimization and growth.",
+        "HIGHLIGHT": "Maintain"
+      }
+    }
+  },
+  "BENEFITS": {
+    "TITLE": "Benefits of working with us",
+    "MAIN_TITLE": "\"What do I actually gain by working with Koober Coders?\"",
+    "TECH_PARTNER": {
+      "TITLE": "A Reliable Tech Partner",
+      "DESCRIPTION": "You can leave the technical part to us and focus on growing your business."
+    },
+    "EFFICIENCY": {
+      "TITLE": "Increased Efficiency",
+      "DESCRIPTION": "The automated systems we create will help you save time and human resources."
+    },
+    "USER_EXPERIENCE": {
+      "TITLE": "Better User Experience",
+      "DESCRIPTION": "Intuitive and fast products will increase your customer satisfaction and loyalty."
+    },
+    "FUTURE_PROOF": {
+      "TITLE": "Future-Proof Solutions",
+      "DESCRIPTION": "We build scalable products that will be ready for your business's future growth."
+    }
+  },
+  "SERVICES": {
+    "TITLE": "Our Services",
+    "SUBTITLE": "We provide a wide range of digital services to help your business thrive",
+    "FAQ_TITLE": "Services FAQ",
+    "EXPLORE_ABOUT_US": "Explore More About Us",
+    "HEADING_TITLE": "Custom Websites & Digital Products,",
+    "HEADING_TITLE_SPAN": "That Actually Perform!",
+    "HEADING_DESCRIPTION": "We build scalable, fast, and beautifully crafted web solutions — designed for real business growth, not just good looks.",
+    "CTA_TITLE": "Ready to Build Something That Lasts?",
+    "CTA_DESCRIPTION": "From idea to launch — and beyond — we're here to help you create digital experiences that make a difference.",
+    "FAQ": {
+      "WEB_APP": {
+        "TITLE": "Web Application Development",
+        "DESCRIPTION": "We build complex, fast, and scalable web applications tailored to your business needs.",
+        "WHAT_YOU_GET": "What You Get:",
+        "GET_DESCRIPTION": "High-performance custom platforms that match your specific workflows, goals, and growth plans.",
+        "KEY_STRENGTHS": "Key Strengths:",
+        "STRENGTHS_DESCRIPTION": "→ Modern tech stack for stability and scalability→ Agile approach for flexible delivery→ Full-cycle development — from discovery to launch and support",
+        "TIMELINE": "Estimated Timeline:",
+        "TIMELINE_DESCRIPTION": "Discovery → 1–2 weeks\nDesign & Prototyping → 2–4 weeks\nDevelopment & Testing → 4–12+ weeks\nLaunch & Monitoring → 1 week\nSupport & Growth → Ongoing"
+      },
+      "MOBILE_APP": {
+        "TITLE": "Mobile App Development (iOS/Android)",
+        "DESCRIPTION": "We build complex, fast, and scalable web applications tailored to your business needs.",
+        "WHAT_YOU_GET": "What You Get:",
+        "GET_DESCRIPTION": "Beautiful, fast, and intuitive mobile apps, built natively or cross-platform, depending on your needs.",
+        "KEY_STRENGTHS": "Key Strengths:",
+        "STRENGTHS_DESCRIPTION": "→ UX-focused approach to maximize engagement→ Agile development for faster iteration→ Transparent communication and regular progress updates",
+        "TIMELINE": "Estimated Timeline:",
+        "TIMELINE_DESCRIPTION": "Discovery → 1–2 weeks\nDesign & Prototyping → 2–4 weeks\nDevelopment & Testing → 4–12+ weeks\nLaunch & Monitoring → 1 week\nSupport & Growth → Ongoing"
+      },
+      "UI_UX": {
+        "TITLE": "UI/UX Design & Prototyping",
+        "DESCRIPTION": "We create intuitive and visually appealing designs that ensure the best User Experience.",
+        "WHAT_YOU_GET": "What You Get:",
+        "GET_DESCRIPTION": "User-centered designs that are both beautiful and functional — plus interactive prototypes to visualize the end product.",
+        "KEY_STRENGTHS": "Key Strengths:",
+        "STRENGTHS_DESCRIPTION": "→ User-first design philosophy→ Data-informed UX decisions→ Iterative approach with regular feedback cycles",
+        "TIMELINE": "Estimated Timeline:",
+        "TIMELINE_DESCRIPTION": "Discovery & Research → 1–2 weeks\nWireframing & User Flows → 1–2 weeks\nVisual Design & UI → 2–3 weeks\nPrototyping & Testing → 1–2 weeks"
+      },
+      "CUSTOM_SOFTWARE": {
+        "TITLE": "Custom Software Development",
+        "DESCRIPTION": "If off-the-shelf solutions don't work for you, we will build unique software for your specific processes.",
+        "WHAT_YOU_GET": "What You Get:",
+        "GET_DESCRIPTION": "Tailor-made software that fits your exact business processes and integrates with your existing systems.",
+        "KEY_STRENGTHS": "Key Strengths:",
+        "STRENGTHS_DESCRIPTION": "→ Process-driven approach→ Modular, extensible architecture→ Comprehensive documentation and training",
+        "TIMELINE": "Estimated Timeline:",
+        "TIMELINE_DESCRIPTION": "Analysis & Planning → 2–4 weeks\nArchitecture & Design → 2–4 weeks\nDevelopment & Integration → 8–16+ weeks\nTesting & QA → 2–4 weeks\nDeployment & Training → 1–2 weeks"
+      },
+      "TECH_CONSULTING": {
+        "TITLE": "Technical Consulting & Audit",
+        "DESCRIPTION": "Analyze your existing systems and receive professional recommendations for their improvement.",
+        "WHAT_YOU_GET": "What You Get:",
+        "GET_DESCRIPTION": "A full technical review of your systems, codebase, and tools — plus strategic advice to improve performance and scale.",
+        "KEY_STRENGTHS": "Key Strengths:",
+        "STRENGTHS_DESCRIPTION": "→ Experienced team with real-world dev insight→ Honest, actionable recommendations→ Business-first thinking to align tech with your goals",
+        "TIMELINE": "Estimated Timeline:",
+        "TIMELINE_DESCRIPTION": "Short-term engagement based on system size (typically 1–2 weeks)"
+      },
+      "POST_LAUNCH": {
+        "TITLE": "Post-Launch Support",
+        "DESCRIPTION": "Our partnership doesn't end at launch. We offer ongoing technical support and development.",
+        "WHAT_YOU_GET": "What You Get:",
+        "GET_DESCRIPTION": "Continued collaboration to support your digital product — from small fixes to new features and scalability planning.",
+        "KEY_STRENGTHS": "Key Strengths:",
+        "STRENGTHS_DESCRIPTION": "→ Fast response time→ Long-term product ownership→ Proactive improvements based on real user data",
+        "TIMELINE": "Estimated Timeline:",
+        "TIMELINE_DESCRIPTION": "Ongoing — support packages tailored to your needs"
+      }
+    }
+  },
+  "WORK": {
+    "TITLE": "Our Work",
+    "SUBTITLE": "Check out our latest projects and success stories",
+    "HEADING_TITLE": "Work That ",
+    "HEADING_TITLE_SPAN": "Speaks for Itself",
+    "HEADING_DESCRIPTION": "We design and build digital products that are fast, functional, and future-ready — here's a look at what we've done.",
+    "DISCOVER_ABOUT_US": "Discover More About Us",
+    "EXPLORE_SERVICES": "Explore About Our Services",
+    "CTA_TITLE": "Ready to Build Something That Lasts?",
+    "CTA_DESCRIPTION": "From idea to launch — and beyond — we're here to help you create digital experiences that make a difference.",
+    "PORTFOLIO": {
+      "TITLE": "Portfolio",
+      "HEADING_TITLE": "See What We've Created With Our Clients",
+      "HEADING_DESCRIPTION": "A selection of websites, apps, and custom solutions we've crafted for startups and businesses ready to scale.",
+      "PROJECT_NAME": "Project name"
+    }
+  },
+  "ABOUT": {
+    "TITLE": "About Us",
+    "SUBTITLE": "Learn more about our team and our mission",
+    "TEAM_TITLE": "Meet Our Team",
+    "HEADING_TITLE": "More Than a Dev Studio —",
+    "HEADING_TITLE_SPAN": "We're Your Digital Growth Partner",
+    "HEADING_DESCRIPTION": "Koober Coders helps companies and startups turn ideas into high-impact digital products. We combine clean code, bold design, and a business-first mindset to build things that actually move the needle.",
+    "SEE_OUR_WORK": "See Our Work",
+    "EXPLORE_SERVICES": "Explore Our Services",
+    "CTA_TITLE": "Ready to Build Something That Lasts?",
+    "CTA_DESCRIPTION": "From idea to launch — and beyond — we're here to help you create digital experiences that make a difference.",
+    "TEAM": {
+      "TITLE": "Our Team",
+      "HEADING_TITLE": "Meet the Minds Behind the Code",
+      "HEADING_DESCRIPTION": "We're a small, focused team of designers and developers who love what we do — and who you'll actually work with.",
+      "FIND_HERE": "You'll Find Him Here:"
+    }
+  },
+  "CONTACT": {
+    "TITLE": "Contact Us",
+    "SUBTITLE": "Get in touch with us for your project",
+    "HEADING_TITLE": "Let's Bring Your ",
+    "HEADING_TITLE_SPAN": "Vision to Life",
+    "HEADING_DESCRIPTION": "Have an idea, question, or project in mind? Reach out — we'd love to hear from you.",
+    "BOOK_CONSULTATION": "Book a Consultation",
+    "FORM": {
+      "NAME": "Name",
+      "EMAIL": "Email",
+      "MESSAGE": "Message",
+      "SUBMIT": "Submit",
+      "GET_IN_TOUCH": "Get in Touch with",
+      "OR_SUBMIT": "Or Submit This Form",
+      "FIRST_NAME": "First Name",
+      "FIRST_NAME_PLACEHOLDER": "John",
+      "LAST_NAME": "Last Name",
+      "LAST_NAME_PLACEHOLDER": "Smith",
+      "EMAIL_PLACEHOLDER": "Example@gmail.com",
+      "PHONE": "Phone Number (Optional)",
+      "PHONE_PLACEHOLDER": "+995 ",
+      "MESSAGE_PLACEHOLDER": "Here Goes Your Interest",
+      "SUBMIT_BUTTON": "Submit the Form"
+    },
+    "NEXT_STEPS": "Next Steps",
+    "CONTACT_INFO": {
+      "PHONE_1": "+995 595 299 995",
+      "PHONE_2": "+995 591 299 899",
+      "EMAIL": "info@koobercoders.com",
+      "ADDRESS": "Tbilisi, Alexander Kazbegi Ave. 34/34b"
+    }
+  },
+  "COMMON": {
+    "READ_MORE": "Read More",
+    "LEARN_MORE": "Learn More",
+    "VIEW_MORE": "View More",
+    "SEND_MESSAGE": "Send Message",
+    "GET_STARTED": "Get Started",
+    "START_PROJECT": "Start Your Project",
+    "SEE_OUR_WORK": "See Our Work",
+    "LOADING": "Loading..."
+  }
+}

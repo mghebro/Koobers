@@ -1,0 +1,26 @@
+<div class="page-wrapper">
+    <app-page-header
+    headingLink="/about"
+    headingLinkText="{{ 'SERVICES.EXPLORE_ABOUT_US' | translate }}"
+    headingTitle="{{ 'SERVICES.HEADING_TITLE' | translate }}"
+    headingTitleSpan="{{ 'SERVICES.HEADING_TITLE_SPAN' | translate }}"
+    headingDescription="{{ 'SERVICES.HEADING_DESCRIPTION' | translate }}"
+    primaryButtonContent="{{ 'COMMON.START_PROJECT' | translate }}"
+    primaryButtonTarget="/contact"
+    secondaryButtonContent="{{ 'COMMON.SEE_OUR_WORK' | translate }}"
+    secondaryButtonTarget="/work"></app-page-header>
+
+<app-out-services></app-out-services>
+
+
+  <app-services-faq-section></app-services-faq-section>
+  <app-features-section></app-features-section>
+  <app-how-we-work-section></app-how-we-work-section>
+  <app-benefits-section></app-benefits-section>
+  <app-cta-section
+  ctaTitle="{{ 'SERVICES.CTA_TITLE' | translate }}"
+  ctaDescription="{{ 'SERVICES.CTA_DESCRIPTION' | translate }}"
+  buttonContent="{{ 'COMMON.START_PROJECT' | translate }}"
+  buttonTarget="/contact"
+  ></app-cta-section>
+</div>

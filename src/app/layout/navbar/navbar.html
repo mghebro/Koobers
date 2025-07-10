@@ -1,0 +1,190 @@
+<div class="navbar-container">
+    <nav>
+      <img alt="" routerLink="/" src="../../../assets/svgs/logo.svg" class="logo">
+
+      <div class="menu">
+        <button
+          class="menu-items"
+          *ngFor="let item of menuItems"
+          [class.active]="activeLink === item.label"
+          (click)="navigateTo(item)"
+          #menuItem
+        >
+          {{ item.translationKey | translate }}
+        </button>
+        <div class="glow-wrapper" [style.left]="menuItemPosition + 'px'">
+        <div
+          class="glow-container bottom-glow"
+        >
+          <div class="glow-effect glow-blur-large"></div>
+          <div class="glow-effect glow-blur-medium"></div>
+          <div class="glow-effect glow-blur-small"></div>
+        </div>
+        <div
+          class="glow-container top-glow"
+        >
+          <div class="glow-effect glow-blur-large"></div>
+          <div class="glow-effect glow-blur-medium"></div>
+          <div class="glow-effect glow-blur-small"></div>
+        </div>
+        </div>
+      </div>
+
+      <div class="right-section">
+        <div class="language-selector">
+          <div
+            class="selected-language"
+            [class.active]="isLanguageDropdownOpen"
+            (click)="toggleLanguageDropdown($event)"
+          >
+            <svg
+              class="globe-icon"
+              width="48"
+              height="48"
+              viewBox="0 0 48 48"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M24 11C21.4288 11 18.9154 11.7624 16.7776 13.1909C14.6398 14.6194 12.9735 16.6497 11.9896 19.0251C11.0056 21.4006 10.7482 24.0144 11.2498 26.5362C11.7514 29.0579 12.9895 31.3743 14.8076 33.1924C16.6257 35.0105 18.9421 36.2486 21.4638 36.7502C23.9856 37.2518 26.5995 36.9944 28.9749 36.0104C31.3503 35.0265 33.3807 33.3603 34.8091 31.2224C36.2376 29.0846 37 26.5712 37 24C36.996 20.5534 35.6251 17.2491 33.188 14.812C30.7509 12.3749 27.4466 11.004 24 11ZM35 24C35.0009 25.0145 34.8608 26.0241 34.5838 27H29.77C30.0767 25.0118 30.0767 22.9882 29.77 21H34.5838C34.8608 21.9759 35.0009 22.9855 35 24ZM20.75 29H27.25C26.6096 31.0982 25.498 33.0223 24 34.625C22.5026 33.0218 21.391 31.098 20.75 29ZM20.2625 27C19.9192 25.0147 19.9192 22.9853 20.2625 21H27.7475C28.0908 22.9853 28.0908 25.0147 27.7475 27H20.2625ZM13 24C12.9991 22.9855 13.1392 21.9759 13.4163 21H18.23C17.9233 22.9882 17.9233 25.0118 18.23 27H13.4163C13.1392 26.0241 12.9991 25.0145 13 24ZM27.25 19H20.75C21.3904 16.9018 22.502 14.9777 24 13.375C25.4974 14.9782 26.609 16.902 27.25 19ZM33.7913 19H29.3388C28.7776 16.9411 27.8318 15.0071 26.5513 13.3C28.0984 13.6717 29.5469 14.3735 30.7974 15.3573C32.0479 16.3412 33.0709 17.5838 33.7963 19H33.7913ZM21.4488 13.3C20.1683 15.0071 19.2224 16.9411 18.6613 19H14.2038C14.9291 17.5838 15.9521 16.3412 17.2026 15.3573C18.4531 14.3735 19.9016 13.6717 21.4488 13.3ZM14.2038 29H18.6613C19.2224 31.0589 20.1683 32.9929 21.4488 34.7C19.9016 34.3283 18.4531 33.6265 17.2026 32.6427C15.9521 31.6588 14.9291 30.4162 14.2038 29ZM26.5513 34.7C27.8318 32.9929 28.7776 31.0589 29.3388 29H33.7963C33.0709 30.4162 32.0479 31.6588 30.7974 32.6427C29.5469 33.6265 28.0984 34.3283 26.5513 34.7Z"
+                fill="#C4D6C4"
+              />
+            </svg>
+            <div class="language-display-container">
+              <span class="language-display language-old" *ngIf="isFadingOut">{{
+                previousLanguageDisplay
+              }}</span>
+              <span
+                class="language-display language-current"
+                [class.fading-in]="isFadingIn"
+                >{{ languageDisplay }}</span
+              >
+            </div>
+            <svg
+              class="arrow-icon"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              [style.transform]="
+                isLanguageDropdownOpen ? 'rotateX(180deg)' : 'rotateX(0)'
+              "
+            >
+              <path
+                d="M7.4694 11.5306L2.4694 6.5306C2.32851 6.3897 2.24935 6.1986 2.24935 5.99935C2.24935 5.80009 2.32851 5.60899 2.4694 5.4681C2.6103 5.3272 2.80139 5.24805 3.00065 5.24805C3.19991 5.24805 3.39101 5.3272 3.5319 5.4681L8.00003 9.93747L12.4694 5.46935C12.5392 5.39958 12.622 5.34424 12.7131 5.30649C12.8043 5.26873 12.902 5.2493 13.0007 5.2493C13.0993 5.2493 13.197 5.26873 13.2882 5.30649C13.3793 5.34424 13.4621 5.39958 13.5319 5.46935C13.6017 5.53911 13.657 5.62194 13.6948 5.71309C13.7325 5.80424 13.752 5.90194 13.752 6.0006C13.752 6.09926 13.7325 6.19696 13.6948 6.28811C13.657 6.37926 13.6017 6.46208 13.5319 6.53185L8.5319 11.5318C8.46214 11.6017 8.37928 11.6571 8.28807 11.6948C8.19687 11.7326 8.0991 11.7519 8.00039 11.7518C7.90168 11.7517 7.80397 11.7321 7.71285 11.6941C7.62173 11.6562 7.539 11.6006 7.4694 11.5306Z"
+                fill="#C4D6C4"
+              />
+            </svg>
+          </div>
+          <div
+            class="language-dropdown"
+            [class.show]="isLanguageDropdownOpen"
+            (click)="$event.stopPropagation()"
+          >
+            <div
+              class="language-option"
+              *ngFor="let language of languages"
+              [class.selected]="selectedLanguage.code === language.code"
+              (click)="selectLanguage(language, $event)"
+            >
+              <img [src]="language.flag" [alt]="language.name" />
+              <span class="language-name">{{ language.name }}</span>
+            </div>
+          </div>
+        </div>
+
+        <button routerLink="/contact" class="Primary-Default">{{ 'NAVBAR.GET_STARTED' | translate }}</button>
+      </div>
+    </nav>
+  </div>
+  <nav class="navbar" [class.open]="menuOpen">
+    <div class="logo">
+      <img routerLink="/" src="../../../assets/svgs/logo.svg" alt="">
+      <div class="language">
+        <div class="language-selector">
+          <div
+            class="selected-language"
+            [class.active]="isLanguageDropdownOpen"
+            (click)="toggleLanguageDropdown($event)"
+          >
+            <svg
+              class="globe-icon"
+              width="48"
+              height="48"
+              viewBox="0 0 48 48"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M24 11C21.4288 11 18.9154 11.7624 16.7776 13.1909C14.6398 14.6194 12.9735 16.6497 11.9896 19.0251C11.0056 21.4006 10.7482 24.0144 11.2498 26.5362C11.7514 29.0579 12.9895 31.3743 14.8076 33.1924C16.6257 35.0105 18.9421 36.2486 21.4638 36.7502C23.9856 37.2518 26.5995 36.9944 28.9749 36.0104C31.3503 35.0265 33.3807 33.3603 34.8091 31.2224C36.2376 29.0846 37 26.5712 37 24C36.996 20.5534 35.6251 17.2491 33.188 14.812C30.7509 12.3749 27.4466 11.004 24 11ZM35 24C35.0009 25.0145 34.8608 26.0241 34.5838 27H29.77C30.0767 25.0118 30.0767 22.9882 29.77 21H34.5838C34.8608 21.9759 35.0009 22.9855 35 24ZM20.75 29H27.25C26.6096 31.0982 25.498 33.0223 24 34.625C22.5026 33.0218 21.391 31.098 20.75 29ZM20.2625 27C19.9192 25.0147 19.9192 22.9853 20.2625 21H27.7475C28.0908 22.9853 28.0908 25.0147 27.7475 27H20.2625ZM13 24C12.9991 22.9855 13.1392 21.9759 13.4163 21H18.23C17.9233 22.9882 17.9233 25.0118 18.23 27H13.4163C13.1392 26.0241 12.9991 25.0145 13 24ZM27.25 19H20.75C21.3904 16.9018 22.502 14.9777 24 13.375C25.4974 14.9782 26.609 16.902 27.25 19ZM33.7913 19H29.3388C28.7776 16.9411 27.8318 15.0071 26.5513 13.3C28.0984 13.6717 29.5469 14.3735 30.7974 15.3573C32.0479 16.3412 33.0709 17.5838 33.7963 19H33.7913ZM21.4488 13.3C20.1683 15.0071 19.2224 16.9411 18.6613 19H14.2038C14.9291 17.5838 15.9521 16.3412 17.2026 15.3573C18.4531 14.3735 19.9016 13.6717 21.4488 13.3ZM14.2038 29H18.6613C19.2224 31.0589 20.1683 32.9929 21.4488 34.7C19.9016 34.3283 18.4531 33.6265 17.2026 32.6427C15.9521 31.6588 14.9291 30.4162 14.2038 29ZM26.5513 34.7C27.8318 32.9929 28.7776 31.0589 29.3388 29H33.7963C33.0709 30.4162 32.0479 31.6588 30.7974 32.6427C29.5469 33.6265 28.0984 34.3283 26.5513 34.7Z"
+                fill="#C4D6C4"
+              />
+            </svg>
+            <div class="language-display-container">
+              <span class="language-display language-old" *ngIf="isFadingOut">{{
+                previousLanguageDisplay
+              }}</span>
+              <span
+                class="language-display language-current"
+                [class.fading-in]="isFadingIn"
+                >{{ languageDisplay }}</span
+              >
+            </div>
+            <svg
+              class="arrow-icon"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              [style.transform]="
+              isLanguageDropdownOpen ? 'rotateX(180deg)' : 'rotateX(0)'
+              "
+            >
+              <path
+                d="M7.4694 11.5306L2.4694 6.5306C2.32851 6.3897 2.24935 6.1986 2.24935 5.99935C2.24935 5.80009 2.32851 5.60899 2.4694 5.4681C2.6103 5.3272 2.80139 5.24805 3.00065 5.24805C3.19991 5.24805 3.39101 5.3272 3.5319 5.4681L8.00003 9.93747L12.4694 5.46935C12.5392 5.39958 12.622 5.34424 12.7131 5.30649C12.8043 5.26873 12.902 5.2493 13.0007 5.2493C13.0993 5.2493 13.197 5.26873 13.2882 5.30649C13.3793 5.34424 13.4621 5.39958 13.5319 5.46935C13.6017 5.53911 13.657 5.62194 13.6948 5.71309C13.7325 5.80424 13.752 5.90194 13.752 6.0006C13.752 6.09926 13.7325 6.19696 13.6948 6.28811C13.657 6.37926 13.6017 6.46208 13.5319 6.53185L8.5319 11.5318C8.46214 11.6017 8.37928 11.6571 8.28807 11.6948C8.19687 11.7326 8.0991 11.7519 8.00039 11.7518C7.90168 11.7517 7.80397 11.7321 7.71285 11.6941C7.62173 11.6562 7.539 11.6006 7.4694 11.5306Z"
+                fill="#C4D6C4"
+              />
+            </svg>
+          </div>
+          <div
+            class="language-dropdown"
+            [class.show]="isLanguageDropdownOpen"
+            (click)="$event.stopPropagation()"
+          >
+            <div
+              class="language-option"
+              *ngFor="let language of languages"
+              [class.selected]="selectedLanguage.code === language.code"
+              (click)="selectLanguage(language, $event)"
+            >
+              <img [src]="language.flag" [alt]="language.name" />
+              <span class="language-name">{{ language.name }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="burger">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="white"
+          class="bi bi-list"
+          viewBox="0 0 16 16"
+          (click)="toggleMenu()"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <div class="nav-links" [class.show]="menuOpen">
+      <ul>
+        <li *ngFor="let item of menuItems" (click)="navigateTo(item)" [class.active]="activeLink == item.label">{{ item.translationKey | translate }}</li>
+      </ul>
+    </div>
+  </nav>

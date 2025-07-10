@@ -1,0 +1,10 @@
+<div class="cta-container">
+  <div class="cta-primary-contain">
+    <h1 class="cta-title">{{ ctaTitle | translate }}</h1>
+    <p class="cta-subtitle">
+      {{ ctaDescription | translate }}
+    </p>
+  </div>
+  <a [routerLink]="buttonTarget" class="cta-button">{{ buttonContent | translate }}</a>
+  <img class="blob" src="../../../../assets/svgs/Blob.svg" alt="">
+</div>

@@ -1,0 +1,60 @@
+<div class="page-section" #benefitsSection>
+  <div class="content-box">
+    <div class="heading">
+      <span>{{ 'BENEFITS.TITLE' | translate }}</span>
+      <div class="main-text">
+        {{ 'BENEFITS.MAIN_TITLE' | translate }}
+      </div>
+    </div>
+
+    <div class="benefits" #benefitsContainer>
+      <div
+        *ngFor="let benefit of benefits"
+        class="benefit"
+        [class.active]="benefit.id == activeIndex"
+        (click)="selectBenefit(benefit.id)"
+      >
+        <div class="progress-bar"></div>
+        <div class="text-content">
+          <p class="id">{{ benefit.id }}.</p>
+          <p class="title">{{ benefit.title | translate }}</p>
+          <p class="description">{{ benefit.description | translate }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="swiper-wrapper">
+        <div class="progress-bar"></div>
+      <swiper-container
+        #swiperEl
+        class="custom-swiper"
+        style="width: 100%"
+        slides-per-view="1"
+        init="false"
+        space-between="8"
+        [attr.autoplay]="autoplayConfig"
+      >
+        <swiper-slide *ngFor="let benefit of benefits" class="benefit">
+          <div class="text-content">
+            <p class="id">{{ benefit.id }}</p>
+            <p class="title">{{ benefit.title | translate }}</p>
+            <p class="description">{{ benefit.description | translate }}</p>
+          </div>
+        </swiper-slide>
+      </swiper-container>
+
+      <div class="custom-nav">
+        <button class="nav-button prev Primary-Default" (click)="slidePrev()">
+          <img src="../../../assets/svgs/swiper-arrow.svg" alt="" />
+        </button>
+        <button class="nav-button next Primary-Default" (click)="slideNext()">
+          <img
+            style="transform: rotateZ(180deg)"
+            src="../../../assets/svgs/swiper-arrow.svg"
+            alt=""
+          />
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

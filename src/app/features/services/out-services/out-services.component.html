@@ -1,0 +1,32 @@
+<div class="cloud">
+    <!-- Header Section -->
+    <div class="service-header">
+      <h4>Our Services</h4>
+      <h2>Web Development</h2>
+      <p>
+        High-performance custom platforms that match your specific workflow,
+        goals and growth plans.
+      </p>
+    </div>
+
+    <!-- Bubble Container -->
+    <div class="bubble-container">
+      <div [class.odd]="isOdd(i)"
+        class="bubble"
+        *ngFor="let service of services, index as i"
+        #bubble
+      >
+        <!-- Optional image -->
+        <ng-container *ngIf="service.imgSrc">
+          <img [src]="service.imgSrc" alt="{{ service.label }}" />
+        </ng-container>
+
+        <span>{{ service.label }}</span>
+      </div>
+    </div>
+
+     <!-- Optional: floor and side walls if needed visually or physically  -->
+    <!-- <div class="floor"></div> -->
+    <div class="wall-left"></div>
+    <div class="wall-right"></div>
+  </div>
