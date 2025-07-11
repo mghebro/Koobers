@@ -102,6 +102,8 @@
               variables.$bg-green-dark 100%);
           background-clip: text;
           -webkit-text-fill-color: transparent;
+          padding-bottom: 0.15em; /* Add padding to prevent cut-off */
+          display: inline-block; /* Ensure padding is applied properly */
         }
       }
 

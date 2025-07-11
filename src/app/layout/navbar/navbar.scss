@@ -151,9 +151,13 @@ nav {
 
     .language-display-container {
       position: relative;
-      min-width: 40px;
+      width: 45px; /* Fixed width to prevent shifting */
       height: 24px;
       text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden; /* Prevent overflow */
     }
 
     .language-display {
@@ -162,6 +166,8 @@ nav {
       line-height: 24px;
       color: v.$typography-200;
       transition: all 0.3s ease;
+      width: 100%; /* Take full width of container */
+      text-align: center; /* Center text */
     }
 
     .language-old {
@@ -170,6 +176,7 @@ nav {
       right: 0;
       opacity: 1;
       animation: fadeOut 0.3s ease forwards;
+      width: 100%;
     }
 
     .language-new {
@@ -177,6 +184,7 @@ nav {
       left: 0;
       right: 0;
       opacity: 1;
+      width: 100%;
 
       &.fading-in {
         animation: fadeIn 0.3s ease forwards;
@@ -188,6 +196,7 @@ nav {
       left: 0;
       right: 0;
       opacity: 1;
+      width: 100%;
 
       &.fading-in {
         animation: fadeIn 0.3s ease forwards;
@@ -351,6 +360,15 @@ nav {
       width: 100%;
       display: flex;
       justify-content: flex-end;
+
+      /* Ensure consistent styling for the mobile language selector */
+      .language-selector .selected-language .language-display-container {
+        width: 45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+      }
     }
 
     width: calc(100% - 40px);

@@ -1,4 +1,4 @@
-import { Component, ElementRef, QueryList, ViewChildren, AfterViewInit, OnInit, HostListener } from '@angular/core';
+import { Component, ElementRef, QueryList, ViewChildren, AfterViewInit, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Router, NavigationEnd, RouterModule } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { TranslationService, Language } from '../../core/services/translation.service';
@@ -16,7 +16,7 @@ interface MenuItem {
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss'
 })
-export class Navbar implements OnInit, AfterViewInit {
+export class Navbar implements OnInit, AfterViewInit, OnDestroy {
   activeLink = 'Home';
   isLanguageDropdownOpen = false;
   menuItemPosition = 0;
@@ -56,6 +56,9 @@ export class Navbar implements OnInit, AfterViewInit {
     });
   }
 
+  // MutationObserver to watch for changes in menu items
+  private menuObserver: MutationObserver | null = null;
+
   ngOnInit() {
     // Initialize with current language
     this.previousLanguageDisplay = this.languageDisplay;
@@ -77,11 +80,47 @@ export class Navbar implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     setTimeout(() => {
       this.updateGlowPosition();
+
+      // Setup MutationObserver to watch for changes in menu items content
+      this.setupMenuObserver();
     });
+  }
+
+  // Set up observer to watch for changes in menu items text content
+  private setupMenuObserver(): void {
+    // If browser supports MutationObserver
+    if (window.MutationObserver) {
+      const menuElement = document.querySelector('.menu');
+
+      if (menuElement) {
+        // Create new observer
+        this.menuObserver = new MutationObserver((mutations) => {
+          // When changes detected, update glow position
+          this.updateGlowPosition();
+        });
+
+        // Start observing with configuration to watch for text changes
+        this.menuObserver.observe(menuElement, {
+          childList: true,
+          subtree: true,
+          characterData: true,
+          characterDataOldValue: true
+        });
+      }
+    }
+  }
+
+  // Clean up observer when component is destroyed
+  ngOnDestroy(): void {
+    if (this.menuObserver) {
+      this.menuObserver.disconnect();
+    }
   }
 
   // Update menu item labels based on current language
   private updateMenuLabels(): void {
+    let translationsCompleted = 0;
+
     this.menuItems.forEach(item => {
       this.translateService.get(item.translationKey).subscribe((translation: string) => {
         item.label = translation;
@@ -89,6 +128,17 @@ export class Navbar implements OnInit, AfterViewInit {
         // If this is the active item, update the activeLink as well
         if (this.isRouteActive(item.route)) {
           this.activeLink = translation;
+        }
+
+        // Count completed translations
+        translationsCompleted++;
+
+        // Once all translations are complete, update the glow position
+        if (translationsCompleted === this.menuItems.length) {
+          // Wait for Angular to update the DOM with new translations
+          setTimeout(() => {
+            this.updateGlowPosition();
+          }, 50);
         }
       });
     });
@@ -222,8 +272,14 @@ export class Navbar implements OnInit, AfterViewInit {
 
       this.toggleLanguageDropdown();
 
+      // Add a short timeout to let translations load and DOM update
       setTimeout(() => {
         this.isFadingOut = false;
+        // After language change and text updates, recalculate glow position
+        // Need a bit longer timeout to ensure all translations are applied
+        setTimeout(() => {
+          this.updateGlowPosition();
+        }, 50);
       }, 300);
 
       setTimeout(() => {

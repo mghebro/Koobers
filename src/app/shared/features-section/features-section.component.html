@@ -65,7 +65,7 @@
 
         <div class="contact">
             <div class="text-content">
-                <p class="main-text">{{ 'FEATURES.CTA.TITLE' | translate }}</p>
+                <p class="main-text" [ngClass]="{'georgian-text': isGeorgian()}">{{ 'FEATURES.CTA.TITLE' | translate }}</p>
                 <p class="sub-text">{{ 'FEATURES.CTA.SUBTITLE' | translate }}</p>
             </div>
             <a class="Primary-Default" routerLink="/contact">{{ 'FEATURES.CTA.BUTTON' | translate }}</a>

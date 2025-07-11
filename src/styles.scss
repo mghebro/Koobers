@@ -131,3 +131,59 @@ swiper-slide {
 .swiper-pagination-bullets {
   display: none;
 }
+
+/* Global fix for gradient text cut-off */
+[style*="background-clip: text"],
+[style*="-webkit-background-clip: text"],
+*[style*="text-fill-color: transparent"],
+*[style*="-webkit-text-fill-color: transparent"],
+*[class*="green-text"],
+*[class*="gradient-text"] {
+  padding-bottom: 0.15em !important;
+  display: inline-block !important;
+}
+
+/* Global styles for Georgian language */
+html.lang-ka {
+  /* Typography adjustments for Georgian text */
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.4;
+  }
+
+  /* FAQ section heading */
+  .faq-title {
+    line-height: 1.5;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+  }
+
+  /* CTA title adjustments */
+  .cta-title {
+    line-height: 1.6;
+    letter-spacing: 0.5px;
+    margin-bottom: 15px;
+  }
+
+  /* Main heading titles */
+  .heading-title {
+    line-height: 1.5;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+
+    /* Green text spans within headings */
+    .green-text {
+      line-height: inherit;
+      letter-spacing: 0.5px;
+      padding-bottom: 0.15em; /* Add padding to prevent cut-off */
+      display: inline-block; /* Ensure padding is applied properly */
+    }
+  }
+
+  /* Standalone green text */
+  .green-text {
+    line-height: 1.5;
+    letter-spacing: 0.5px;
+    padding-bottom: 0.15em; /* Add padding to prevent cut-off */
+    display: inline-block; /* Ensure padding is applied properly */
+  }
+}

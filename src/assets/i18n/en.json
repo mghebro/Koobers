@@ -290,6 +290,21 @@
       "SUBMIT_BUTTON": "Submit the Form"
     },
     "NEXT_STEPS": "Next Steps",
+    "NEXT_STEPS_SECTION": {
+      "TITLE": "What Happens After You Reach Out?",
+      "REVIEW": {
+        "TITLE": "Quick Review & Response",
+        "DESCRIPTION": "We'll carefully review your message and get back to you within one business day to schedule a quick intro call or ask any clarifying questions."
+      },
+      "DISCOVERY": {
+        "TITLE": "Free Discovery Call",
+        "DESCRIPTION": "We'll explore your idea, goals, and challenges — and see if we're the right fit to build it together."
+      },
+      "PLANNING": {
+        "TITLE": "Project Planning & Proposal",
+        "DESCRIPTION": "If it's a match, we'll prepare a tailored plan with scope, timeline, and next steps."
+      }
+    },
     "CONTACT_INFO": {
       "PHONE_1": "+995 595 299 995",
       "PHONE_2": "+995 591 299 899",
@@ -306,5 +321,11 @@
     "START_PROJECT": "Start Your Project",
     "SEE_OUR_WORK": "See Our Work",
     "LOADING": "Loading..."
+  },
+  "COOKIE_CONSENT": {
+    "TITLE": "We Use Cookies",
+    "DESCRIPTION": "To improve your experience, we use cookies for site performance, analytics, and personalization.",
+    "ACCEPT": "Accept",
+    "DECLINE": "Decline"
   }
 }
