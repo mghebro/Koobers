@@ -1,16 +1,13 @@
-import { Component, ElementRef, QueryList, ViewChildren, AfterViewInit, OnInit, HostListener } from '@angular/core';
+import { Component, ElementRef, QueryList, ViewChildren, AfterViewInit, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Router, NavigationEnd, RouterModule } from '@angular/router';
 import { filter } from 'rxjs/operators';
-
-interface Language {
-  code: string;
-  name: string;
-  flag: string;
-}
+import { TranslationService, Language } from '../../core/services/translation.service';
+import { TranslateService } from '@ngx-translate/core';
 
 interface MenuItem {
   label: string;
   route: string;
+  translationKey: string;
 }
 
 @Component({
@@ -19,32 +16,48 @@ interface MenuItem {
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss'
 })
-export class Navbar {activeLink = 'Home';
+export class Navbar implements OnInit, AfterViewInit, OnDestroy {
+  activeLink = 'Home';
   isLanguageDropdownOpen = false;
   menuItemPosition = 0;
 
-  // Updated menu items with routes
+  // Updated menu items with routes and translation keys
   menuItems: MenuItem[] = [
-    { label: 'Home', route: '/' },
-    { label: 'Services', route: '/services' },
-    { label: 'Work', route: '/work' },
-    { label: 'About', route: '/about' },
-    { label: 'Contact', route: '/contact' },
+    { label: 'Home', route: '/', translationKey: 'NAVBAR.HOME' },
+    { label: 'Services', route: '/services', translationKey: 'NAVBAR.SERVICES' },
+    { label: 'Work', route: '/work', translationKey: 'NAVBAR.WORK' },
+    { label: 'About', route: '/about', translationKey: 'NAVBAR.ABOUT' },
+    { label: 'Contact', route: '/contact', translationKey: 'NAVBAR.CONTACT' },
   ];
 
   @ViewChildren('menuItem') menuItemsElements!: QueryList<ElementRef>;
 
-  languages: Language[] = [
-    { code: 'en', name: 'English', flag: '../../../assets/images/Eng.png' },
-    { code: 'geo', name: 'Georgian', flag: '../../../assets/images/Geo.png' },
-  ];
-
-  selectedLanguage: Language = this.languages[0];
+  languages: Language[] = [];
+  selectedLanguage: Language;
   previousLanguageDisplay = '';
   isFadingOut = false;
   isFadingIn = false;
 
-  constructor(private elementRef: ElementRef, private router: Router) {}
+  constructor(
+    private elementRef: ElementRef,
+    private router: Router,
+    private translationService: TranslationService,
+    private translateService: TranslateService
+  ) {
+    // Get languages from the translation service
+    this.languages = this.translationService.getLanguages();
+    this.selectedLanguage = this.translationService.getCurrentLanguageValue();
+
+    // Subscribe to language changes
+    this.translationService.getCurrentLanguage().subscribe(lang => {
+      this.selectedLanguage = lang;
+      // Update menu labels when language changes
+      this.updateMenuLabels();
+    });
+  }
+
+  // MutationObserver to watch for changes in menu items
+  private menuObserver: MutationObserver | null = null;
 
   ngOnInit() {
     // Initialize with current language
@@ -59,11 +72,75 @@ export class Navbar {activeLink = 'Home';
       .subscribe(() => {
         this.setActiveLinkFromRoute();
       });
+
+    // Initialize menu labels with translations
+    this.updateMenuLabels();
   }
 
   ngAfterViewInit() {
     setTimeout(() => {
       this.updateGlowPosition();
+
+      // Setup MutationObserver to watch for changes in menu items content
+      this.setupMenuObserver();
+    });
+  }
+
+  // Set up observer to watch for changes in menu items text content
+  private setupMenuObserver(): void {
+    // If browser supports MutationObserver
+    if (window.MutationObserver) {
+      const menuElement = document.querySelector('.menu');
+
+      if (menuElement) {
+        // Create new observer
+        this.menuObserver = new MutationObserver((mutations) => {
+          // When changes detected, update glow position
+          this.updateGlowPosition();
+        });
+
+        // Start observing with configuration to watch for text changes
+        this.menuObserver.observe(menuElement, {
+          childList: true,
+          subtree: true,
+          characterData: true,
+          characterDataOldValue: true
+        });
+      }
+    }
+  }
+
+  // Clean up observer when component is destroyed
+  ngOnDestroy(): void {
+    if (this.menuObserver) {
+      this.menuObserver.disconnect();
+    }
+  }
+
+  // Update menu item labels based on current language
+  private updateMenuLabels(): void {
+    let translationsCompleted = 0;
+
+    this.menuItems.forEach(item => {
+      this.translateService.get(item.translationKey).subscribe((translation: string) => {
+        item.label = translation;
+
+        // If this is the active item, update the activeLink as well
+        if (this.isRouteActive(item.route)) {
+          this.activeLink = translation;
+        }
+
+        // Count completed translations
+        translationsCompleted++;
+
+        // Once all translations are complete, update the glow position
+        if (translationsCompleted === this.menuItems.length) {
+          // Wait for Angular to update the DOM with new translations
+          setTimeout(() => {
+            this.updateGlowPosition();
+          }, 50);
+        }
+      });
     });
   }
 
@@ -80,7 +157,8 @@ export class Navbar {activeLink = 'Home';
       this.activeLink = matchedItem.label;
     } else {
       // Default to Home if no match found
-      this.activeLink = 'Home';
+      const homeItem = this.menuItems.find(item => item.route === '/');
+      this.activeLink = homeItem ? homeItem.label : 'Home';
     }
 
     setTimeout(() => {
@@ -156,7 +234,7 @@ export class Navbar {activeLink = 'Home';
     }
 
     if (!clickedInsideNavbar && this.menuOpen) {
-      this.menuOpen = false
+      this.menuOpen = false;
     }
   }
 
@@ -166,18 +244,18 @@ export class Navbar {activeLink = 'Home';
     if (this.menuOpen) {
       this.menuOpen = false;
     }
-    
+
     // Close language dropdown as well
     if (this.isLanguageDropdownOpen) {
       this.isLanguageDropdownOpen = false;
     }
-    
+
     // Update glow position after resize
     setTimeout(() => {
       this.updateGlowPosition();
     }, 100);
   }
-  
+
   selectLanguage(language: Language, event?: MouseEvent): void {
     if (event) {
       event.stopPropagation();
@@ -188,11 +266,20 @@ export class Navbar {activeLink = 'Home';
       this.isFadingOut = true;
       this.isFadingIn = true;
 
+      // Use TranslationService to switch language
+      this.translationService.setLanguage(language);
       this.selectedLanguage = language;
+
       this.toggleLanguageDropdown();
 
+      // Add a short timeout to let translations load and DOM update
       setTimeout(() => {
         this.isFadingOut = false;
+        // After language change and text updates, recalculate glow position
+        // Need a bit longer timeout to ensure all translations are applied
+        setTimeout(() => {
+          this.updateGlowPosition();
+        }, 50);
       }, 300);
 
       setTimeout(() => {
@@ -204,20 +291,30 @@ export class Navbar {activeLink = 'Home';
   get languageDisplay(): string {
     if (this.selectedLanguage.code === 'en') {
       return 'Eng';
-    } else if (this.selectedLanguage.code === 'geo') {
+    } else if (this.selectedLanguage.code === 'ka') {
       return 'Geo';
     }
     return 'Eng/Geo';
   }
+
   menuOpen = false;
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
 
     if (this.menuOpen) {
+      // Check if we need to compensate for scrollbar
+      const hasScrollbar = window.innerWidth > document.documentElement.clientWidth;
+
+      // Add adjust class to html to prevent layout shift
+      if (hasScrollbar) {
+        document.documentElement.classList.add('scroll-lock-adjust');
+      }
+
       document.body.style.overflow = 'hidden'; // Prevent scroll
     } else {
       document.body.style.overflow = ''; // Restore scroll
+      document.documentElement.classList.remove('scroll-lock-adjust');
     }
   }
 }

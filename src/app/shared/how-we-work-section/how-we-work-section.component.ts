@@ -9,89 +9,93 @@ import { ScrollLockService } from '../../core/services/scroll-lock.service';
 })
 export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
   @ViewChild('processSection', { static: false }) processSection!: ElementRef;
-  
+  @ViewChild('headingSection', { static: false }) headingSection!: ElementRef;
+  @ViewChild('contentBox', { static: false }) contentBox!: ElementRef;
+
   activeIndex: number = 1;
   isLocked: boolean = false;
-  
+
   // State management
   private hasEnteredSection: boolean = false;
   private sectionCompleted: boolean = false;
   private hasEverLocked: boolean = false;
   private lastScrollY: number = 0;
   private scrollDirection: 'up' | 'down' = 'down';
-  
+  private headingIsVisible: boolean = false;
+  private headingObserver: IntersectionObserver | null = null;
+
   // Lock/unlock debouncing
   private lockDebounceTimer: any = null;
   private unlockDebounceTimer: any = null;
   private lockDebounceDelay: number = 200;
   private unlockDebounceDelay: number = 300;
-  
+
   // Hysteresis thresholds
   private lockThreshold: number = 0.2;
   private unlockThreshold: number = 0.4;
   private wasInLockZone: boolean = false;
-  
+
   // Scroll control
   private scrollAccumulator: number = 0;
   private requiredScroll: number = 120;
   private lastScrollTime: number = 0;
   private scrollDelay: number = 300;
   private isTransitioning: boolean = false;
-  
+
   // Touch handling
   private touchStartY: number = 0;
   private touchSensitivity: number = 50;
-  
+
   steps = [
     {
       id: 1,
       number: '01',
-      title: 'Discovery',
-      timeline: '1-2 Weeks',
-      description: 'Understand your vision and define clear goals.',
+      title: 'HOW_WE_WORK.STEPS.DISCOVERY.TITLE',
+      timeline: 'HOW_WE_WORK.STEPS.DISCOVERY.TIMELINE',
+      description: 'HOW_WE_WORK.STEPS.DISCOVERY.DESCRIPTION',
       icon: '../../../assets/svgs/how-we-work/discovery.svg',
-      highlight: 'Strategy'
+      highlight: 'HOW_WE_WORK.STEPS.DISCOVERY.HIGHLIGHT'
     },
     {
       id: 2,
       number: '02',
-      title: 'Design',
-      timeline: '2-4 Weeks',
-      description: 'Create beautiful, intuitive user experiences.',
+      title: 'HOW_WE_WORK.STEPS.DESIGN.TITLE',
+      timeline: 'HOW_WE_WORK.STEPS.DESIGN.TIMELINE',
+      description: 'HOW_WE_WORK.STEPS.DESIGN.DESCRIPTION',
       icon: '../../../assets/svgs/how-we-work/design.svg',
-      highlight: 'UX/UI'
+      highlight: 'HOW_WE_WORK.STEPS.DESIGN.HIGHLIGHT'
     },
     {
       id: 3,
       number: '03',
-      title: 'Development',
-      timeline: '4-12 Weeks',
-      description: 'Build scalable solutions with clean code.',
+      title: 'HOW_WE_WORK.STEPS.DEVELOPMENT.TITLE',
+      timeline: 'HOW_WE_WORK.STEPS.DEVELOPMENT.TIMELINE',
+      description: 'HOW_WE_WORK.STEPS.DEVELOPMENT.DESCRIPTION',
       icon: '../../../assets/svgs/how-we-work/development.svg',
-      highlight: 'Engineering'
+      highlight: 'HOW_WE_WORK.STEPS.DEVELOPMENT.HIGHLIGHT'
     },
     {
       id: 4,
       number: '04',
-      title: 'Launch',
-      timeline: '1 Week',
-      description: 'Deploy smoothly with zero downtime.',
+      title: 'HOW_WE_WORK.STEPS.LAUNCH.TITLE',
+      timeline: 'HOW_WE_WORK.STEPS.LAUNCH.TIMELINE',
+      description: 'HOW_WE_WORK.STEPS.LAUNCH.DESCRIPTION',
       icon: '../../../assets/svgs/how-we-work/launch.svg',
-      highlight: 'Go Live'
+      highlight: 'HOW_WE_WORK.STEPS.LAUNCH.HIGHLIGHT'
     },
     {
       id: 5,
       number: '05',
-      title: 'Support',
-      timeline: 'Ongoing',
-      description: 'Continuous optimization and growth.',
+      title: 'HOW_WE_WORK.STEPS.SUPPORT.TITLE',
+      timeline: 'HOW_WE_WORK.STEPS.SUPPORT.TIMELINE',
+      description: 'HOW_WE_WORK.STEPS.SUPPORT.DESCRIPTION',
       icon: '../../../assets/svgs/how-we-work/support.svg',
-      highlight: 'Maintain'
+      highlight: 'HOW_WE_WORK.STEPS.SUPPORT.HIGHLIGHT'
     }
   ];
 
   private readonly SECTION_ID = 'how-we-work';
-  
+
   constructor(
     private ngZone: NgZone,
     private scrollLockService: ScrollLockService
@@ -99,14 +103,21 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.setupScrollListener();
+    this.setupHeadingObserver();
   }
 
   ngOnDestroy(): void {
     this.unlockScroll();
     this.removeEventListeners();
     this.clearDebounceTimers();
+
+    // Disconnect the observer when component is destroyed
+    if (this.headingObserver) {
+      this.headingObserver.disconnect();
+      this.headingObserver = null;
+    }
   }
-  
+
   private clearDebounceTimers(): void {
     if (this.lockDebounceTimer) {
       clearTimeout(this.lockDebounceTimer);
@@ -136,6 +147,34 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
     window.removeEventListener('keydown', this.handleKeydown.bind(this));
   }
 
+  private setupHeadingObserver(): void {
+    if (!this.headingSection) return;
+
+    // Create IntersectionObserver to detect when heading is visible
+    this.headingObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        this.headingIsVisible = entry.isIntersecting;
+
+        // If the heading becomes visible and we haven't locked yet
+        if (this.headingIsVisible && !this.isLocked && !this.hasEverLocked &&
+            this.scrollDirection === 'down' &&
+            this.scrollLockService.canSectionLock(this.SECTION_ID, this.scrollDirection)) {
+          this.clearDebounceTimers();
+          this.lockDebounceTimer = setTimeout(() => {
+            if (this.headingIsVisible &&
+                this.scrollLockService.canSectionLock(this.SECTION_ID, this.scrollDirection)) {
+              this.lockScroll();
+            }
+          }, this.lockDebounceDelay);
+        }
+      });
+    }, {
+      threshold: 0.3 // Trigger when 30% of the heading is visible
+    });
+
+    this.headingObserver.observe(this.headingSection.nativeElement);
+  }
+
   private handleScroll(): void {
     if (!this.processSection) return;
 
@@ -148,16 +187,17 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
     const sectionHeight = sectionRect.height;
     const windowHeight = window.innerHeight;
 
-    // Calculate if section center is near screen center
+    // Use headingIsVisible state instead of topVisible
+    const sectionVisible = sectionTop < windowHeight && (sectionTop + sectionHeight) > 0;
+
+    // Lock when heading is visible - this is now handled by the IntersectionObserver
+    const isInLockZone = this.headingIsVisible && sectionVisible;
+
+    // Use section center for unlocking logic to prevent immediate unlocking
     const sectionCenter = sectionTop + (sectionHeight / 2);
     const screenCenter = windowHeight / 2;
     const distanceFromCenter = Math.abs(sectionCenter - screenCenter);
-    const lockDistance = windowHeight * this.lockThreshold;
     const unlockDistance = windowHeight * this.unlockThreshold;
-    
-    // Check if section is visible in viewport
-    const sectionVisible = sectionTop < windowHeight && (sectionTop + sectionHeight) > 0;
-    const isInLockZone = distanceFromCenter <= lockDistance && sectionVisible;
     const shouldUnlock = !sectionVisible || distanceFromCenter > unlockDistance;
 
     // Apply hysteresis logic with scroll lock service
@@ -185,7 +225,7 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
         }
       }, this.unlockDebounceDelay);
     }
-    
+
     this.wasInLockZone = isInLockZone;
   }
 
@@ -193,7 +233,7 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
     if (!this.isLocked) return;
 
     event.preventDefault();
-    
+
     const now = Date.now();
     if (now - this.lastScrollTime < this.scrollDelay || this.isTransitioning) {
       return;
@@ -225,20 +265,20 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
 
     if (Math.abs(deltaY) > this.touchSensitivity) {
       event.preventDefault();
-      
+
       const now = Date.now();
       if (now - this.lastScrollTime < this.scrollDelay || this.isTransitioning) {
         return;
       }
 
       this.lastScrollTime = now;
-      
+
       if (deltaY > 0) {
         this.nextStep();
       } else {
         this.previousStep();
       }
-      
+
       this.touchStartY = touchEndY;
     }
   }
@@ -248,7 +288,7 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
 
     if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       event.preventDefault();
-      
+
       const now = Date.now();
       if (now - this.lastScrollTime < this.scrollDelay || this.isTransitioning) {
         return;
@@ -277,7 +317,7 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
       // Completed all steps - add a slight delay before unlocking
       this.isTransitioning = true;
       this.sectionCompleted = true;
-      
+
       setTimeout(() => {
         this.clearDebounceTimers();
         this.unlockScroll('down');
@@ -306,59 +346,71 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
 
   private lockScroll(): void {
     if (this.isLocked) return;
-    
+
     // Clear any pending unlocks
     if (this.unlockDebounceTimer) {
       clearTimeout(this.unlockDebounceTimer);
       this.unlockDebounceTimer = null;
     }
-    
+
+    // Check if we need to compensate for scrollbar
+    const hasScrollbar = window.innerWidth > document.documentElement.clientWidth;
+
+    // Add adjust class to html to prevent layout shift
+    if (hasScrollbar) {
+      document.documentElement.classList.add('scroll-lock-adjust');
+    }
+
     this.isLocked = true;
     this.hasEverLocked = true;
     this.scrollAccumulator = 0;
     this.scrollLockService.lockSection(this.SECTION_ID);
     document.body.style.overflow = 'hidden';
-    
+
     // Set initial step based on scroll direction
     if (!this.hasEnteredSection) {
       this.activeIndex = this.scrollDirection === 'down' ? 1 : this.steps.length;
       this.hasEnteredSection = true;
     }
-    
+
     // Center the section on screen
     this.centerSection();
   }
 
-  private unlockScroll(exitDirection?: 'up' | 'down'): void {
+    private unlockScroll(exitDirection?: 'up' | 'down'): void {
     if (!this.isLocked) return;
-    
+
     // Clear any pending locks
     if (this.lockDebounceTimer) {
       clearTimeout(this.lockDebounceTimer);
       this.lockDebounceTimer = null;
     }
-    
+
+    // Remove scroll-lock-adjust class from html
+    document.documentElement.classList.remove('scroll-lock-adjust');
+
     const direction = exitDirection || this.scrollDirection;
     this.scrollLockService.unlockSection(this.SECTION_ID, direction);
-    
+
     this.isLocked = false;
     this.scrollAccumulator = 0;
     document.body.style.overflow = '';
     this.wasInLockZone = false;
-    
+
     // Reset scroll tracking to prevent immediate re-lock
     this.lastScrollTime = Date.now();
   }
 
-  private centerSection(): void {
-    const sectionElement = this.processSection.nativeElement;
+    private centerSection(): void {
+    const sectionElement = this.contentBox.nativeElement;
     const sectionTop = sectionElement.offsetTop;
-    const sectionHeight = sectionElement.offsetHeight;
-    const windowHeight = window.innerHeight;
-    const centerOffset = (windowHeight - sectionHeight) / 2;
-    
+
+    // Estimate navbar height (adjust this value if needed)
+    const navbarHeight = 80;
+
+    // Position the section directly under the navbar
     window.scrollTo({
-      top: sectionTop - centerOffset,
+      top: sectionTop - navbarHeight,
       behavior: 'smooth'
     });
   }
@@ -366,10 +418,10 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
   private scrollPastSection(): void {
     const sectionElement = this.processSection.nativeElement;
     const sectionBottom = sectionElement.offsetTop + sectionElement.offsetHeight;
-    
+
     // More conservative scroll - just move past the section edge
     const targetScroll = sectionBottom + 50; // Just 50px past the section
-    
+
     // Use requestAnimationFrame for smoother control
     requestAnimationFrame(() => {
       window.scrollTo({
@@ -382,7 +434,7 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
   private scrollBeforeSection(): void {
     const sectionElement = this.processSection.nativeElement;
     const sectionTop = sectionElement.offsetTop;
-    
+
     setTimeout(() => {
       window.scrollTo({
         top: sectionTop - window.innerHeight * 1.2,
@@ -398,18 +450,18 @@ export class HowWeWorkSectionComponent implements AfterViewInit, OnDestroy {
   getProgressPercentage(): number {
     if (this.activeIndex === 1) return 0;
     if (this.activeIndex === this.steps.length) return 100;
-    
+
     const segmentWidth = 100 / (this.steps.length - 1);
     return (this.activeIndex - 1) * segmentWidth;
   }
 
   onStepClick(stepId: number): void {
     if (!this.isLocked) return;
-    
+
     if (stepId !== this.activeIndex && !this.isTransitioning) {
       this.isTransitioning = true;
       this.activeIndex = stepId;
-      
+
       setTimeout(() => {
         this.isTransitioning = false;
       }, 800);

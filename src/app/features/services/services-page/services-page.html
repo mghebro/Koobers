@@ -1,23 +1,26 @@
 <div class="page-wrapper">
     <app-page-header
     headingLink="/about"
-    headingLinkText="
-        Explore More About Us"
-    headingTitle="Custom Websites & Digital Products, "
-    headingTitleSpan="That Actually Perform!"
-    headingDescription="We build scalable, fast, and beautifully crafted web solutions — designed for real business growth, not just good looks."
-    primaryButtonContent="Start Your Project"
+    headingLinkText="{{ 'SERVICES.EXPLORE_ABOUT_US' | translate }}"
+    headingTitle="{{ 'SERVICES.HEADING_TITLE' | translate }}"
+    headingTitleSpan="{{ 'SERVICES.HEADING_TITLE_SPAN' | translate }}"
+    headingDescription="{{ 'SERVICES.HEADING_DESCRIPTION' | translate }}"
+    primaryButtonContent="{{ 'COMMON.START_PROJECT' | translate }}"
     primaryButtonTarget="/contact"
-    secondaryButtonContent="See Our Work"
+    secondaryButtonContent="{{ 'COMMON.SEE_OUR_WORK' | translate }}"
     secondaryButtonTarget="/work"></app-page-header>
+
+<app-out-services></app-out-services>
+
+
   <app-services-faq-section></app-services-faq-section>
   <app-features-section></app-features-section>
   <app-how-we-work-section></app-how-we-work-section>
   <app-benefits-section></app-benefits-section>
-  <app-cta-section 
-  ctaTitle="Ready to Build Something That Lasts?"
-  ctaDescription="From idea to launch — and beyond — we’re here to help you create digital experiences that make a difference."
-  buttonContent="Start Your Project"
+  <app-cta-section
+  ctaTitle="{{ 'SERVICES.CTA_TITLE' | translate }}"
+  ctaDescription="{{ 'SERVICES.CTA_DESCRIPTION' | translate }}"
+  buttonContent="{{ 'COMMON.START_PROJECT' | translate }}"
   buttonTarget="/contact"
   ></app-cta-section>
 </div>

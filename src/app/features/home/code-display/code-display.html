@@ -4,18 +4,18 @@
       <div class="tab" [class.active]="activeTab === 'react'" (click)="setTab('react')">React</div>
       <div class="tab" [class.active]="activeTab === 'csharp'" (click)="setTab('csharp')">C#</div>
     </div>
-  
-  
-  
+
+
+
     <div class="code-content">
        <pre><code [innerHTML]="displayedCode" [class.typing]="isTyping"></code></pre>
     </div>
-  
-  
-  
-    
+
+
+
+
     <div class="code-footer">
-      <span class="contact-us-text" (click)="openModal()"> <p>Contact Us</p> <svg class="arrow-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <span class="contact-us-text" (click)="openModal()"> <p>{{ 'FOOTER.CONTACT_US' | translate }}</p> <svg class="arrow-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M6 13L10 9L6 5" stroke="#BBCCBB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         </span>
@@ -39,4 +39,3 @@
         </span>
     </div>
   </div>
-  

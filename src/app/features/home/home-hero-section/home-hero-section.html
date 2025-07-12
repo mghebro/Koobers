@@ -25,7 +25,7 @@
       <div class="left-content">
         <button class="explore">
           <span class="line"></span>
-          <span class="explore-text">Explore Blogs</span>
+          <span class="explore-text">{{ 'HOME.EXPLORE_BLOGS' | translate }}</span>
           <span class="explore-arrow"><svg width="7" height="12" viewBox="0 0 7 12" fill="none"
               xmlns="http://www.w3.org/2000/svg">
               <path
@@ -34,36 +34,36 @@
             </svg>
           </span>
         </button>
-  
-        <div class="heading">
-          <h1 class="heading-text">Build new products</h1>
-          <h1 class="heading-text"><span>for </span>
-            <span class="highlight">{{displayedText}}</span>
+
+        <div class="heading" [ngClass]="{'georgian-heading': isGeorgian}">
+          <h1 class="heading-text">{{ 'HOME.BUILD_NEW_PRODUCTS' | translate }}</h1>
+          <h1 class="heading-text"><span>{{ 'HOME.FOR' | translate }} </span>
+            <span class="highlight" [ngClass]="{'georgian': isGeorgian}">{{displayedText}}</span>
             <span class="cursor" [ngClass]="{'hidden': !cursorVisible}"></span>
           </h1>
         </div>
-  
+
         <p class="description">
-          Our framework component is built to handle scaling demands with agility.
-          <br>Lightning-fast performance is our promise.
+          {{ 'HOME.HERO_DESCRIPTION_1' | translate }}
+          <br>{{ 'HOME.HERO_DESCRIPTION_2' | translate }}
         </p>
-  
+
         <div class="cta-buttons">
-          <button routerLink="/contact" class="Primary-Default">Get Started</button>
-          <button routerLink="/services" class="Secondary-Default">See Our Services</button>
+          <button routerLink="/contact" class="Primary-Default">{{ 'COMMON.GET_STARTED' | translate }}</button>
+          <button routerLink="/services" class="Secondary-Default">{{ 'HOME.SEE_OUR_SERVICES' | translate }}</button>
         </div>
       </div>
-  
-  
-  
-  
+
+
+
+
       <div class="right-content">
         <app-code-display [activeTab]="activeTab" [codeSnippets]="codeSnippets" (tabChange)="onTabChange($event)">
         </app-code-display>
       </div>
     </div>
-  
-  
-  
-  
+
+
+
+
   </section>

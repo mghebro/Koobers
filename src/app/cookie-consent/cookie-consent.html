@@ -1,0 +1,24 @@
+<div class="cookie-consent" *ngIf="!cookiesAccepted"
+     (touchstart)="onTouchStart($event)"
+     (touchmove)="onTouchMove($event)"
+     (touchend)="onTouchEnd($event)">
+  <div class="cookie-content">
+    <div class="divider" role="button" aria-label="Swipe down to dismiss"></div>
+
+    <div class="header">
+    <div class="cookie-icon">
+      <img src="assets/svgs/cookie.svg" alt="Cookie icon">
+    </div>
+    <div class="cookie-text">
+      <h3>{{ 'COOKIE_CONSENT.TITLE' | translate }}</h3>
+
+    </div>
+
+</div>
+<p>{{ 'COOKIE_CONSENT.DESCRIPTION' | translate }}</p>
+    <div class="cookie-actions">
+      <button (click)="acceptCookies()" class="accept-button">{{ 'COOKIE_CONSENT.ACCEPT' | translate }}</button>
+      <button (click)="rejectCookies()" class="reject-button">{{ 'COOKIE_CONSENT.DECLINE' | translate }}</button>
+    </div>
+  </div>
+</div>

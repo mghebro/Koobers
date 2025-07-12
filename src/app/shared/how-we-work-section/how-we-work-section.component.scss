@@ -676,7 +676,7 @@
 
     .progress-indicator {
       position: fixed;
-      bottom: 40px;
+      bottom: 20px; // Closer to the bottom of the screen
       left: 50%;
       transform: translateX(-50%);
       background: variables.$bg-section-secondary;

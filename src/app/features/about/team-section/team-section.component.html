@@ -2,10 +2,10 @@
   <div class="container">
 
     <div class="header-container">
-      <h3 class="section-subtitle">Our Team</h3>
-      <h2 class="section-title">Meet the Minds Behind the Code</h2>
+      <h3 class="section-subtitle">{{ 'ABOUT.TEAM.TITLE' | translate }}</h3>
+      <h2 class="section-title">{{ 'ABOUT.TEAM.HEADING_TITLE' | translate }}</h2>
       <p class="section-description">
-        We're a small, focused team of designers and developers who love what we do — and who you'll actually work with.
+        {{ 'ABOUT.TEAM.HEADING_DESCRIPTION' | translate }}
       </p>
     </div>
 
@@ -35,7 +35,7 @@
                     <h3 class="member-name">{{ member.name }}</h3>
                   </div>
                   <div class="flip-card-back">
-                    <p class="member-find">You'll Find Him Here:</p>
+                    <p class="member-find">{{ 'ABOUT.TEAM.FIND_HERE' | translate }}</p>
                     <div class="link-container">
                       <a href="{{ member.link }}" class="member-link" target="_blank" (click)="flipBack($event, member)">{{ member.displayUrl || member.link }}</a>
                       <img src="assets/svgs/arrow.svg" alt="Arrow" class="arrow-icon">
@@ -66,7 +66,7 @@
                     <h3 class="member-name">{{ member.name }}</h3>
                   </div>
                   <div class="flip-card-back">
-                    <p class="member-find">You'll Find Him Here:</p>
+                    <p class="member-find">{{ 'ABOUT.TEAM.FIND_HERE' | translate }}</p>
                     <div class="link-container">
                       <a href="{{ member.link }}" class="member-link" target="_blank" (click)="flipBack($event, member)">{{ member.displayUrl || member.link }}</a>
                       <img src="assets/svgs/arrow.svg" alt="Arrow" class="arrow-icon">
@@ -104,7 +104,7 @@
                     <h3 class="member-name">{{ member.name }}</h3>
                   </div>
                   <div class="flip-card-back">
-                    <p class="member-find">You'll Find Him Here:</p>
+                    <p class="member-find">{{ 'ABOUT.TEAM.FIND_HERE' | translate }}</p>
                     <div class="link-container">
                       <a href="{{ member.link }}" class="member-link" target="_blank" (click)="flipBack($event, member)">{{ member.displayUrl || member.link }}</a>
                       <img src="assets/svgs/arrow.svg" alt="Arrow" class="arrow-icon">
@@ -135,7 +135,7 @@
                     <h3 class="member-name">{{ member.name }}</h3>
                   </div>
                   <div class="flip-card-back">
-                    <p class="member-find">You'll Find Him Here:</p>
+                    <p class="member-find">{{ 'ABOUT.TEAM.FIND_HERE' | translate }}</p>
                     <div class="link-container">
                       <a href="{{ member.link }}" class="member-link" target="_blank" (click)="flipBack($event, member)">{{ member.displayUrl || member.link }}</a>
                       <img src="assets/svgs/arrow.svg" alt="Arrow" class="arrow-icon">

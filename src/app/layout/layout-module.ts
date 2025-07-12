@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Footer } from './footer/footer';
 import { RouterModule } from '@angular/router';
 import { Navbar } from './navbar/navbar';
-
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -13,7 +13,8 @@ import { Navbar } from './navbar/navbar';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    TranslateModule
   ],
   exports: [
     Footer,

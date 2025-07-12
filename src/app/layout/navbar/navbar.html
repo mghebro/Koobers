@@ -1,7 +1,7 @@
 <div class="navbar-container">
     <nav>
       <img alt="" routerLink="/" src="../../../assets/svgs/logo.svg" class="logo">
-  
+
       <div class="menu">
         <button
           class="menu-items"
@@ -10,7 +10,7 @@
           (click)="navigateTo(item)"
           #menuItem
         >
-          {{ item.label }}
+          {{ item.translationKey | translate }}
         </button>
         <div class="glow-wrapper" [style.left]="menuItemPosition + 'px'">
         <div
@@ -29,7 +29,7 @@
         </div>
         </div>
       </div>
-  
+
       <div class="right-section">
         <div class="language-selector">
           <div
@@ -93,8 +93,8 @@
             </div>
           </div>
         </div>
-  
-        <button routerLink="/contact" class="Primary-Default">Get Started</button>
+
+        <button routerLink="/contact" class="Primary-Default">{{ 'NAVBAR.GET_STARTED' | translate }}</button>
       </div>
     </nav>
   </div>
@@ -165,7 +165,7 @@
           </div>
         </div>
       </div>
-  
+
       <div class="burger">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -181,10 +181,10 @@
         </svg>
       </div>
     </div>
-  
+
     <div class="nav-links" [class.show]="menuOpen">
       <ul>
-        <li *ngFor="let item of menuItems" (click)="navigateTo(item)" [class.active]="activeLink == item.label">{{item.label}}</li>
+        <li *ngFor="let item of menuItems" (click)="navigateTo(item)" [class.active]="activeLink == item.label">{{ item.translationKey | translate }}</li>
       </ul>
     </div>
   </nav>

@@ -121,7 +121,7 @@
   outline-offset: -1px;
   position: relative;
   overflow: hidden;
-  
+
   &::before {
     content: '';
     position: absolute;
@@ -137,7 +137,7 @@
 
   &:hover {
     box-shadow: 0px 4px 20px rgba(84, 250, 150, 0.4), 0px 0px 12px 2px variables.$button-stroke inset;
-    
+
     &::before {
       width: 150%;
       height: 150%;

@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { CtaSection } from './cta-section/cta-section';
 import { ModalForm } from './modal-form/modal-form';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -24,6 +25,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
+    TranslateModule,
   ],
   exports: [
     FeaturesSectionComponent,
@@ -31,7 +33,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     BenefitsSectionComponent,
     CtaSection,
     PageHeader,
-    ModalForm
+    ModalForm,
+    TranslateModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

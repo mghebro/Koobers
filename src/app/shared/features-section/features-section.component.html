@@ -1,9 +1,9 @@
 <div class="page-section">
     <div class="content-box">
         <div class="heading">
-            <span>Features</span>
-            <div class="main-text">Custom-Fit Solutions, Built With You</div>
-            <div class="sub-text">At Koober Coders, we combine cutting-edge technology, real-world experience, and a personalized approach to bring your digital ideas to life. Here's what sets us apart from the rest:</div>
+            <span>{{ 'FEATURES.TITLE' | translate }}</span>
+            <div class="main-text">{{ 'FEATURES.MAIN_TITLE' | translate }}</div>
+            <div class="sub-text">{{ 'FEATURES.SUB_TITLE' | translate }}</div>
         </div>
 
         <div class="features">
@@ -12,63 +12,63 @@
                     <div class="logo">
                         <img src="assets/svgs/features/technology.svg" alt="">
                     </div>
-                    <p class="title">Modern Technologies</p>
+                    <p class="title">{{ 'FEATURES.MODERN_TECH.TITLE' | translate }}</p>
                 </div>
-                <p class="description">We use the latest, stable technology stack to ensure high performance, security, and scalability for every project.</p>
+                <p class="description">{{ 'FEATURES.MODERN_TECH.DESCRIPTION' | translate }}</p>
             </div>
             <div class="feature">
                 <div class="heading">
                     <div class="logo">
                         <img src="assets/svgs/features/team.svg" alt="">
                     </div>
-                    <p class="title">Experienced Team</p>
+                    <p class="title">{{ 'FEATURES.EXPERIENCED_TEAM.TITLE' | translate }}</p>
                 </div>
-                <p class="description">Our developers bring years of hands-on experience solving complex problems with clean, maintainable code..</p>
+                <p class="description">{{ 'FEATURES.EXPERIENCED_TEAM.DESCRIPTION' | translate }}</p>
             </div>
             <div class="feature">
                 <div class="heading">
                     <div class="logo">
                         <img src="assets/svgs/features/process.svg" alt="">
                     </div>
-                    <p class="title">Flexible (Agile) Processes</p>
+                    <p class="title">{{ 'FEATURES.AGILE_PROCESS.TITLE' | translate }}</p>
                 </div>
-                <p class="description">We follow Agile methodology — delivering fast, adapting quickly to change, and keeping you in the loop every step of the way.</p>
+                <p class="description">{{ 'FEATURES.AGILE_PROCESS.DESCRIPTION' | translate }}</p>
             </div>
             <div class="feature">
                 <div class="heading">
                     <div class="logo">
                         <img src="assets/svgs/features/personal-approach.svg" alt="">
                     </div>
-                    <p class="title">Personalized Approach</p>
+                    <p class="title">{{ 'FEATURES.PERSONAL_APPROACH.TITLE' | translate }}</p>
                 </div>
-                <p class="description">No copy-paste templates here. Every solution is tailored to your business goals, industry, and vision.</p>
+                <p class="description">{{ 'FEATURES.PERSONAL_APPROACH.DESCRIPTION' | translate }}</p>
             </div>
             <div class="feature">
                 <div class="heading">
                     <div class="logo">
                         <img src="assets/svgs/features/job-done.svg" alt="">
                     </div>
-                    <p class="title">Result-Oriented</p>
+                    <p class="title">{{ 'FEATURES.RESULT_ORIENTED.TITLE' | translate }}</p>
                 </div>
-                <p class="description">Our job isn’t done until your business grows. We focus on impact — not just deliverables.</p>
+                <p class="description">{{ 'FEATURES.RESULT_ORIENTED.DESCRIPTION' | translate }}</p>
             </div>
             <div class="feature">
                 <div class="heading">
                     <div class="logo">
                         <img src="assets/svgs/features/connection.svg" alt="">
                     </div>
-                    <p class="title">Transparent Communication</p>
+                    <p class="title">{{ 'FEATURES.TRANSPARENT_COMM.TITLE' | translate }}</p>
                 </div>
-                <p class="description">You’ll always know what’s happening. We believe in regular updates, honest feedback, and real collaboration.</p>
+                <p class="description">{{ 'FEATURES.TRANSPARENT_COMM.DESCRIPTION' | translate }}</p>
             </div>
         </div>
 
         <div class="contact">
             <div class="text-content">
-                <p class="main-text">Let’s Build Something Great</p>
-                <p class="sub-text">Tell us your challenge — we’ll help solve it.</p>
+                <p class="main-text" [ngClass]="{'georgian-text': isGeorgian()}">{{ 'FEATURES.CTA.TITLE' | translate }}</p>
+                <p class="sub-text">{{ 'FEATURES.CTA.SUBTITLE' | translate }}</p>
             </div>
-            <a class="Primary-Default" routerLink="/contact">Let's Talk</a>
+            <a class="Primary-Default" routerLink="/contact">{{ 'FEATURES.CTA.BUTTON' | translate }}</a>
         </div>
     </div>
 </div>
