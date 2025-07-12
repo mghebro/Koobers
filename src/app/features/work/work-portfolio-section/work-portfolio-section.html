@@ -1,10 +1,10 @@
 <div class="portfolio-section">
     <div class="container">
-  
+
       <div class="portfolio-header">
-      <h3 class="subtitle">Portfolio</h3>
-      <h2 class="title">See What We've Created With Our Clients</h2>
-      <p class="description">A selection of websites, apps, and custom solutions we've crafted for startups and businesses ready to scale.</p>
+      <h3 class="subtitle">{{ 'WORK.PORTFOLIO.TITLE' | translate }}</h3>
+      <h2 class="title">{{ 'WORK.PORTFOLIO.HEADING_TITLE' | translate }}</h2>
+      <p class="description">{{ 'WORK.PORTFOLIO.HEADING_DESCRIPTION' | translate }}</p>
       </div>
       <div class="projects-grid">
         <div class="project-card" (click)="toggleFolder(0)" [class.opened]="openedFolders[0]">
@@ -17,23 +17,23 @@
             </div>
             <img class="folder-front" src="assets/svgs/work/workFront.svg" alt="Project folder front">
           </div>
-          <h4 class="project-name">Project name</h4>
+          <h4 class="project-name">{{ 'WORK.PORTFOLIO.PROJECT_NAME' | translate }}</h4>
         </div>
-  
+
         <div class="project-card" (click)="toggleFolder(1)" [class.opened]="openedFolders[1]">
           <div class="project-icon">
             <img class="folder-back" src="assets/svgs/work/workBack.svg" alt="Project folder back">
             <img class="folder-front" src="assets/svgs/work/workFront.svg" alt="Project folder front">
           </div>
-          <h4 class="project-name">Project name</h4>
+          <h4 class="project-name">{{ 'WORK.PORTFOLIO.PROJECT_NAME' | translate }}</h4>
         </div>
-  
+
         <div class="project-card" (click)="toggleFolder(2)" [class.opened]="openedFolders[2]">
           <div class="project-icon">
             <img class="folder-back" src="assets/svgs/work/workBack.svg" alt="Project folder back">
             <img class="folder-front" src="assets/svgs/work/workFront.svg" alt="Project folder front">
           </div>
-          <h4 class="project-name">Project name</h4>
+          <h4 class="project-name">{{ 'WORK.PORTFOLIO.PROJECT_NAME' | translate }}</h4>
         </div>
       </div>
     </div>

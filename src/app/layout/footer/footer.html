@@ -1,15 +1,15 @@
 <footer>
   <div class="input-box">
     <div class="left-side">
-      <p class="main-text">Stay in the Loop</p>
+      <p class="main-text">{{ 'FOOTER.STAY_IN_LOOP' | translate }}</p>
       <p class="sub-text">
-        Get occasional insights, tips, and updates — no spam.
+        {{ 'FOOTER.NO_SPAM' | translate }}
       </p>
     </div>
 
     <div class="right-side">
-      <input placeholder="Example@gmail.com" type="text" />
-      <button>Subscribe</button>
+      <input placeholder="{{ 'FOOTER.EMAIL_PLACEHOLDER' | translate }}" type="text" />
+      <button>{{ 'FOOTER.SUBSCRIBE' | translate }}</button>
     </div>
   </div>
 
@@ -21,19 +21,19 @@
         <div class="text-content">
           <p class="main-text">Koober Coders</p>
           <p class="sub-text">
-            We turn ideas into high-performing digital products.
+            {{ 'FOOTER.SLOGAN' | translate }}
           </p>
         </div>
       </a>
       <div class="copyright">
         <img src="../../../../assets/svgs/copyright.svg" alt="" />
-        <p>All Rights Reserved.</p>
+        <p>{{ 'FOOTER.COPYRIGHT' | translate }}</p>
       </div>
     </div>
 
     <div class="right-side">
       <div class="column">
-        <p class="title">Socials</p>
+        <p class="title">{{ 'FOOTER.SOCIALS' | translate }}</p>
         <div class="list">
           <a href="">Facebook</a>
           <a href="">Instagram</a>
@@ -41,19 +41,19 @@
         </div>
       </div>
       <div class="column">
-        <p class="title">Company</p>
+        <p class="title">{{ 'FOOTER.COMPANY' | translate }}</p>
         <div class="list">
-          <a routerLink="/about">About</a>
-          <a href="">Blog</a>
-          <a href="">FAQs</a>
-          <a routerLink="/contact">Contact</a>
+          <a routerLink="/about">{{ 'NAVBAR.ABOUT' | translate }}</a>
+          <a href="">{{ 'FOOTER.BLOG' | translate }}</a>
+          <a href="">{{ 'FOOTER.FAQS' | translate }}</a>
+          <a routerLink="/contact">{{ 'NAVBAR.CONTACT' | translate }}</a>
         </div>
       </div>
       <div class="column">
-        <p class="title">Contact</p>
+        <p class="title">{{ 'FOOTER.CONTACT_US' | translate }}</p>
         <div class="list">
-          <p>Tel: +995 567 789 654</p>
-          <p>Email: Example&#64;gmail.com</p>
+          <p>{{ 'FOOTER.TEL' | translate }}: +995 567 789 654</p>
+          <p>{{ 'FOOTER.EMAIL' | translate }}: Example&#64;gmail.com</p>
         </div>
       </div>
     </div>
@@ -61,6 +61,6 @@
     <div class="footer-watermark-wrapper">
     <span class="footer-watermark">Koober Coders</span>
   </div>
-  
+
   <img class="blob" src="../../../../assets/svgs/Blob.svg" alt="">
 </footer>

@@ -101,7 +101,7 @@ body {
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.2s ease;
-    max-width: 170px;
+    max-width: fit-content; // Changed from fixed width to fit-content
     height: 40px;
 
     &:hover {
@@ -114,6 +114,8 @@ body {
       height: 24px;
       background-color: $line-color;
       border-radius: 4px;
+      flex-shrink: 0; // Added to prevent the line from shrinking
+      display: block; // Ensure it's always displayed
     }
 
     .explore-text {
@@ -124,6 +126,7 @@ body {
       font-size: 16px;
       line-height: 24px;
       letter-spacing: 0.02em;
+      white-space: nowrap; // Prevent text wrapping
     }
 
     .explore-arrow {
@@ -150,6 +153,20 @@ body {
         font-family: "General Sans";
       }
     }
+
+    // Georgian language specific styling
+    &.georgian-heading {
+      h1 {
+        font-size: 50px; // Changed from 58px to 50px as requested
+        line-height: 1.4; // Increased line height to prevent text cut-off
+        margin-bottom: 10px; // Add some extra spacing between lines
+
+        // For the 'სთვის' text and other spans
+        span {
+          font-size: 0.9em;
+        }
+      }
+    }
   }
 
   .highlight {
@@ -159,6 +176,15 @@ body {
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+
+    // Add Georgian language specific styling
+    &.georgian {
+      font-size: 0.85em; // Make Georgian text smaller
+      letter-spacing: -0.03em; // Adjust letter spacing for Georgian characters
+      line-height: 1.6; // Increased line height to prevent cut-off
+      padding-bottom: 5px; // Add padding at bottom to prevent cut-off
+      display: inline-block; // Ensure the padding is respected
+    }
   }
 
   .cursor {
@@ -174,6 +200,12 @@ body {
 
     &.hidden {
       opacity: 0;
+    }
+
+    // When next to Georgian text, adjust positioning
+    .georgian + & {
+      height: 1.6em; // Match Georgian line height
+      top: 0;
     }
   }
 
@@ -334,13 +366,29 @@ body {
   .left-content {
     .heading {
       h1 {
-        font-size: 48px;
+        font-size: 46px;
+      }
+
+      // Georgian heading at tablet size
+      &.georgian-heading {
+        h1 {
+          font-size: 42px;
+          line-height: 1.5; // Increased line height for tablets
+          margin-bottom: 8px; // Adjust spacing for tablets
+        }
       }
     }
 
     .description {
       font-size: 14px;
       margin: 24px 0;
+    }
+
+    .highlight {
+      &.georgian {
+        font-size: 0.8em; // Make Georgian text even smaller on tablets
+        line-height: 1.5; // Adjusted line height for tablets
+      }
     }
   }
 
@@ -364,9 +412,15 @@ body {
   .explore {
     height: 36px;
     gap: 8px;
+    max-width: fit-content; // Added to ensure it fits content in all languages
 
     .explore-text {
       font-size: 14px;
+    }
+
+    .line {
+      flex-shrink: 0; // Ensure line doesn't shrink on mobile
+      display: block; // Ensure it's always displayed
     }
   }
 
@@ -375,6 +429,23 @@ body {
       h1 {
         font-size: 32px;
         line-height: 1.2;
+      }
+
+      // Georgian heading at mobile size
+      &.georgian-heading {
+        h1 {
+          font-size: 26px;
+          line-height: 1.6; // Increased line height for mobile
+          margin-bottom: 6px; // Adjust spacing for mobile
+        }
+      }
+    }
+
+    .highlight {
+      &.georgian {
+        font-size: 0.75em; // Make Georgian text even smaller on mobile
+        line-height: 1.7; // Increased line height for mobile
+        padding-bottom: 4px; // Adjusted padding for mobile
       }
     }
 
@@ -480,5 +551,5 @@ body {
 @media (max-width:375px) {
  .hero{
   padding: 0px;
- } 
+ }
 }

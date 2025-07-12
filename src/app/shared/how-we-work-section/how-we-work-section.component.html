@@ -1,17 +1,17 @@
 <div class="page-section">
-    <div class="content-box">
-        <div class="heading">
+    <div class="content-box" #contentBox>
+        <div class="heading" #headingSection>
             <span class="section-label">
                 <span class="label-line"></span>
-                How we work
+                {{ 'HOW_WE_WORK.TITLE' | translate }}
                 <span class="label-line"></span>
             </span>
             <div class="main-text">
-                Our <span class="text-gradient">5-Step Process</span> 
-                to Success
+                {{ 'HOW_WE_WORK.MAIN_TITLE_START' | translate }} <span class="text-gradient">{{ 'HOW_WE_WORK.MAIN_TITLE_HIGHLIGHT' | translate }}</span>
+                {{ 'HOW_WE_WORK.MAIN_TITLE_END' | translate }}
             </div>
             <div class="sub-text">
-                From concept to launch, we follow a proven methodology that delivers results.
+                {{ 'HOW_WE_WORK.SUB_TITLE' | translate }}
             </div>
         </div>
 
@@ -21,8 +21,8 @@
                 <div class="progress-line-fill" [style.width.%]="getProgressPercentage()"></div>
                 <div class="progress-line-glow" [style.left.%]="getProgressPercentage()"></div>
             </div>
-            <div class="card" 
-                 *ngFor="let step of steps; let i = index" 
+            <div class="card"
+                 *ngFor="let step of steps; let i = index"
                  [attr.data-step]="step.id"
                  [class.active]="isStepActive(step.id)"
                  [class.completed]="step.id < activeIndex"
@@ -37,15 +37,15 @@
                 <div class="card-content">
                     <div class="icon-wrapper">
                         <div class="icon-bg"></div>
-                        <img class="logo" [src]="step.icon" [alt]="step.title">
+                        <img class="logo" [src]="step.icon" [alt]="step.title | translate">
                         <div class="icon-ring"></div>
                     </div>
                     <div class="heading">
-                        <p class="highlight-badge">{{step.highlight}}</p>
-                        <p class="title">{{step.title}}</p>
-                        <p class="timeline">{{step.timeline}}</p>
+                        <p class="highlight-badge">{{ step.highlight | translate }}</p>
+                        <p class="title">{{ step.title | translate }}</p>
+                        <p class="timeline">{{ step.timeline | translate }}</p>
                     </div>
-                    <p class="description">{{step.description}}</p>
+                    <p class="description">{{ step.description | translate }}</p>
                 </div>
                 <div class="ripple"></div>
             </div>
@@ -53,8 +53,8 @@
 
         <div class="progress-indicator" *ngIf="isLocked">
             <div class="progress-dots">
-                <div class="dot" 
-                     *ngFor="let step of steps" 
+                <div class="dot"
+                     *ngFor="let step of steps"
                      [class.active]="isStepActive(step.id)"
                      [class.completed]="step.id < activeIndex">
                 </div>
@@ -63,11 +63,11 @@
     </div>
 
     <div class="content-box-mobile">
-        
+
         <div class="heading">
-            <span>How we work</span>
-            <div class="main-text">Quality. Growth. Success. Our Process Covers It All.</div>
-            <div class="sub-text">From first idea to final launch (and beyond), our process is clear, collaborative, and focused on real results. Here’s how we bring your vision to life — step by step.</div>
+            <span>{{ 'HOW_WE_WORK.TITLE' | translate }}</span>
+            <div class="main-text">{{ 'HOW_WE_WORK.MOBILE_MAIN_TITLE' | translate }}</div>
+            <div class="sub-text">{{ 'HOW_WE_WORK.MOBILE_SUB_TITLE' | translate }}</div>
         </div>
 
         <div class="process">
@@ -75,11 +75,11 @@
                 <div class="heading">
                     <img class="logo" [src]="step.icon" alt="">
                     <div class="heading-text">
-                        <p class="title">{{step.number}}. {{step.title}}</p>
-                        <p class="timeline">{{step.timeline}}</p>
+                        <p class="title">{{step.number}}. {{ step.title | translate }}</p>
+                        <p class="timeline">{{ step.timeline | translate }}</p>
                     </div>
                 </div>
-                <p class="description">{{step.description}}</p>
+                <p class="description">{{ step.description | translate }}</p>
             </div>
         </div>
     </div>

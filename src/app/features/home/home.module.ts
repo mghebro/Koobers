@@ -10,6 +10,7 @@ import { HomeHeroSection } from './home-hero-section/home-hero-section';
 import { CodeDisplay } from './code-display/code-display';
 import { HomeFaqSection } from './home-faq-section/home-faq-section';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     HomeRoutingModule,
     SharedModule,
-    RouterModule
+    RouterModule,
+    TranslateModule
   ]
 })
 export class HomeModule { }

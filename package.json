@@ -6,7 +6,12 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "start:en": "ng serve --configuration=en",
+    "start:ka": "ng serve --configuration=ka",
+    "build:en": "ng build --configuration=en",
+    "build:ka": "ng build --configuration=ka",
+    "build:all": "npm run build:en && npm run build:ka"
   },
   "prettier": {
     "overrides": [
@@ -21,16 +26,23 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^20.0.6",
+    "@angular/cdk": "^20.1.0",
     "@angular/common": "^20.0.0",
     "@angular/compiler": "^20.0.0",
     "@angular/core": "^20.0.0",
     "@angular/forms": "^20.0.0",
     "@angular/platform-browser": "^20.0.0",
     "@angular/router": "^20.0.0",
+    "@ngx-translate/core": "^14.0.0",
+    "@ngx-translate/http-loader": "^7.0.0",
+    "@types/matter-js": "^0.19.8",
+    "matter-js": "^0.20.0",
+    "ng-particles": "^3.9.3",
     "prismjs": "^1.30.0",
     "rxjs": "~7.8.0",
     "swiper": "^11.2.10",
     "tslib": "^2.3.0",
+    "tsparticles-preset-bubbles": "^2.12.0",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {

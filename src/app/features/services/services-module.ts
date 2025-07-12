@@ -5,6 +5,7 @@ import { ServicesRoutingModule } from './services-routing-module';
 import { ServicesPage } from './services-page/services-page';
 import { SharedModule } from '../../shared/shared.module';
 import { ServicesFaqSection } from './services-faq-section/services-faq-section';
+import { OutServicesComponent } from './out-services/out-services.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { ServicesFaqSection } from './services-faq-section/services-faq-section'
   imports: [
     CommonModule,
     ServicesRoutingModule,
-    SharedModule
+    SharedModule,
+    OutServicesComponent // Added the standalone component here
   ]
 })
 export class ServicesModule { }

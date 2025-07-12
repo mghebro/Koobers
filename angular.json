@@ -75,17 +75,42 @@
                 }
               ],
               "outputHashing": "all",
-              "fileReplacements": [
-
-              ]
+              "optimization": true,
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
-              "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "extractLicenses": false,
+              "vendorChunk": true,
+              "buildOptimizer": false
+            },
+            "en": {
+              "localize": ["en"],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "outputPath": "dist/KooberCoders-en"
+            },
+            "ka": {
+              "localize": ["ka"],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "outputPath": "dist/KooberCoders-ka"
             }
           },
           "defaultConfiguration": "production"
@@ -98,6 +123,12 @@
             },
             "development": {
               "buildTarget": "KooberCoders:build:development"
+            },
+            "en": {
+              "buildTarget": "KooberCoders:build:en"
+            },
+            "ka": {
+              "buildTarget": "KooberCoders:build:ka"
             }
           },
           "defaultConfiguration": "development"

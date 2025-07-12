@@ -7,8 +7,8 @@
       >
         <div class="faq-question" (click)="toggleFaq(i)">
           <div class="app-head">
-            <h3>{{ item.title }}</h3>
-            <p>{{ item.description }}</p>
+            <h3>{{ item.title | translate }}</h3>
+            <p>{{ item.description | translate }}</p>
           </div>
           <div class="svg-class">
             <svg
@@ -26,20 +26,20 @@
           </div>
           <div class="liner" [class.visible]="item.isOpen"></div>
         </div>
-  
+
         <div class="faq-answer" [class.visible]="item.isOpen">
           <div class="faq-child">
             <div class="firstdown" [class.visible]="item.isOpen">
-            <p>{{ item.textdescription }}</p>
-            <p>{{ item.text1 }}</p>
+            <p>{{ item.textdescription | translate }}</p>
+            <p>{{ item.text1 | translate }}</p>
           </div>
           <div class="seconddown" [class.visible]="item.isOpen">
-            <p>{{ item.textdescription2 }}</p>
-            <p>{{ item.text2 }}</p>
+            <p>{{ item.textdescription2 | translate }}</p>
+            <p>{{ item.text2 | translate }}</p>
           </div>
           <div class="thirddown" [class.visible]="item.isOpen">
-            <p>{{ item.textdescription3 }}</p>
-            <p>{{ item.text3 }}</p>
+            <p>{{ item.textdescription3 | translate }}</p>
+            <p>{{ item.text3 | translate }}</p>
           </div>
         </div>
           </div>

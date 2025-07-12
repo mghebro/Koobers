@@ -1,7 +1,7 @@
 <div id="contactForm" class="page-section">
     <div class="content-box">
         <div class="left-side">
-            <p class="title">Get in Touch with</p>
+            <p class="title">{{ 'CONTACT.FORM.GET_IN_TOUCH' | translate }}</p>
 
             <div class="info-wrapper">
                 <div class="contact-info">
@@ -9,84 +9,84 @@
                         <img src="../../../../assets/svgs/contact/phone.svg" alt="">
                     </div>
                     <div class="info">
-                        <p>+995 595 299 995</p>
-                        <p>+995 591 299 899</p>
+                        <p>{{ 'CONTACT.CONTACT_INFO.PHONE_1' | translate }}</p>
+                        <p>{{ 'CONTACT.CONTACT_INFO.PHONE_2' | translate }}</p>
                     </div>
                 </div>
-    
+
                 <div class="contact-info">
                     <div class="icon">
                         <img src="../../../../assets/svgs/contact/mail.svg" alt="">
                     </div>
                     <div class="info">
-                        <p>info&#64;koobercoders.com</p>
+                        <p>{{ 'CONTACT.CONTACT_INFO.EMAIL' | translate }}</p>
                     </div>
                 </div>
-    
+
                 <div class="contact-info">
                     <div class="icon">
                         <img src="../../../../assets/svgs/contact/location.svg" alt="">
                     </div>
                     <div class="info">
-                        <p>Tbilisi, Alexander Kazbegi Ave. 34/34b</p>
+                        <p>{{ 'CONTACT.CONTACT_INFO.ADDRESS' | translate }}</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="right-side">
-            <p class="title">Or Submit This Form</p>
+            <p class="title">{{ 'CONTACT.FORM.OR_SUBMIT' | translate }}</p>
             <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
                 <div class="form-group">
-                    <label for="firstName">First Name</label>
-                    <input 
-                        type="text" 
+                    <label for="firstName">{{ 'CONTACT.FORM.FIRST_NAME' | translate }}</label>
+                    <input
+                        type="text"
                         id="firstName"
                         formControlName="firstName"
-                        placeholder="John"
+                        placeholder="{{ 'CONTACT.FORM.FIRST_NAME_PLACEHOLDER' | translate }}"
                         [class.error]="hasError('firstName')"
                     >
                     <span class="error-message" *ngIf="hasError('firstName')">
                         {{ getErrorMessage('firstName') }}
                     </span>
                 </div>
-                
+
                 <div class="form-group">
-                    <label for="lastName">Last Name</label>
-                    <input 
-                        type="text" 
+                    <label for="lastName">{{ 'CONTACT.FORM.LAST_NAME' | translate }}</label>
+                    <input
+                        type="text"
                         id="lastName"
                         formControlName="lastName"
-                        placeholder="Smith"
+                        placeholder="{{ 'CONTACT.FORM.LAST_NAME_PLACEHOLDER' | translate }}"
                         [class.error]="hasError('lastName')"
                     >
                     <span class="error-message" *ngIf="hasError('lastName')">
                         {{ getErrorMessage('lastName') }}
                     </span>
                 </div>
-                
+
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input 
-                        type="email" 
+                    <label for="email">{{ 'CONTACT.FORM.EMAIL' | translate }}</label>
+                    <input
+                        type="email"
                         id="email"
                         formControlName="email"
-                        placeholder="Example@gmail.com"
+                        placeholder="{{ 'CONTACT.FORM.EMAIL_PLACEHOLDER' | translate }}"
                         [class.error]="hasError('email')"
                     >
                     <span class="error-message" *ngIf="hasError('email')">
                         {{ getErrorMessage('email') }}
                     </span>
                 </div>
-                
-    
+
+
                 <div class="form-group">
-                    <label for="phoneNumber">Phone Number (Optional)</label>
-                    <input 
-                        type="tel" 
+                    <label for="phoneNumber">{{ 'CONTACT.FORM.PHONE' | translate }}</label>
+                    <input
+                        type="tel"
                         id="phoneNumber"
                         formControlName="phoneNumber"
-                        placeholder="+995 568096543"
+                        placeholder="{{ 'CONTACT.FORM.PHONE_PLACEHOLDER' | translate }}"
                         [class.error]="hasError('phoneNumber')"
                         (input)="onPhoneInput($event)"
                         (keydown)="onPhoneKeydown($event)"
@@ -96,26 +96,26 @@
                         {{ getErrorMessage('phoneNumber') }}
                     </div>
                 </div>
-                
+
                 <div class="form-group">
-                    <label for="message">Message</label>
-                    <input 
+                    <label for="message">{{ 'CONTACT.FORM.MESSAGE' | translate }}</label>
+                    <input
                         id="message"
                         formControlName="message"
-                        placeholder="Here Goes Your Interest"
+                        placeholder="{{ 'CONTACT.FORM.MESSAGE_PLACEHOLDER' | translate }}"
                         [class.error]="hasError('message')"
                     >
                     <span class="error-message" *ngIf="hasError('message')">
                         {{ getErrorMessage('message') }}
                     </span>
                 </div>
-                
-                <button 
-                    type="submit" 
+
+                <button
+                    type="submit"
                     [disabled]="contactForm.invalid && submitted"
                     [class.disabled]="contactForm.invalid && submitted"
                 >
-                    Submit the Form
+                    {{ 'CONTACT.FORM.SUBMIT_BUTTON' | translate }}
                 </button>
             </form>
         </div>

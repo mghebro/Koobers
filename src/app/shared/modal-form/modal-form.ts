@@ -11,43 +11,43 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
     trigger('overlayAnimation', [
       transition(':enter', [
         style({ opacity: 0, backdropFilter: 'blur(0px)' }),
-        animate('400ms cubic-bezier(0.4, 0, 0.2, 1)', 
+        animate('400ms cubic-bezier(0.4, 0, 0.2, 1)',
           style({ opacity: 1, backdropFilter: 'blur(8px)' })
         )
       ]),
       transition(':leave', [
-        animate('300ms cubic-bezier(0.4, 0, 0.2, 1)', 
+        animate('300ms cubic-bezier(0.4, 0, 0.2, 1)',
           style({ opacity: 0, backdropFilter: 'blur(0px)' })
         )
       ])
     ]),
     trigger('modalAnimation', [
       transition(':enter', [
-        animate('500ms cubic-bezier(0.34, 1.56, 0.64, 1)', 
+        animate('500ms cubic-bezier(0.34, 1.56, 0.64, 1)',
           keyframes([
-            style({ 
-              opacity: 0, 
+            style({
+              opacity: 0,
               transform: 'scale(0.9) translateY(20px)',
-              offset: 0 
+              offset: 0
             }),
-            style({ 
-              opacity: 1, 
+            style({
+              opacity: 1,
               transform: 'scale(1.02) translateY(-5px)',
-              offset: 0.7 
+              offset: 0.7
             }),
-            style({ 
-              opacity: 1, 
+            style({
+              opacity: 1,
               transform: 'scale(1) translateY(0)',
-              offset: 1 
+              offset: 1
             })
           ])
         )
       ]),
       transition(':leave', [
-        animate('300ms cubic-bezier(0.4, 0, 0.2, 1)', 
-          style({ 
-            opacity: 0, 
-            transform: 'scale(0.95) translateY(10px)' 
+        animate('300ms cubic-bezier(0.4, 0, 0.2, 1)',
+          style({
+            opacity: 0,
+            transform: 'scale(0.95) translateY(10px)'
           })
         )
       ])
@@ -57,7 +57,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
         query('.stagger-item', [
           style({ opacity: 0, transform: 'translateY(30px)' }),
           stagger(100, [
-            animate('600ms cubic-bezier(0.4, 0, 0.2, 1)', 
+            animate('600ms cubic-bezier(0.4, 0, 0.2, 1)',
               style({ opacity: 1, transform: 'translateY(0)' })
             )
           ])
@@ -77,12 +77,20 @@ export class ModalForm implements OnInit, OnDestroy {
 
   @Output() onClose = new EventEmitter<void>();
   @Output() onConfirm = new EventEmitter<void>();
-  
+
   animationState = 'in';
 
   ngOnInit() {
     // Prevent body scroll when modal is open
     if (this.isOpen) {
+      // Check if we need to compensate for scrollbar
+      const hasScrollbar = window.innerWidth > document.documentElement.clientWidth;
+
+      // Add adjust class to html to prevent layout shift
+      if (hasScrollbar) {
+        document.documentElement.classList.add('scroll-lock-adjust');
+      }
+
       document.body.style.overflow = 'hidden';
     }
   }
@@ -90,6 +98,7 @@ export class ModalForm implements OnInit, OnDestroy {
   ngOnDestroy() {
     // Restore body scroll
     document.body.style.overflow = '';
+    document.documentElement.classList.remove('scroll-lock-adjust');
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -108,6 +117,7 @@ export class ModalForm implements OnInit, OnDestroy {
   close() {
     this.isOpen = false;
     document.body.style.overflow = '';
+    document.documentElement.classList.remove('scroll-lock-adjust');
     this.onClose.emit();
   }
 
@@ -122,7 +132,7 @@ export class ModalForm implements OnInit, OnDestroy {
     phoneNumber: new FormControl('+995 ', [Validators.pattern(/^\+995\s\d{9}$/)]),
     message: new FormControl('', [Validators.required, Validators.maxLength(500)])
   });
-  
+
   submitted = false;
 
   hasError(fieldName: string): boolean {
@@ -169,7 +179,7 @@ export class ModalForm implements OnInit, OnDestroy {
 
   onSubmit(): void {
     this.submitted = true;
-    
+
     if (this.contactForm.valid) {
       console.log('Form submitted:', this.contactForm.value);
       // Here you would typically send the data to your backend
@@ -199,22 +209,22 @@ export class ModalForm implements OnInit, OnDestroy {
   onPhoneInput(event: any): void {
     const input = event.target;
     let value = input.value;
-    
-    // Always ensure it starts with +995 
+
+    // Always ensure it starts with +995
     if (!value.startsWith('+995 ')) {
       value = '+995 ';
     }
-    
-    // Remove any non-digit characters after +995 
+
+    // Remove any non-digit characters after +995
     const prefix = '+995 ';
     const numbers = value.substring(prefix.length).replace(/\D/g, '');
-    
-    // Limit to 9 digits after +995 
+
+    // Limit to 9 digits after +995
     const limitedNumbers = numbers.substring(0, 9);
-    
+
     // Format the number
     const formattedValue = prefix + limitedNumbers;
-    
+
     // Update the form control
     this.contactForm.get('phoneNumber')?.setValue(formattedValue);
   }
@@ -222,12 +232,12 @@ export class ModalForm implements OnInit, OnDestroy {
   onPhoneKeydown(event: KeyboardEvent): void {
     const input = event.target as HTMLInputElement;
     const cursorPosition = input.selectionStart || 0;
-    
+
     // Prevent deletion of +995 prefix
     if ((event.key === 'Backspace' || event.key === 'Delete') && cursorPosition <= 5) {
       event.preventDefault();
     }
-    
+
     // Prevent arrow keys, home, end from going before the prefix
     if (event.key === 'ArrowLeft' || event.key === 'Home') {
       setTimeout(() => {

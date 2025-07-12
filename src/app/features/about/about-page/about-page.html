@@ -1,20 +1,17 @@
 <div class="page-wrapper">
-    <app-page-header headingTitle="
-        More Than a Dev Studio —"
-        headingTitleSpan="We're Your Digital Growth Partner"
-        headingDescription="Koober Coders helps companies and startups turn ideas into high-impact
-          digital products. We combine clean code, bold design, and a
-          business-first mindset to build things that actually move the needle."
-          primaryButtonContent="See Our Work"
+    <app-page-header headingTitle="{{ 'ABOUT.HEADING_TITLE' | translate }}"
+        headingTitleSpan="{{ 'ABOUT.HEADING_TITLE_SPAN' | translate }}"
+        headingDescription="{{ 'ABOUT.HEADING_DESCRIPTION' | translate }}"
+          primaryButtonContent="{{ 'ABOUT.SEE_OUR_WORK' | translate }}"
           primaryButtonTarget="/work"
-          secondaryButtonContent="Explore Our Services"
+          secondaryButtonContent="{{ 'ABOUT.EXPLORE_SERVICES' | translate }}"
           secondaryButtonTarget="/services"></app-page-header>
   <app-about-section></app-about-section>
   <app-team-section></app-team-section>
-  <app-cta-section 
-  ctaTitle="Ready to Build Something That Lasts?"
-  ctaDescription="From idea to launch — and beyond — we’re here to help you create digital experiences that make a difference."
-  buttonContent="Start Your Project"
+  <app-cta-section
+  ctaTitle="{{ 'ABOUT.CTA_TITLE' | translate }}"
+  ctaDescription="{{ 'ABOUT.CTA_DESCRIPTION' | translate }}"
+  buttonContent="{{ 'COMMON.START_PROJECT' | translate }}"
   buttonTarget="/contact"
   ></app-cta-section>
 </div>

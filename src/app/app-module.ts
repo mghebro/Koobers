@@ -7,15 +7,19 @@ import { Footer } from './layout/footer/footer';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from './layout/layout-module';
 import { SharedModule } from "./shared/shared.module";
+import { CoreModule } from './core/core-module';
+import { CookieConsent } from './cookie-consent/cookie-consent';
 
 @NgModule({
   declarations: [
     App,
+    CookieConsent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    CoreModule,
     LayoutModule,
     SharedModule
 ],

@@ -72,8 +72,20 @@ footer {
 
       button {
         height: 48px;
+        min-width: 120px;
         @include mixins.button-primary;
-        overflow: visible;
+        overflow: hidden;
+        background: radial-gradient(
+          49.65% 160.08% at 50.35% 57.29%,
+          #42eb85 0%,
+          #34b84a 100%
+        );
+        z-index: 1;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
       }
     }
   }
