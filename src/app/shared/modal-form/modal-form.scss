@@ -16,7 +16,7 @@
   z-index: 10000;
   padding: 20px;
   box-sizing: border-box;
-  
+
   &::before {
     content: '';
     position: absolute;
@@ -33,7 +33,7 @@
   background-color: variables.$bg-background;
   padding: 96px;
   border-radius: 48px;
-  box-shadow: 
+  box-shadow:
     0 50px 100px -20px rgba(0, 0, 0, 0.25),
     0 30px 60px -30px rgba(0, 0, 0, 0.3),
     0 0 0 1px rgba(variables.$button-primary-bg-light, 0.1);
@@ -46,7 +46,7 @@
   position: relative;
   transform-origin: center;
   will-change: transform, opacity;
-  
+
   &::before {
     content: '';
     position: absolute;
@@ -54,9 +54,9 @@
     left: -1px;
     right: -1px;
     bottom: -1px;
-    background: linear-gradient(135deg, 
-      rgba(variables.$button-primary-bg-light, 0.15) 0%, 
-      transparent 50%, 
+    background: linear-gradient(135deg,
+      rgba(variables.$button-primary-bg-light, 0.15) 0%,
+      transparent 50%,
       rgba(variables.$button-primary-bg-light, 0.05) 100%);
     border-radius: inherit;
     pointer-events: none;
@@ -79,49 +79,49 @@
     justify-content: center;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 10;
-    
+
     &:hover {
       background: rgba(variables.$button-primary-bg-light, 0.1);
       color: variables.$button-primary-bg-light;
       transform: rotate(90deg) scale(1.1);
     }
-    
+
     &:active {
       transform: rotate(90deg) scale(0.95);
     }
-    
+
     svg {
       width: 20px;
       height: 20px;
     }
   }
-  
+
   .modal-body {
     flex: 1;
     overflow: hidden;
     position: relative;
     display: flex;
     flex-direction: column;
-    
+
     .animation-wrapper {
       flex: 1;
       overflow-y: auto;
       overflow-x: hidden;
       position: relative;
       padding: 5px;
-      
+
       &::-webkit-scrollbar {
         width: 8px;
       }
-      
+
       &::-webkit-scrollbar-track {
         background: transparent;
       }
-      
+
       &::-webkit-scrollbar-thumb {
         background: rgba(variables.$typography-300, 0.2);
         border-radius: 4px;
-        
+
         &:hover {
           background: rgba(variables.$typography-300, 0.3);
         }
@@ -147,7 +147,7 @@
       color: variables.$typography-green;
       position: relative;
       display: inline-block;
-      
+
       &::after {
         content: '';
         position: absolute;
@@ -174,24 +174,24 @@
         @include mixins.default-form-group;
         width: calc(50% - 24px);
         position: relative;
-        
+
         &:nth-child(5) {
           width: calc(100% - 236px);
         }
-        
+
         input {
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-          
+
           &:focus {
             transform: translateY(-2px);
             box-shadow: 0 4px 20px rgba(variables.$button-primary-bg-light, 0.15);
           }
-          
+
           &.error {
             animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97);
           }
         }
-        
+
         .error-message {
           animation: slideDown 0.3s ease-out;
         }
@@ -203,7 +203,7 @@
         position: relative;
         overflow: hidden;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        
+
         &::before {
           content: '';
           position: absolute;
@@ -216,17 +216,17 @@
           transform: translate(-50%, -50%);
           transition: width 0.6s, height 0.6s;
         }
-        
+
         &:hover:not(.disabled) {
           transform: translateY(-2px);
           box-shadow: 0 10px 25px rgba(variables.$button-primary-bg-light, 0.3);
-          
+
           &::before {
             width: 300px;
             height: 300px;
           }
         }
-        
+
         &:active:not(.disabled) {
           transform: translateY(0);
         }
@@ -355,11 +355,11 @@
     animation: staggerIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     transform-origin: center top;
   }
-  
+
   .title.stagger-item {
     animation-delay: 0.05s;
   }
-  
+
   form {
     .form-group.stagger-item {
       &:nth-child(1) { animation-delay: 0.1s; }
@@ -368,7 +368,7 @@
       &:nth-child(4) { animation-delay: 0.25s; }
       &:nth-child(5) { animation-delay: 0.3s; }
     }
-    
+
     button.stagger-item {
       animation-delay: 0.35s;
     }

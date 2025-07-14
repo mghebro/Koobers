@@ -60,13 +60,13 @@ body {
   background-color: $dark-background;
   color: $white-text;
   display: flex;
-  max-width: 1344px;
+  width: 100%;
   align-items: center;
-  min-height: 800px;
+  height: 90vh; /* Changed from 100vh to 90vh */
   margin: 0 auto;
   position: relative;
   z-index: 0;
-  padding: 96px;
+  padding: 48px;
   overflow: hidden;
   border-radius: 96px;
 
@@ -74,10 +74,9 @@ body {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    max-width: 1400px;
+    align-items: center;
     margin: 0 auto;
-    padding: 80px 0px 40px;
+    padding: 0;
     position: relative;
     z-index: 2;
   }
@@ -184,6 +183,9 @@ body {
       line-height: 1.6; // Increased line height to prevent cut-off
       padding-bottom: 5px; // Add padding at bottom to prevent cut-off
       display: inline-block; // Ensure the padding is respected
+      height: 72px; // Fixed height to prevent collapsing
+      min-width: 20px; // Minimum width when empty
+      vertical-align: middle; // Align properly with surrounding text
     }
   }
 
@@ -540,6 +542,40 @@ body {
       var(--Gradients-Tealish, #42eb85) 85.1%);
   mix-blend-mode: hard-light;
   filter: blur(250px);
+}
+
+// Add media query for screens around 1500px
+@media (max-width: 1500px) {
+  .hero {
+    height: 90vh; /* Changed from 100vh to 90vh */
+    padding: 64px;
+
+    &-content {
+      padding: 0;
+    }
+
+    .left-content {
+      .heading {
+        .heading-text {
+          font-size: 54px;
+          line-height: 70px;
+        }
+      }
+
+      .description {
+        margin: 16px 0;
+      }
+    }
+
+    .right-content {
+      transform: scale(0.9);
+      transform-origin: center;
+    }
+  }
+
+  .blob {
+    bottom: -750px;
+  }
 }
 
 @media (max-width: 650px) {

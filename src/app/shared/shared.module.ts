@@ -9,6 +9,7 @@ import { CtaSection } from './cta-section/cta-section';
 import { ModalForm } from './modal-form/modal-form';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { CookieConsent } from './cookie-consent/cookie-consent';
 
 
 
@@ -19,7 +20,8 @@ import { TranslateModule } from '@ngx-translate/core';
     BenefitsSectionComponent,
     PageHeader,
     CtaSection,
-    ModalForm
+    ModalForm,
+    CookieConsent
   ],
   imports: [
     CommonModule,
@@ -34,7 +36,8 @@ import { TranslateModule } from '@ngx-translate/core';
     CtaSection,
     PageHeader,
     ModalForm,
-    TranslateModule
+    TranslateModule,
+    CookieConsent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

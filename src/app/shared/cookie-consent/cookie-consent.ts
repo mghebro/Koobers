@@ -1,5 +1,6 @@
 import { Component, OnInit, Renderer2, Inject, ElementRef } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-cookie-consent',
@@ -21,7 +22,8 @@ export class CookieConsent implements OnInit {
   constructor(
     private renderer: Renderer2,
     @Inject(DOCUMENT) private document: Document,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit(): void {

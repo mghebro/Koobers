@@ -20,6 +20,7 @@
   color: #ffffff;
   padding: 0;
   overflow: hidden;
+  max-height: 90vh; /* Added max-height */
 
   .container {
     width: 100%;
@@ -346,6 +347,48 @@
   }
 }
 
+// Add media query for 1500px screens
+@media (max-width: 1500px) {
+  .team-section {
+    max-height: 85vh; /* Added max-height */
+
+    .container {
+      gap: 32px; /* Reduced from 36px */
+    }
+
+    .header-container {
+      padding: 0 72px;
+    }
+
+    .team-rows-container {
+      gap: 24px; /* Reduced from 30px */
+    }
+
+    .team-member {
+      width: calc((100vw - 96px - 3rem) / 5);
+      min-width: 240px;
+      height: 160px;
+
+      .member-name {
+        font-size: 1.3rem;
+      }
+
+      .flip-card-front,
+      .flip-card-back {
+        padding: 18px;
+      }
+    }
+
+    .row-top {
+      animation: scrollLeft 35s linear infinite;
+    }
+
+    .row-bottom {
+      animation: scrollRight 35s linear infinite;
+    }
+  }
+}
+
 @media (max-width: 768px) {
   .team-section {
     margin-top: 0px;
@@ -383,13 +426,13 @@
       .section-description {
         font-size: 14px;
       }
-      
+
     }
     .team-member{
       min-width: 200px;
     }
   }
-  
+
 }
 @media (max-width: 375px) {
   .team-section {
