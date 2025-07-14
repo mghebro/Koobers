@@ -71,7 +71,7 @@
     height: 48px;
     border-radius: 50%;
     border: none;
-    background: rgba(variables.$typography-300, 0.1);
+    background: rgba(variables.$typography-300, 0.3);
     color: variables.$typography-200;
     cursor: pointer;
     display: flex;
@@ -255,9 +255,6 @@
     border-radius: 24px;
 
     .content-box {
-      .title {
-        text-align: center;
-      }
 
       form {
         gap: 24px;
@@ -276,7 +273,7 @@
 }
 
 
-@media (max-width: 500px) {
+@media (max-width: 700px) {
   .modal-container {
 
     .content-box {
@@ -284,8 +281,6 @@
         font-size: 24px;
         line-height: 30px;
       }
-
-      gap: 12px;
 
       form {
         .form-group {
@@ -300,13 +295,58 @@
   }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 500px) {
+  .close-button {
+    width: 32px;
+    height: 32px;
+    top: 24px;
+    right: 24px;
+  }
+
+  .modal-body {
+    .animation-wrapper {
+      padding: 0;
+    }
 
     .content-box {
-      .title {
-        font-size: 24px;
+      
+
+      form {
+        .form-group {
+          max-height: unset;
+          height: unset;
+          .error-message {
+            font-size: 10px;
+            line-height: 12px;
+          }
+        }
       }
     }
+  }
+}
+
+
+@media (max-width: 374px) {
+
+  .modal-container {
+    width: 100%;
+    padding: 10px 0;
+    .content-box {
+    align-items: unset;
+    gap: 32px;
+      .title {
+        font-size: 23px;
+        line-height: 28px;
+        margin-top: 12px;
+      }
+    }
+
+    .close-button {
+      top: 12px;
+      right: 12px;
+    }
+  }
+
 }
 
 @keyframes expandWidth {

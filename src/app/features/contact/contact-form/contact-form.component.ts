@@ -9,15 +9,23 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./contact-form.component.scss']
 })
 export class ContactFormComponent {
+  submitted = false;
+
+  // Custom validator for optional phone number
+  optionalPhoneValidator = (control: any) => {
+    if (!control.value || control.value.trim() === '' || control.value === '+995 ') {
+      return null; // Valid if empty or just the prefix
+    }
+    return /^\+995\s\d{9}$/.test(control.value) ? null : { pattern: true };
+  };
+
   contactForm: FormGroup = new FormGroup({
     firstName: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]),
     lastName: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    phoneNumber: new FormControl('+995 ', [Validators.pattern(/^\+995\s\d{9}$/)]),
+    phoneNumber: new FormControl('', [this.optionalPhoneValidator]),
     message: new FormControl('', [Validators.required, Validators.maxLength(500)])
   });
-  
-  submitted = false;
 
   hasError(fieldName: string): boolean {
     const field = this.contactForm.get(fieldName);
@@ -94,20 +102,29 @@ export class ContactFormComponent {
     const input = event.target;
     let value = input.value;
     
-    // Always ensure it starts with +995 
-    if (!value.startsWith('+995 ')) {
-      value = '+995 ';
+    // If the field is completely empty, leave it empty
+    if (value === '') {
+      this.contactForm.get('phoneNumber')?.setValue('');
+      return;
     }
     
-    // Remove any non-digit characters after +995 
-    const prefix = '+995 ';
-    const numbers = value.substring(prefix.length).replace(/\D/g, '');
+    // Extract all digits from the input
+    const allDigits = value.replace(/\D/g, '');
     
-    // Limit to 9 digits after +995 
-    const limitedNumbers = numbers.substring(0, 9);
+    // If no digits, clear the field
+    if (allDigits === '') {
+      this.contactForm.get('phoneNumber')?.setValue('');
+      return;
+    }
     
-    // Format the number
-    const formattedValue = prefix + limitedNumbers;
+    // Remove the country code (995) if it exists at the beginning
+    const phoneDigits = allDigits.startsWith('995') ? allDigits.substring(3) : allDigits;
+    
+    // Limit to 9 digits
+    const limitedNumbers = phoneDigits.substring(0, 9);
+    
+    // Format the number with prefix
+    const formattedValue = '+995 ' + limitedNumbers;
     
     // Update the form control
     this.contactForm.get('phoneNumber')?.setValue(formattedValue);
@@ -116,16 +133,24 @@ export class ContactFormComponent {
   onPhoneKeydown(event: KeyboardEvent): void {
     const input = event.target as HTMLInputElement;
     const cursorPosition = input.selectionStart || 0;
+    const value = input.value;
     
-    // Prevent deletion of +995 prefix
-    if ((event.key === 'Backspace' || event.key === 'Delete') && cursorPosition <= 5) {
+    // Allow clearing the entire field
+    if ((event.key === 'Backspace' || event.key === 'Delete') && value === '+995 ') {
+      this.contactForm.get('phoneNumber')?.setValue('');
+      event.preventDefault();
+      return;
+    }
+    
+    // Prevent deletion of +995 prefix when there are numbers after it
+    if ((event.key === 'Backspace' || event.key === 'Delete') && cursorPosition <= 5 && value.length > 5) {
       event.preventDefault();
     }
     
     // Prevent arrow keys, home, end from going before the prefix
     if (event.key === 'ArrowLeft' || event.key === 'Home') {
       setTimeout(() => {
-        if (input.selectionStart !== null && input.selectionStart < 5) {
+        if (input.selectionStart !== null && input.selectionStart < 5 && input.value.length > 0) {
           input.setSelectionRange(5, 5);
         }
       });
@@ -134,11 +159,15 @@ export class ContactFormComponent {
 
   onPhoneFocus(event: any): void {
     const input = event.target;
-    // Set cursor after +995 prefix
-    setTimeout(() => {
-      if (input.selectionStart !== null && input.selectionStart < 5) {
-        input.setSelectionRange(5, 5);
-      }
-    });
+    const value = input.value;
+    
+    // Only set cursor after +995 prefix if there's content
+    if (value && value.length > 0) {
+      setTimeout(() => {
+        if (input.selectionStart !== null && input.selectionStart < 5) {
+          input.setSelectionRange(5, 5);
+        }
+      });
+    }
   }
 }
