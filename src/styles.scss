@@ -27,6 +27,39 @@
   font-style: normal;
 }
 
+/* Noto Sans Georgian Font */
+@font-face {
+  font-family: 'Noto Sans Georgian';
+  src: url('./fonts/NotoSansGeorgian/static/NotoSansGeorgian-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans Georgian';
+  src: url('./fonts/NotoSansGeorgian/static/NotoSansGeorgian-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans Georgian';
+  src: url('./fonts/NotoSansGeorgian/static/NotoSansGeorgian-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans Georgian';
+  src: url('./fonts/NotoSansGeorgian/static/NotoSansGeorgian-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -89,8 +122,15 @@ a {
 
 .page-section {
   margin: 0 auto;
-  width: 1344px;
-  max-width: 100%;
+  width: 100%;
+}
+
+/* Add media query for screens around 1500px */
+@media (max-width: 1500px) {
+  .page-wrapper {
+    gap: 72px;
+    min-height: 800px;
+  }
 }
 
 @media (max-width: 650px) {
@@ -145,8 +185,16 @@ swiper-slide {
 
 /* Global styles for Georgian language */
 html.lang-ka {
+  font-family: 'Noto Sans Georgian', 'Open Sans', sans-serif;
+
+  /* Apply Georgian font to all elements */
+  *, button, input, select, textarea {
+    font-family: 'Noto Sans Georgian', 'Open Sans', sans-serif;
+  }
+
   /* Typography adjustments for Georgian text */
   h1, h2, h3, h4, h5, h6 {
+    font-family: 'Noto Sans Georgian', 'General Sans', sans-serif;
     line-height: 1.4;
   }
 

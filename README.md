@@ -12,6 +12,20 @@ ng serve
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
+## Multilingual Support
+
+This application supports both English and Georgia languages. The Georgian language uses the Noto Sans Georgian font for proper typography rendering.
+
+### Fonts
+
+The following fonts are included in this project:
+- **General Sans**: Primary heading font for English
+- **Open Sans**: Base body font for English
+- **Outfit**: Additional font for specialized UI elements
+- **Noto Sans Georgian**: Optimized font for Georgian language display
+
+Font styles are automatically applied based on the selected language through the language selector in the navigation bar.
+
 ## Code scaffolding
 
 Angular CLI includes powerful code scaffolding tools. To generate a new component, run:

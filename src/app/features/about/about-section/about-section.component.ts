@@ -5,6 +5,9 @@ import {
   AfterViewInit,
   OnDestroy,
   HostListener,
+  Renderer2,
+  OnInit,
+  NgZone
 } from '@angular/core';
 
 @Component({
@@ -13,140 +16,213 @@ import {
   templateUrl: './about-section.component.html',
   styleUrl: './about-section.component.scss',
 })
-export class AboutSectionComponent implements AfterViewInit, OnDestroy {
+export class AboutSectionComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild('textBlock') textBlock!: ElementRef;
-  private animationFrame: number | null = null;
-  private smoothProgress: number = 0;
 
-  constructor() {}
+  private scrollPosition = 0;
+  private textBlockElement!: HTMLElement;
+  private hasAnimationStarted = false;
+  private observer: IntersectionObserver | null = null;
+  private scrollSpeedFactor = 0.3; // Increased from 0.15 for faster manual scrolling
+  private isAutoScrolling = false;
+  private autoScrollInterval: any = null;
+  private animationCompleted = false;
+  private readonly animationDuration = 8000; // Reduced from 15000 to 8000 (8 seconds)
+
+  // Parameters for the perspective effect
+  private initialScale = 1.0;
+  private finalScale = 0.2;
+  private viewportHeight = 0;
+  private totalScrollDistance = 0;
+
+  constructor(
+    private elementRef: ElementRef,
+    private renderer: Renderer2,
+    private ngZone: NgZone
+  ) {}
+
+  ngOnInit(): void {
+    // No initialization needed
+  }
 
   ngAfterViewInit(): void {
-    // Set initial position
-    this.updateAnimation();
-    
-    // Start continuous animation
-    this.startAnimation();
+    this.textBlockElement = this.textBlock.nativeElement;
+    this.viewportHeight = window.innerHeight;
+
+    // Calculate total scroll distance based on text height
+    setTimeout(() => {
+      const textHeight = this.textBlockElement.clientHeight;
+      this.totalScrollDistance = this.viewportHeight + textHeight;
+    });
+
+    // Setup intersection observer to trigger animation when section is visible
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !this.hasAnimationStarted && !this.animationCompleted) {
+          this.hasAnimationStarted = true;
+          this.startAnimation();
+        } else if (!entry.isIntersecting && this.hasAnimationStarted && !this.animationCompleted) {
+          // Reset when scrolled out of view and animation not completed
+          this.pauseAnimation();
+        }
+      });
+    }, { threshold: 0.2 });
+
+    this.observer.observe(this.elementRef.nativeElement);
   }
 
   ngOnDestroy(): void {
-    this.stopAnimation();
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+
+    // Stop any ongoing auto-scroll
+    this.stopAutoScroll();
   }
 
   @HostListener('window:scroll')
-  onWindowScroll(): void {
-    // Animation is always running, no need to check
+  onScroll(): void {
+    // If animation is completed, allow normal page scrolling
+    if (this.animationCompleted) return;
+
+    if (!this.hasAnimationStarted) return;
+
+    // Stop auto-scroll when user manually scrolls
+    this.stopAutoScroll();
+
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollDiff = scrollTop - this.scrollPosition;
+
+    this.updateTextPosition(scrollDiff * this.scrollSpeedFactor);
+
+    this.scrollPosition = scrollTop;
+  }
+
+  @HostListener('wheel', ['$event'])
+  onWheel(event: WheelEvent): void {
+    // If animation is completed, allow normal page scrolling
+    if (this.animationCompleted) return;
+
+    if (!this.hasAnimationStarted) return;
+
+    // Stop auto-scroll when user manually scrolls with wheel
+    this.stopAutoScroll();
+
+    // Manual scroll speed control for wheel events
+    const delta = event.deltaY;
+    this.updateTextPosition(delta * 0.1); // Increased from 0.05 for faster wheel scrolling
+
+    // Prevent default scrolling for a smoother experience
+    event.preventDefault();
+  }
+
+  private updateTextPosition(scrollAmount: number): void {
+    // If animation is completed, don't update position
+    if (this.animationCompleted) return;
+
+    // Get current transform state
+    const computedStyle = window.getComputedStyle(this.textBlockElement);
+    const transform = computedStyle.transform || computedStyle.webkitTransform;
+
+    // Extract current Y position
+    const matrix = new DOMMatrix(transform);
+    const currentY = matrix.m42;
+
+    // Calculate new position
+    const containerHeight = this.textBlockElement.clientHeight;
+    const minY = -containerHeight;
+    const maxY = window.innerHeight * 0.5;
+
+    const newY = Math.min(maxY, Math.max(minY, currentY - scrollAmount));
+
+    // Calculate scale factor based on position - from initialScale to finalScale
+    // As the text moves from bottom to top, scale decreases
+    const startY = this.viewportHeight;
+    const progress = 1 - Math.min(1, Math.max(0, (newY + containerHeight) / this.totalScrollDistance));
+    const scale = this.initialScale - (progress * (this.initialScale - this.finalScale));
+
+    // Apply new position with scale
+    this.renderer.setStyle(
+      this.textBlockElement,
+      'transform',
+      `translateY(${newY}px) scale(${scale})`
+    );
+
+    // If text has scrolled to its end position, mark animation as completed
+    if (newY <= minY) {
+      this.completeAnimation();
+    }
   }
 
   private startAnimation(): void {
-    const animate = () => {
-      this.updateAnimation();
-      this.animationFrame = requestAnimationFrame(animate);
-    };
-    
-    animate();
+    // Set the text to full width initially
+    this.renderer.setStyle(
+      this.textBlockElement,
+      'width',
+      '100%'
+    );
+
+    // Position the text below the viewport
+    this.renderer.setStyle(
+      this.textBlockElement,
+      'transform',
+      `translateY(${window.innerHeight}px) scale(${this.initialScale})`
+    );
+
+    // Remove any existing transition
+    this.renderer.setStyle(this.textBlockElement, 'transition', 'none');
+
+    // Start auto-scroll after a short delay
+    setTimeout(() => {
+      this.startAutoScroll();
+
+      // Set a timer to automatically complete the animation after a certain duration
+      setTimeout(() => {
+        this.completeAnimation();
+      }, this.animationDuration);
+    }, 500); // Reduced from 1000 to 500 for quicker start
   }
 
-  private stopAnimation(): void {
-    if (this.animationFrame) {
-      cancelAnimationFrame(this.animationFrame);
-      this.animationFrame = null;
-    }
+  private pauseAnimation(): void {
+    if (this.animationCompleted) return;
+    this.stopAutoScroll();
+    this.hasAnimationStarted = false;
   }
 
-  private updateAnimation(): void {
-    if (!this.textBlock || !this.textBlock.nativeElement) {
-      return;
-    }
+  private startAutoScroll(): void {
+    if (this.isAutoScrolling || this.animationCompleted) return;
 
-    const section = this.textBlock.nativeElement.closest('.about-section');
-    if (!section) {
-      return;
-    }
+    this.isAutoScrolling = true;
 
-    const rect = section.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-    
-    // Calculate scroll progress
-    const targetProgress = this.calculateScrollProgress(rect, windowHeight);
-    
-    // Smooth the progress for heavy, cinematic feel
-    this.smoothProgress = this.lerp(this.smoothProgress, targetProgress, 0.08);
-    
-    // Apply transform based on smoothed progress
-    this.applyTransform(this.smoothProgress);
+    // Run outside Angular zone for better performance
+    this.ngZone.runOutsideAngular(() => {
+      this.autoScrollInterval = setInterval(() => {
+        this.updateTextPosition(1.5); // Increased from 0.5 for faster auto-scrolling
+      }, 16); // ~60fps
+    });
   }
 
-  private calculateScrollProgress(rect: DOMRect, windowHeight: number): number {
-    // Progress starts when section enters viewport
-    // Progress ends when section leaves viewport
-    
-    if (rect.top >= windowHeight) {
-      // Section hasn't entered viewport yet
-      return 0;
-    } else if (rect.bottom <= 0) {
-      // Section has left viewport
-      return 1;
-    } else {
-      // Section is in viewport - calculate progress
-      // Total scroll distance is the section height minus one viewport
-      const totalScrollDistance = rect.height - windowHeight;
-      const scrolled = -rect.top;
-      
-      // Calculate progress (0 to 1)
-      const progress = scrolled / totalScrollDistance;
-      
-      return Math.max(0, Math.min(1, progress));
+  private stopAutoScroll(): void {
+    if (this.autoScrollInterval) {
+      clearInterval(this.autoScrollInterval);
+      this.autoScrollInterval = null;
     }
+    this.isAutoScrolling = false;
   }
 
-  private applyTransform(progress: number): void {
-    // Star Wars style positioning
-    const startY = 600;   // Start below viewport
-    const endY = -1800;   // End above viewport (reduced from -3000)
-    
-    // Use custom easing for cinematic feel
-    const easedProgress = this.cinematicEase(progress);
-    const currentY = startY + (easedProgress * (endY - startY));
-    
-    // Apply the transform with proper centering
-    this.textBlock.nativeElement.style.transform = 
-      `translate(-50%, -50%) rotateX(25deg) translateZ(0) translateY(${currentY}px)`;
-    
-    // Fade in/out for smooth appearance
-    let opacity = 1;
-    
-    // Fade in at the beginning (first 10%)
-    if (progress < 0.1) {
-      opacity = progress / 0.1;
-    } 
-    // Fade out at the end (last 10%)
-    else if (progress > 0.9) {
-      opacity = (1 - progress) / 0.1;
-    }
-    
-    this.textBlock.nativeElement.style.opacity = opacity.toString();
-  }
+  private completeAnimation(): void {
+    this.animationCompleted = true;
+    this.stopAutoScroll();
 
-  // Linear interpolation for smoothing
-  private lerp(start: number, end: number, factor: number): number {
-    return start + (end - start) * factor;
-  }
+    // Final position for the text with small scale
+    const containerHeight = this.textBlockElement.clientHeight;
+    this.renderer.setStyle(
+      this.textBlockElement,
+      'transform',
+      `translateY(${-containerHeight}px) scale(${this.finalScale})`
+    );
 
-  // Custom easing function for cinematic feel
-  private cinematicEase(t: number): number {
-    // More linear progression for consistent speed
-    // Slight ease at start and end
-    if (t < 0.05) {
-      // Gentle start
-      return t * t * 20;
-    } else if (t < 0.95) {
-      // Linear middle (most of the animation)
-      const adjustedT = (t - 0.05) / 0.9;
-      return 0.05 + (adjustedT * 0.9);
-    } else {
-      // Gentle end
-      const endT = (t - 0.95) * 20;
-      return 0.95 + (endT * endT * 0.05);
-    }
+    // Make the container non-interactive to allow normal page scrolling
+    this.renderer.setStyle(this.elementRef.nativeElement, 'pointer-events', 'none');
   }
 }

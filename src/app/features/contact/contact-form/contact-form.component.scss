@@ -92,18 +92,48 @@
   }
 }
 
-@media (max-width: 1350px) {
-  .page-section{
+@media (max-width: 1500px) {
+  .page-section {
+    padding: 32px;
+
     .content-box {
-      flex-direction: column;
-      align-items: center;
+      gap: 32px;
 
       .left-side {
-        width: 800px;
+        width: calc(100% - 750px);
+      }
+
+      form {
+        width: 700px;
+      }
+    }
+  }
+}
+
+// Add media queries for smaller screens
+@media (max-width: 1200px) {
+  .page-section {
+    .content-box {
+      flex-direction: column;
+
+      .left-side {
+        width: 100%;
+        max-width: 800px;
+
+        .info-wrapper {
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: space-between;
+        }
       }
 
       .right-side {
+        width: 100%;
         padding-top: 32px;
+      }
+
+      form {
+        width: 100%;
       }
     }
   }

@@ -26,23 +26,34 @@
 .cloud {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: auto;
+  min-height: 65vh; /* Reduced from 70vh */
   overflow: hidden;
   // background-color: #131413;
   // margin-top: 96px;
-
 }
 
-/* Add a bubble container to constrain the bubbles /
+/* Add a bubble container to constrain the bubbles */
 .bubble-container {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden; / This prevents bubbles from escaping */
+  overflow: hidden; /* This prevents bubbles from escaping */
+}
 
+@media (max-width: 1500px) {
+  .cloud {
+    min-height: 55vh; /* Reduced from 60vh */
+  }
 
+  .service-header {
+    padding-top: 64px;
+    width: 100%;
+    max-width: 560px;
+  }
+}
 
 /* Optional: Add a floor line */
 .floor {

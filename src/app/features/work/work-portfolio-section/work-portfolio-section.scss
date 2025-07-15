@@ -204,6 +204,34 @@
     }
   }
 
+  @media (max-width: 1500px) {
+    .container {
+      gap: 36px;
+    }
+
+    .projects-grid {
+      gap: 64px;
+    }
+
+    .project-card {
+      .project-icon {
+        width: 200px;
+        height: 170px;
+        margin-bottom: 16px;
+      }
+
+      .project-name {
+        font-size: 20px;
+        line-height: 26px;
+      }
+    }
+
+    .title {
+      font-size: 32px;
+      line-height: 40px;
+    }
+  }
+
   @media (max-width: 768px) {
     .title {
       font-size: 30px;
@@ -238,4 +266,4 @@
         line-height: 18px;
     }
   }
-}   
+}
