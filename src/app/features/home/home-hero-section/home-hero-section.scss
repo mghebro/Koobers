@@ -301,49 +301,6 @@ body {
 }
 
 
-// Tablet and smaller desktop screens
-@media (max-width: 1200px) {
-  .hero {
-    border-radius: 48px;
-    padding: 70px 48px 48px 48px;
-  }
-
-  .hero-content {
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .description {
-    margin: 24px 0;
-  }
-
-  .left-content {
-    width: 100%;
-    margin-bottom: 24px;
-    align-items: center;
-    text-align: center;
-
-    .cta-buttons {
-      gap: 12px;
-      width: 100%;
-      justify-content: center;
-
-      button {
-        width: 35%;
-      }
-    }
-  }
-
-  .right-content {
-    margin-left: 0;
-    justify-content: center;
-    width: 100%;
-    display: flex;
-  }
-}
 
 // Mobile and small tablet screens
 @media (max-width: 768px) {
@@ -401,13 +358,136 @@ body {
 }
 
 // Smaller mobile screens
+// Smallest mobile screens
+
+@media (max-width: 425px) {
+  .heading {
+    h1 {
+      font-size: 32px;
+    }
+  }
+}
+
+.blob {
+  width: 100%;
+  height: 1000px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: -3;
+  display: flex;
+  justify-content: center;
+  aspect-ratio: 1/1;
+  position: absolute;
+  bottom: -664px;
+  border-radius: 1000px;
+  opacity: 0.64;
+  background: radial-gradient(50% 50% at 50% 50%,
+      var(--Gradients-Light, #f5f5e1) 15.87%,
+      var(--Gradients-Light, #f5f5e1) 62.5%,
+      var(--Gradients-Green, #34b84a) 76.44%,
+      var(--Gradients-Tealish, #42eb85) 85.1%);
+  mix-blend-mode: hard-light;
+  filter: blur(250px);
+}
+
+// Add media query for screens around 1500px
+@media (max-width: 1500px) {
+  .hero {
+    height: 90vh; /* Changed from 100vh to 90vh */
+    padding: 64px;
+
+    &-content {
+      padding: 0;
+    }
+
+    .left-content {
+      .heading {
+        .heading-text {
+          font-size: 54px;
+          line-height: 70px;
+        }
+      }
+
+      .description {
+        margin: 16px 0;
+      }
+    }
+
+    .right-content {
+      transform: scale(0.9);
+      transform-origin: center;
+    }
+  }
+
+  .blob {
+    bottom: -750px;
+  }
+}
+
+// Tablet and smaller desktop screens
+@media (max-width: 1200px) {
+  .hero {
+    height: auto;
+    border-radius: 48px;
+    padding: 70px 48px 48px 48px;
+  }
+
+  .hero-content {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .description {
+    margin: 24px 0;
+  }
+
+  .left-content {
+    width: 100%;
+    margin-bottom: 24px;
+    align-items: center;
+    text-align: center;
+
+    .cta-buttons {
+      gap: 12px;
+      width: 100%;
+      justify-content: center;
+
+      button {
+        width: 35%;
+      }
+    }
+  }
+
+  .right-content {
+    margin-left: 0;
+    justify-content: center;
+    width: 100%;
+    display: flex;
+  }
+}
+
+
+@media (max-width: 650px) {
+  .hero {
+    padding: 70px 24px 24px 24px;
+    border-radius: 24px;
+  }
+}
 @media (max-width: 600px) {
   .hero {
     margin: 0;
     display: flex;
+    .left-content {
+      .heading {
 
-    &-content {
-      padding: 20px 10px;
+        .heading-text {
+          font-size: 40px;
+          line-height: 50px;
+        }
+      }
     }
   }
 
@@ -512,80 +592,22 @@ body {
   }
 }
 
-// Smallest mobile screens
-
-@media (max-width: 425px) {
-  .heading {
-    h1 {
-      font-size: 32px;
-    }
-  }
-}
-
-.blob {
-  width: 100%;
-  height: 1000px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: -3;
-  display: flex;
-  justify-content: center;
-  aspect-ratio: 1/1;
-  position: absolute;
-  bottom: -664px;
-  border-radius: 1000px;
-  opacity: 0.64;
-  background: radial-gradient(50% 50% at 50% 50%,
-      var(--Gradients-Light, #f5f5e1) 15.87%,
-      var(--Gradients-Light, #f5f5e1) 62.5%,
-      var(--Gradients-Green, #34b84a) 76.44%,
-      var(--Gradients-Tealish, #42eb85) 85.1%);
-  mix-blend-mode: hard-light;
-  filter: blur(250px);
-}
-
-// Add media query for screens around 1500px
-@media (max-width: 1500px) {
+@media (max-width:475px) {
   .hero {
-    height: 90vh; /* Changed from 100vh to 90vh */
-    padding: 64px;
-
-    &-content {
-      padding: 0;
-    }
-
     .left-content {
       .heading {
+
         .heading-text {
-          font-size: 54px;
-          line-height: 70px;
+          font-size: 30px;
+          line-height: 36px;
         }
       }
-
-      .description {
-        margin: 16px 0;
-      }
     }
-
-    .right-content {
-      transform: scale(0.9);
-      transform-origin: center;
-    }
-  }
-
-  .blob {
-    bottom: -750px;
   }
 }
 
-@media (max-width: 650px) {
-  .hero {
-    padding: 70px 24px 24px 24px;
-    border-radius: 24px;
-  }
-}
 @media (max-width:375px) {
  .hero{
-  padding: 0px;
+  padding: 70px 12px 24px 12px;
  }
 }
