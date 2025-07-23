@@ -23,17 +23,19 @@ export class AboutSectionComponent implements AfterViewInit, OnInit, OnDestroy {
   private textBlockElement!: HTMLElement;
   private hasAnimationStarted = false;
   private observer: IntersectionObserver | null = null;
-  private scrollSpeedFactor = 0.3; // Increased from 0.15 for faster manual scrolling
+  private scrollSpeedFactor = 0.9; // Adjusted for Star Wars feel
   private isAutoScrolling = false;
   private autoScrollInterval: any = null;
   private animationCompleted = false;
-  private readonly animationDuration = 8000; // Reduced from 15000 to 8000 (8 seconds)
+  private readonly animationDuration = 25000; // Longer for Star Wars effect (25 seconds)
 
-  // Parameters for the perspective effect
+  // Enhanced parameters for Star Wars perspective effect
   private initialScale = 1.0;
-  private finalScale = 0.2;
+  private finalScale = 0.1; // Smaller final scale for disappearing effect
   private viewportHeight = 0;
   private totalScrollDistance = 0;
+  private initialRotateX = 45; // Star Wars angle
+  private finalRotateX = 85; // Nearly flat at the end
 
   constructor(
     private elementRef: ElementRef,
@@ -42,7 +44,8 @@ export class AboutSectionComponent implements AfterViewInit, OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // No initialization needed
+    // Set dark space background
+    this.renderer.setStyle(document.body, 'background-color', '#000');
   }
 
   ngAfterViewInit(): void {
@@ -52,21 +55,20 @@ export class AboutSectionComponent implements AfterViewInit, OnInit, OnDestroy {
     // Calculate total scroll distance based on text height
     setTimeout(() => {
       const textHeight = this.textBlockElement.clientHeight;
-      this.totalScrollDistance = this.viewportHeight + textHeight;
+      this.totalScrollDistance = this.viewportHeight + textHeight * 2; // Increased for longer scroll
     });
 
-    // Setup intersection observer to trigger animation when section is visible
+    // Setup intersection observer
     this.observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting && !this.hasAnimationStarted && !this.animationCompleted) {
           this.hasAnimationStarted = true;
           this.startAnimation();
         } else if (!entry.isIntersecting && this.hasAnimationStarted && !this.animationCompleted) {
-          // Reset when scrolled out of view and animation not completed
           this.pauseAnimation();
         }
       });
-    }, { threshold: 0.2 });
+    }, { threshold: 0.1 });
 
     this.observer.observe(this.elementRef.nativeElement);
   }
@@ -75,112 +77,107 @@ export class AboutSectionComponent implements AfterViewInit, OnInit, OnDestroy {
     if (this.observer) {
       this.observer.disconnect();
     }
-
-    // Stop any ongoing auto-scroll
     this.stopAutoScroll();
+    
+    // Reset body background
+    this.renderer.removeStyle(document.body, 'background-color');
   }
 
   @HostListener('window:scroll')
   onScroll(): void {
-    // If animation is completed, allow normal page scrolling
     if (this.animationCompleted) return;
-
     if (!this.hasAnimationStarted) return;
 
-    // Stop auto-scroll when user manually scrolls
     this.stopAutoScroll();
 
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const scrollDiff = scrollTop - this.scrollPosition;
 
     this.updateTextPosition(scrollDiff * this.scrollSpeedFactor);
-
     this.scrollPosition = scrollTop;
   }
 
   @HostListener('wheel', ['$event'])
   onWheel(event: WheelEvent): void {
-    // If animation is completed, allow normal page scrolling
     if (this.animationCompleted) return;
-
     if (!this.hasAnimationStarted) return;
 
-    // Stop auto-scroll when user manually scrolls with wheel
     this.stopAutoScroll();
 
-    // Manual scroll speed control for wheel events
     const delta = event.deltaY;
-    this.updateTextPosition(delta * 0.1); // Increased from 0.05 for faster wheel scrolling
+    this.updateTextPosition(delta * 0.15); // Slower for more control
 
-    // Prevent default scrolling for a smoother experience
     event.preventDefault();
   }
 
   private updateTextPosition(scrollAmount: number): void {
-    // If animation is completed, don't update position
     if (this.animationCompleted) return;
 
-    // Get current transform state
     const computedStyle = window.getComputedStyle(this.textBlockElement);
     const transform = computedStyle.transform || computedStyle.webkitTransform;
 
-    // Extract current Y position
     const matrix = new DOMMatrix(transform);
     const currentY = matrix.m42;
 
-    // Calculate new position
     const containerHeight = this.textBlockElement.clientHeight;
-    const minY = -containerHeight;
-    const maxY = window.innerHeight * 0.5;
+    const minY = -containerHeight * 1.5; // Extended range for Star Wars effect
+    const maxY = this.viewportHeight * 0.3; // Start lower on screen
 
     const newY = Math.min(maxY, Math.max(minY, currentY - scrollAmount));
 
-    // Calculate scale factor based on position - from initialScale to finalScale
-    // As the text moves from bottom to top, scale decreases
-    const startY = this.viewportHeight;
-    const progress = 1 - Math.min(1, Math.max(0, (newY + containerHeight) / this.totalScrollDistance));
-    const scale = this.initialScale - (progress * (this.initialScale - this.finalScale));
+    // Calculate progress for Star Wars effects
+    const progress = Math.min(1, Math.max(0, (maxY - newY) / (maxY - minY)));
+    
+    // Scale decreases more dramatically
+    const scale = this.initialScale - (Math.pow(progress, 1.5) * (this.initialScale - this.finalScale));
+    
+    // Rotate X increases for Star Wars perspective
+    const rotateX = this.initialRotateX + (progress * (this.finalRotateX - this.initialRotateX));
+    
+    // Add slight fade effect as text moves away
+    const opacity = Math.max(0.1, 1 - (progress * 0.7));
 
-    // Apply new position with scale
+    // Apply Star Wars-style transform
     this.renderer.setStyle(
       this.textBlockElement,
       'transform',
-      `translateY(${newY}px) scale(${scale})`
+      `translateY(${newY}px) scale(${scale}) rotateX(${rotateX}deg)`
     );
 
-    // If text has scrolled to its end position, mark animation as completed
-    if (newY <= minY) {
+    this.renderer.setStyle(
+      this.textBlockElement,
+      'opacity',
+      opacity.toString()
+    );
+
+    // Complete animation when text is far enough
+    if (progress >= 0.95) {
       this.completeAnimation();
     }
   }
 
   private startAnimation(): void {
-    // Set the text to full width initially
-    this.renderer.setStyle(
-      this.textBlockElement,
-      'width',
-      '100%'
-    );
-
-    // Position the text below the viewport
+    // Ensure text starts at bottom with initial Star Wars styling
+    this.renderer.setStyle(this.textBlockElement, 'width', '100%');
+    this.renderer.setStyle(this.textBlockElement, 'transition', 'none');
+    this.renderer.setStyle(this.textBlockElement, 'opacity', '1');
+    
+    // Position text at bottom with initial Star Wars transform
     this.renderer.setStyle(
       this.textBlockElement,
       'transform',
-      `translateY(${window.innerHeight}px) scale(${this.initialScale})`
+      `translateY(${this.viewportHeight * 0.3}px) scale(${this.initialScale}) rotateX(${this.initialRotateX}deg)`
     );
 
-    // Remove any existing transition
-    this.renderer.setStyle(this.textBlockElement, 'transition', 'none');
-
-    // Start auto-scroll after a short delay
+    // Start the crawl after a dramatic pause
     setTimeout(() => {
       this.startAutoScroll();
 
-      // Set a timer to automatically complete the animation after a certain duration
+      // Auto-complete after duration
       setTimeout(() => {
         this.completeAnimation();
       }, this.animationDuration);
-    }, 500); // Reduced from 1000 to 500 for quicker start
+    }, 1000); // Longer pause for dramatic effect
   }
 
   private pauseAnimation(): void {
@@ -194,11 +191,11 @@ export class AboutSectionComponent implements AfterViewInit, OnInit, OnDestroy {
 
     this.isAutoScrolling = true;
 
-    // Run outside Angular zone for better performance
     this.ngZone.runOutsideAngular(() => {
       this.autoScrollInterval = setInterval(() => {
-        this.updateTextPosition(1.5); // Increased from 0.5 for faster auto-scrolling
-      }, 16); // ~60fps
+        // Slower, more cinematic scroll speed
+        this.updateTextPosition(0.8);
+      }, 16); // 60fps
     });
   }
 
@@ -214,15 +211,22 @@ export class AboutSectionComponent implements AfterViewInit, OnInit, OnDestroy {
     this.animationCompleted = true;
     this.stopAutoScroll();
 
-    // Final position for the text with small scale
-    const containerHeight = this.textBlockElement.clientHeight;
+    // Final Star Wars position - disappeared into space
     this.renderer.setStyle(
       this.textBlockElement,
       'transform',
-      `translateY(${-containerHeight}px) scale(${this.finalScale})`
+      `translateY(${-this.textBlockElement.clientHeight * 1.5}px) scale(${this.finalScale}) rotateX(${this.finalRotateX}deg)`
     );
+    
+    this.renderer.setStyle(this.textBlockElement, 'opacity', '0');
 
-    // Make the container non-interactive to allow normal page scrolling
+    // Allow normal scrolling
     this.renderer.setStyle(this.elementRef.nativeElement, 'pointer-events', 'none');
+    
+    // Optional: trigger next section or callback
+    setTimeout(() => {
+      // You can emit an event here or call a method to show next content
+      console.log('Star Wars text crawl completed');
+    }, 1000);
   }
 }

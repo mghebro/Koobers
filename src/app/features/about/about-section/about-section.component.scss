@@ -1,95 +1,42 @@
-:host {
-  display: block;
-  position: relative;
+p{
+ color: #ffc909;
+}
+body{
+  background: rgb(20, 20, 20);
+  font-family: 'Star Jedi', sans-serif;
   overflow: hidden;
-  min-height: 80vh; /* Reduced from 100vh */
-  margin-bottom: 0;
-  padding-bottom: 0;
-}
-
-.about-section {
-  font-family: 'Outfit', sans-serif;
-  perspective: 350px;
-  height: 80vh; /* Reduced from 100vh */
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #FFE81F;
-  margin-bottom: 0;
-  padding-bottom: 0;
-}
-
-.text-container {
-  transform: perspective(300px) rotateX(25deg);
-  transform-origin: 50% 100%;
-  position: absolute;
+position: relative;  
+height: 100vh;&::after{
+  content: '';
+  position: fixed;
+  top: 0;
   width: 100%;
-  max-width: 100%;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%) perspective(300px) rotateX(25deg);
-  text-align: center;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(20, 20, 20, 1) 40%, rgba(20, 20, 20, 0) 100%);
 }
-
-.text-block {
-  position: relative;
-  padding: 0 20px;
-  text-align: center;
-  transform-origin: center;
-  width: 100%;
-}
-
-.text-line {
-  color: #FFE81F;
-  font-size: 2rem;
-  line-height: 1.4;
-  margin: 0;
-  white-space: nowrap;
-  text-shadow: 0 0 6px rgba(255, 232, 31, 0.6);
-  letter-spacing: 1px;
-}
-
-.text-line.title {
-  font-size: 3.5rem;
-  font-weight: bold;
-  margin: 0.5em 0;
-  letter-spacing: 4px;
-  text-shadow: 0 0 10px rgba(255, 232, 31, 0.8);
-}
-
-.text-line.intro {
-  color: rgb(75, 213, 238);
-  font-size: 2.5rem;
-  text-shadow: 0 0 8px rgba(75, 213, 238, 0.8);
-  animation: introFade 6s ease-out;
-}
-
-/* Media queries for responsiveness */
-@media (max-width: 768px) {
-  .text-line {
-    font-size: 1.4rem;
-  }
-
-  .text-line.title {
-    font-size: 2.2rem;
-    letter-spacing: 2px;
-  }
-
-  .text-line.intro {
-    font-size: 1.8rem;
-  }
-
-  .text-container {
-    width: 100%;
+  .wrapper{
+    display: flex;
+    height: 100%;
+    width: 60%;
+    margin: 0 auto;
+    perspective: 450px;
+    .scroll-text, .text-line{
+      color: #ffc909;
+      font-size: 3vw;
+      line-height: 1.5em;
+      font-weight: bold;
+      text-align: justify;
+      position: relative;
+      animation: scroll 120s linear forwards;
+      transform: rotateX(20deg);
+      h1{
+        text-align: center;
+      }
+    }
   }
 }
-
-/* Animation for the intro text fade */
-@keyframes introFade {
-  0% { opacity: 0; }
-  20% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { opacity: 0; }
+@keyframes scroll{
+  from{top:0; transform: translateZ(0) rotateX(20deg);}
+  to{top: -7500px; transform: translateZ(-2500px) rotateX(21deg);}
+  
 }
