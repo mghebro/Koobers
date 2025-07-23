@@ -1,42 +1,332 @@
-p{
- color: #ffc909;
+@use "../../../../styles/variables" as v;
+@use "../../../../styles/mixins" as m;
+
+@font-face {
+  font-family: "MyFont";
+  src: url("../../../../fonts/starjout/Starjout.ttf") format("truetype");
+  font-style: normal;
 }
-body{
-  background: rgb(20, 20, 20);
-  font-family: 'Star Jedi', sans-serif;
+
+@font-face {
+  font-family: "pFont";
+  src: url("../../../../fonts/starjedi/Starjedi.ttf") format("truetype");
+  font-style: normal;
+}
+
+.about-section {
+  background: v.$bg-background;
+  color: v.$typography-100;
   overflow: hidden;
-position: relative;  
-height: 100vh;&::after{
-  content: '';
-  position: fixed;
-  top: 0;
   width: 100%;
-  height: 50%;
-  background: linear-gradient(180deg, rgba(20, 20, 20, 1) 40%, rgba(20, 20, 20, 0) 100%);
 }
-  .wrapper{
-    display: flex;
-    height: 100%;
-    width: 60%;
-    margin: 0 auto;
-    perspective: 450px;
-    .scroll-text, .text-line{
-      color: #ffc909;
-      font-size: 3vw;
-      line-height: 1.5em;
-      font-weight: bold;
-      text-align: justify;
-      position: relative;
-      animation: scroll 120s linear forwards;
-      transform: rotateX(20deg);
-      h1{
-        text-align: center;
-      }
+
+.about-section p {
+  color: rgb(255, 232, 31);
+}
+
+.text-container {
+  height: 1000px;
+  position: relative;
+  perspective: 1000px;
+  perspective-origin: center center;
+  padding-bottom: 200px;
+  
+  // Responsive container adjustments
+  @media (max-width: 480px) {
+    height: 120vh;
+    min-height: 600px;
+    padding-bottom: 80px;
+  }
+  
+  @media (min-width: 481px) and (max-width: 768px) {
+    height: 110vh;
+    min-height: 700px;
+    padding-bottom: 120px;
+  }
+  
+  @media (min-width: 769px) and (max-width: 1024px) {
+    height: 105vh;
+    min-height: 800px;
+    padding-bottom: 160px;
+  }
+}
+
+.text-block {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotateX(25deg);
+  text-align: center;
+  width: 80%;
+  max-width: 900px;
+  transform-style: preserve-3d;
+  z-index: 10;
+  font-stretch: normal;
+  font-weight: 400;
+  font-family: "pFont", sans-serif;
+  
+  // Mobile responsive
+  @media (max-width: 480px) {
+    width: 95%;
+    transform: translate(-50%, -50%) rotateX(35deg);
+    padding: 0 5px;
+  }
+  
+  @media (min-width: 481px) and (max-width: 768px) {
+    width: 90%;
+    transform: translate(-50%, -50%) rotateX(32deg);
+    padding: 0 10px;
+  }
+  
+  // Tablet responsive
+  @media (min-width: 769px) and (max-width: 1024px) {
+    width: 85%;
+    transform: translate(-50%, -50%) rotateX(28deg);
+  }
+}
+
+#h1 {
+  font-family: "MyFont", sans-serif;
+  font-size: 48px;
+  margin: 0px;
+  
+  // Responsive font sizes using fluid scaling
+  @media (max-width: 480px) {
+    font-size: clamp(24px, 8vw, 32px);
+  }
+  
+  @media (min-width: 481px) and (max-width: 768px) {
+    font-size: clamp(32px, 6vw, 40px);
+  }
+  
+  @media (min-width: 769px) and (max-width: 1024px) {
+    font-size: clamp(40px, 5vw, 44px);
+  }
+}
+
+.text-line {
+  display: block;
+  margin: 60px 0;
+  color: rgb(255, 232, 31);
+  opacity: 0;
+  transform: translateY(100px) scale(0.3);
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 0.5s ease;
+  font-size: 1.8rem;
+  line-height: 1.4;
+
+  // When text is active/visible during scroll
+  &.active {
+    opacity: 1;
+    transform: translateY(0) scale(2.5);
+  }
+
+  // When text is scrolled past
+  &.scrolled-past {
+    opacity: 0.3;
+    transform: translateY(-50px) scale(0.8);
+  }
+
+  // Ensure last line stays visible
+  &:last-child {
+    margin-bottom: 100px;
+  }
+  
+  // Mobile responsive adjustments
+  @media (max-width: 480px) {
+    margin: 25px 0;
+    font-size: clamp(12px, 4vw, 16px);
+    line-height: 1.3;
+    transform: translateY(50px) scale(0.3);
+
+    &.active {
+      transform: translateY(0) scale(1.2);
+    }
+
+    &.scrolled-past {
+      transform: translateY(-25px) scale(0.6);
+    }
+    
+    &:last-child {
+      margin-bottom: 50px;
+    }
+  }
+  
+  @media (min-width: 481px) and (max-width: 768px) {
+    margin: 35px 0;
+    font-size: clamp(14px, 3.5vw, 18px);
+    line-height: 1.35;
+    transform: translateY(60px) scale(0.3);
+
+    &.active {
+      transform: translateY(0) scale(1.6);
+    }
+
+    &.scrolled-past {
+      transform: translateY(-30px) scale(0.7);
+    }
+    
+    &:last-child {
+      margin-bottom: 70px;
+    }
+  }
+  
+  // Tablet responsive
+  @media (min-width: 769px) and (max-width: 1024px) {
+    margin: 50px 0;
+    font-size: clamp(16px, 2.5vw, 22px);
+    transform: translateY(80px) scale(0.3);
+
+    &.active {
+      transform: translateY(0) scale(2.0);
+    }
+
+    &.scrolled-past {
+      transform: translateY(-40px) scale(0.75);
+    }
+    
+    &:last-child {
+      margin-bottom: 85px;
+    }
+  }
+  
+  // Large desktop
+  @media (min-width: 1200px) {
+    font-size: 2rem;
+    
+    &.active {
+      transform: translateY(0) scale(2.8);
     }
   }
 }
-@keyframes scroll{
-  from{top:0; transform: translateZ(0) rotateX(20deg);}
-  to{top: -7500px; transform: translateZ(-2500px) rotateX(21deg);}
+
+// Very small screens
+@media (max-width: 320px) {
+  .text-container {
+    height: 130vh;
+    padding-bottom: 60px;
+  }
   
+  .text-block {
+    width: 98%;
+    padding: 0 3px;
+  }
+  
+  #h1 {
+    font-size: 20px;
+  }
+  
+  .text-line {
+    font-size: 11px;
+    margin: 20px 0;
+    
+    &.active {
+      transform: translateY(0) scale(1.0);
+    }
+  }
+}
+
+// Large screens optimization
+@media (min-width: 1400px) {
+  .text-block {
+    max-width: 1000px;
+  }
+  
+  #h1 {
+    font-size: 52px;
+  }
+  
+  .text-line {
+    font-size: 2.2rem;
+    margin: 70px 0;
+    
+    &.active {
+      transform: translateY(0) scale(3.0);
+    }
+    
+    &:last-child {
+      margin-bottom: 120px;
+    }
+  }
+}
+
+// Landscape orientation for mobile/tablet
+@media (max-height: 600px) and (orientation: landscape) {
+  .text-container {
+    height: 150vh;
+  }
+  
+  .text-line {
+    margin: 20px 0;
+    font-size: 14px;
+    
+    &.active {
+      transform: translateY(0) scale(1.3);
+    }
+  }
+  
+  #h1 {
+    font-size: 28px;
+  }
+}
+
+// Accessibility
+@media (prefers-reduced-motion: reduce) {
+  .text-line {
+    transition: opacity 0.3s ease;
+    transform: none !important;
+
+    &.active {
+      opacity: 1;
+      transform: none !important;
+    }
+
+    &.scrolled-past {
+      opacity: 0.7;
+      transform: none !important;
+    }
+  }
+
+  .text-block {
+    transform: translate(-50%, -50%) !important;
+  }
+}
+
+// High contrast
+@media (prefers-contrast: high) {
+  .about-section .text-line,
+  .about-section p {
+    color: #ffffff;
+  }
+
+  .about-section {
+    background: #000000;
+  }
+}
+
+// Print styles
+@media print {
+  .about-section {
+    background: white;
+    color: black;
+  }
+
+  .about-section .text-line,
+  .about-section p {
+    color: black;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .text-container {
+    height: auto;
+    padding-bottom: 0;
+  }
+
+  .text-block {
+    position: static;
+    transform: none;
+    width: 100%;
+    max-width: none;
+  }
 }
