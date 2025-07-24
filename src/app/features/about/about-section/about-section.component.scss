@@ -28,10 +28,9 @@
   height: 1000px;
   position: relative;
   perspective: 1000px;
-  perspective-origin: center center;
+  perspective-origin: center bottom;
   padding-bottom: 200px;
   
-  // Responsive container adjustments
   @media (max-width: 480px) {
     height: 120vh;
     min-height: 600px;
@@ -53,7 +52,7 @@
 
 .text-block {
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%) rotateX(25deg);
   text-align: center;
@@ -65,7 +64,6 @@
   font-weight: 400;
   font-family: "pFont", sans-serif;
   
-  // Mobile responsive
   @media (max-width: 480px) {
     width: 95%;
     transform: translate(-50%, -50%) rotateX(35deg);
@@ -78,7 +76,6 @@
     padding: 0 10px;
   }
   
-  // Tablet responsive
   @media (min-width: 769px) and (max-width: 1024px) {
     width: 85%;
     transform: translate(-50%, -50%) rotateX(28deg);
@@ -90,7 +87,6 @@
   font-size: 48px;
   margin: 0px;
   
-  // Responsive font sizes using fluid scaling
   @media (max-width: 480px) {
     font-size: clamp(24px, 8vw, 32px);
   }
@@ -115,24 +111,20 @@
   font-size: 1.8rem;
   line-height: 1.4;
 
-  // When text is active/visible during scroll
   &.active {
     opacity: 1;
     transform: translateY(0) scale(2.5);
   }
 
-  // When text is scrolled past
   &.scrolled-past {
     opacity: 0.3;
     transform: translateY(-50px) scale(0.8);
   }
 
-  // Ensure last line stays visible
   &:last-child {
     margin-bottom: 100px;
   }
   
-  // Mobile responsive adjustments
   @media (max-width: 480px) {
     margin: 25px 0;
     font-size: clamp(12px, 4vw, 16px);
@@ -171,7 +163,6 @@
     }
   }
   
-  // Tablet responsive
   @media (min-width: 769px) and (max-width: 1024px) {
     margin: 50px 0;
     font-size: clamp(16px, 2.5vw, 22px);
@@ -190,7 +181,6 @@
     }
   }
   
-  // Large desktop
   @media (min-width: 1200px) {
     font-size: 2rem;
     
@@ -200,7 +190,6 @@
   }
 }
 
-// Very small screens
 @media (max-width: 320px) {
   .text-container {
     height: 130vh;
@@ -226,7 +215,6 @@
   }
 }
 
-// Large screens optimization
 @media (min-width: 1400px) {
   .text-block {
     max-width: 1000px;
@@ -250,7 +238,6 @@
   }
 }
 
-// Landscape orientation for mobile/tablet
 @media (max-height: 600px) and (orientation: landscape) {
   .text-container {
     height: 150vh;
@@ -270,7 +257,6 @@
   }
 }
 
-// Accessibility
 @media (prefers-reduced-motion: reduce) {
   .text-line {
     transition: opacity 0.3s ease;
@@ -292,7 +278,6 @@
   }
 }
 
-// High contrast
 @media (prefers-contrast: high) {
   .about-section .text-line,
   .about-section p {
@@ -304,7 +289,6 @@
   }
 }
 
-// Print styles
 @media print {
   .about-section {
     background: white;
